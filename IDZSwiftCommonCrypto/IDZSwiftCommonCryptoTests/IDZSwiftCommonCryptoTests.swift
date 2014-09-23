@@ -49,6 +49,22 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         let digest = md5.final()
         XCTAssertEqual(digest, expected, "PASS")
     }
+    
+    func test_Digest_MD5_Composition()
+    {
+        let  s = "The quick brown fox jumps over the lazy dog."
+        let expected : Array<UInt8> = [0xe4,0xd9,0x09,0xc2,
+            0x90,0xd0,0xfb,0x1c,
+            0xa0,0x68,0xff,0xad,
+            0xdf,0x22,0xcb,0xd0]
+        var digest = Digest(algorithm: .MD5).update(s)?.final()
+        XCTAssertEqual(digest!, expected, "PASS")
+        
+        let s1 = "The quick brown fox"
+        let s2 = " jumps over the lazy dog."
+        digest = Digest(algorithm: .MD5).update(s1)?.update(s2)?.final()
+        XCTAssertEqual(digest!, expected, "PASS")
+    }
     // MARK: - HMAC tests
     // See: https://www.ietf.org/rfc/rfc2202.txt
     func test_HMAC_SHA1()

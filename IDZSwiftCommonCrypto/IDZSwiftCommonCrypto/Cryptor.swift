@@ -28,8 +28,6 @@ public class Cryptor
     {
         case AES, DES, TripleDES, CAST, RC2, Blowfish
         
-        
-        
         public func blockSize() -> Int {
             switch self {
             case AES : return kCCBlockSizeAES128
@@ -112,6 +110,30 @@ public class Cryptor
         
     }
 
+    //MARK: - High-level interface
+    public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: [UInt8],
+        iv : [UInt8])
+    {
+        self.init(operation:operation, algorithm:algorithm, options:options, key:key, keyLength:UInt(key.count), iv:iv)
+    }
+    
+    public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: String,
+        iv : String)
+    {
+        self.init(operation:operation, algorithm:algorithm, options:options, key:key, keyLength:UInt(key.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)), iv:iv)
+    }
+    
+    
+
+    
+    public func update(dataIn: [UInt8], inout dataOut: [UInt8]) -> (UInt, Status)
+    {
+        var dataOutAvailable = UInt(dataOut.count)
+        var dataOutMoved = UInt(0)
+        update(dataIn, dataInLength: UInt(dataIn.count), dataOut: &dataOut, dataOutAvailable: UInt(dataOut.count), dataOutMoved: &dataOutMoved)
+        return (dataOutMoved, self.status)
+    }
+    // MARK: - Low-level interface
     public init(operation: Operation, algorithm: Algorithm, options: Options, key: UnsafePointer<Void>,
         keyLength: UInt, iv: UnsafePointer<Void>)
     {
@@ -126,19 +148,6 @@ public class Cryptor
             fatalError("CCCryptorCreate returned unexpected status.")
         }
     }
-    
-    public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: [UInt8],
-        iv : [UInt8])
-    {
-        self.init(operation:operation, algorithm:algorithm, options:options, key:key, keyLength:UInt(key.count), iv:iv)
-    }
-    
-    public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: String,
-        iv : String)
-    {
-        self.init(operation:operation, algorithm:algorithm, options:options, key:key, keyLength:UInt(key.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)), iv:iv)
-    }
-    
     
     public func update(dataIn: UnsafePointer<Void>, dataInLength: UInt, dataOut: UnsafeMutablePointer<Void>,
         dataOutAvailable : UInt, inout dataOutMoved : UInt) -> Status
@@ -159,12 +168,28 @@ public class Cryptor
         return self.status
     }
     
-    public func update(dataIn: [UInt8], inout dataOut: [UInt8]) -> (UInt, Status)
+    public func final(dataOut: UnsafeMutablePointer<Void>,
+        dataOutAvailable : UInt, inout dataOutMoved : UInt) -> Status
     {
-        var dataOutAvailable = UInt(dataOut.count)
-        var dataOutMoved = UInt(0)
-        update(dataIn, dataInLength: UInt(dataIn.count), dataOut: &dataOut, dataOutAvailable: UInt(dataOut.count), dataOutMoved: &dataOutMoved)
-        return (dataOutMoved, self.status)
+        if(status == .Success)
+        {
+            let rawStatus = CCCryptorFinal(context.memory, dataOut, dataOutAvailable, &dataOutMoved)
+            if let status = Status.fromRaw(rawStatus)
+            {
+                self.status =  status
+            }
+            else
+            {
+                NSLog("FATAL_ERROR: CCCryptorFinal returned unexpected status (\(rawStatus)).")
+                fatalError("CCCryptorUpdate returned unexpected status.")
+            }
+        }
+        return self.status
+    }
+    
+    public func getOutputLength(inputLength : UInt, isFinal : Bool = false) -> UInt
+    {
+        return CCCryptorGetOutputLength(context.memory, inputLength, isFinal)
     }
     
     deinit
@@ -185,8 +210,6 @@ public class Cryptor
         context.dealloc(1)
     }
     
-    var context = UnsafeMutablePointer<CCCryptorRef>.alloc(1)
-    var status : Status = .Success
-    
-
+    private var context = UnsafeMutablePointer<CCCryptorRef>.alloc(1)
+    public var status : Status = .Success
 }
