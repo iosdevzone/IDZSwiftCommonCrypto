@@ -63,6 +63,7 @@ public class Cryptor
     public struct Options : RawOptionSetType, BooleanType {
         private var value: UInt = 0
         
+        
         init(_ value: UInt) {
             self.value = value
         }
@@ -96,19 +97,8 @@ public class Cryptor
         public static var ECBMode: Options      { return self(UInt(kCCOptionECBMode)) }
     }
     
-    public enum Status : CCCryptorStatus
-    {
-        case Success          = 0,
-        ParamError       = -4300,
-        BufferTooSmall   = -4301,
-        MemoryFailure    = -4302,
-        AlignmentError   = -4303,
-        DecodeError      = -4304,
-        Unimplemented    = -4305,
-        Overflow         = -4306,
-        RNGFailure       = -4307
-        
-    }
+
+    public var status : Status = .Success
 
     //MARK: - High-level interface
     public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: [UInt8],
@@ -152,7 +142,7 @@ public class Cryptor
     public func update(dataIn: UnsafePointer<Void>, dataInLength: UInt, dataOut: UnsafeMutablePointer<Void>,
         dataOutAvailable : UInt, inout dataOutMoved : UInt) -> Status
     {
-        if(status == .Success)
+        if(self.status == Status.Success)
         {
             let rawStatus = CCCryptorUpdate(context.memory, dataIn, dataInLength, dataOut, dataOutAvailable, &dataOutMoved)
             if let status = Status.fromRaw(rawStatus)
@@ -171,7 +161,7 @@ public class Cryptor
     public func final(dataOut: UnsafeMutablePointer<Void>,
         dataOutAvailable : UInt, inout dataOutMoved : UInt) -> Status
     {
-        if(status == .Success)
+        if(status == Status.Success)
         {
             let rawStatus = CCCryptorFinal(context.memory, dataOut, dataOutAvailable, &dataOutMoved)
             if let status = Status.fromRaw(rawStatus)
@@ -211,5 +201,5 @@ public class Cryptor
     }
     
     private var context = UnsafeMutablePointer<CCCryptorRef>.alloc(1)
-    public var status : Status = .Success
+    
 }
