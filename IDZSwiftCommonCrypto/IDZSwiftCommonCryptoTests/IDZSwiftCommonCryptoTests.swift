@@ -116,9 +116,17 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
 
     
     // MARK: - Utilities tests
-    func testArrayFromHexString()
+    func test_Utilities_arrayFromHexString_lowerCase()
     {
         var s = "deadface"
+        var expected : [UInt8] = [ 0xde, 0xad, 0xfa, 0xce ]
+        var result = arrayFromHexString(s)
+        XCTAssertEqual(result, expected, "PASS")
+    }
+    
+    func test_Utilities_arrayFromHexString_upperCase()
+    {
+        var s = "DEADFACE"
         var expected : [UInt8] = [ 0xde, 0xad, 0xfa, 0xce ]
         var result = arrayFromHexString(s)
         XCTAssertEqual(result, expected, "PASS")
