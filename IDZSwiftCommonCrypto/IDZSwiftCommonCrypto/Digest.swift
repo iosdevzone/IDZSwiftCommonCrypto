@@ -52,18 +52,22 @@ public class Digest
         }
     }
     
-    public func update(buffer: UnsafePointer<UInt8>, _ byteCount: CC_LONG)
+    public func update(buffer: UnsafePointer<UInt8>, _ byteCount: CC_LONG) -> Digest?
     {
         engine.update(buffer, byteCount)
+        return self
     }
     
-    public func update(buffer : [UInt8]) {
+    public func update(buffer : [UInt8]) -> Digest?
+    {
         engine.update(buffer, CC_LONG(buffer.count))
+        return self
     }
     
-    public func update(s : String)
+    public func update(s : String) -> Digest?
     {
         engine.update(s, CC_LONG(s.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
+        return self
     }
     
     public func final() -> [UInt8]
