@@ -9,10 +9,21 @@
 import Foundation
 import CommonCrypto
 
-class Random
+public class Random
 {
-    class func GenerateBytes(bytes : UnsafeMutablePointer<Void>, byteCount : UInt )
+    public class func generateBytes(bytes : UnsafeMutablePointer<Void>, byteCount : UInt )
     {
         CCRandomGenerateBytes(bytes, byteCount)
+    }
+    
+    public class func generateBytes(byteCount : Int ) -> [UInt8]
+    {
+        if(byteCount <= 0)
+        {
+            fatalError("generateBytes: byteCount must be positve and non-zero")
+        }
+        var bytes : [UInt8] = Array(count:byteCount, repeatedValue:UInt8(0))
+        CCRandomGenerateBytes(&bytes, UInt(byteCount))
+        return bytes
     }
 }

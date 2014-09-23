@@ -9,9 +9,9 @@
 import Foundation
 import CommonCrypto
 
-class HMAC
+public class HMAC
 {
-    enum Algorithm
+    public enum Algorithm
     {
         case SHA1, MD5, SHA224, SHA256, SHA384, SHA512
         
@@ -33,7 +33,7 @@ class HMAC
             }
         }
         
-        func digestLength() -> Int {
+        public func digestLength() -> Int {
             switch self {
             case .SHA1:
                 return Int(CC_SHA1_DIGEST_LENGTH)
@@ -56,7 +56,7 @@ class HMAC
     let context = Context.alloc(1)
     var algorithm : Algorithm
     
-    init(algorithm : Algorithm, key : [UInt8]) {
+    public init(algorithm : Algorithm, key : [UInt8]) {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), key, size_t(key.count))
     }
@@ -71,21 +71,21 @@ class HMAC
         context.dealloc(1)
     }
     
-    func update(buffer : UnsafePointer<Void>, _ byteCount : size_t)
+    public func update(buffer : UnsafePointer<Void>, _ byteCount : size_t)
     {
         CCHmacUpdate(context, buffer, byteCount)
     }
     
-    func update(b : [UInt8]) {
+    public func update(b : [UInt8]) {
         update(b, size_t(b.count))
     }
     
-    func update(s : String)
+    public func update(s : String)
     {
         update(s, size_t(s.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
     }
     
-    func final() -> [UInt8]
+    public func final() -> [UInt8]
     {
         var hmac = Array<UInt8>(count:algorithm.digestLength(), repeatedValue:0)
         CCHmacFinal(context, &hmac)

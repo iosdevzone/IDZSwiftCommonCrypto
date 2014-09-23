@@ -10,9 +10,9 @@ import Foundation
 import CommonCrypto
 
 
-class Cryptor
+public class Cryptor
 {
-    enum Operation
+    public enum Operation
     {
         case Encrypt, Decrypt
         
@@ -24,23 +24,13 @@ class Cryptor
         }
     }
     
-    enum Algorithm
+    public enum Algorithm
     {
         case AES, DES, TripleDES, CAST, RC2, Blowfish
         
-        func nativeValue() -> CCAlgorithm
-        {
-            switch self {
-                case AES : return CCAlgorithm(kCCAlgorithmAES)
-                case DES : return CCAlgorithm(kCCAlgorithmDES)
-                case TripleDES : return CCAlgorithm(kCCAlgorithm3DES)
-                case CAST : return CCAlgorithm(kCCAlgorithmCAST)
-                case RC2: return CCAlgorithm(kCCAlgorithmRC2)
-                case Blowfish : return CCAlgorithm(kCCAlgorithmBlowfish)
-            }
-        }
         
-        func blockSize() -> Int {
+        
+        public func blockSize() -> Int {
             switch self {
             case AES : return kCCBlockSizeAES128
             case DES : return kCCBlockSizeDES
@@ -50,55 +40,65 @@ class Cryptor
             case Blowfish : return kCCBlockSizeBlowfish
             }
         }
+        
+        func nativeValue() -> CCAlgorithm
+        {
+            switch self {
+            case AES : return CCAlgorithm(kCCAlgorithmAES)
+            case DES : return CCAlgorithm(kCCAlgorithmDES)
+            case TripleDES : return CCAlgorithm(kCCAlgorithm3DES)
+            case CAST : return CCAlgorithm(kCCAlgorithmCAST)
+            case RC2: return CCAlgorithm(kCCAlgorithmRC2)
+            case Blowfish : return CCAlgorithm(kCCAlgorithmBlowfish)
+            }
+        }
     }
     
-    
-    
     /*
-     * It turns out to be rather tedious to reprent ORable
-     * bitmask style options in Swift. I would love to 
-     * to say that I was smart enough to figure out the 
-     * magic incantions below for myself, but it was, in fact,
-     * NSHipster
-     * From: http://nshipster.com/rawoptionsettype/
-     */
-    struct Options : RawOptionSetType, BooleanType {
+    * It turns out to be rather tedious to reprent ORable
+    * bitmask style options in Swift. I would love to
+    * to say that I was smart enough to figure out the
+    * magic incantions below for myself, but it was, in fact,
+    * NSHipster
+    * From: http://nshipster.com/rawoptionsettype/
+    */
+    public struct Options : RawOptionSetType, BooleanType {
         private var value: UInt = 0
         
         init(_ value: UInt) {
             self.value = value
         }
         
-        static func fromMask(raw: UInt) -> Options {
+        public static func fromMask(raw: UInt) -> Options {
             return self(raw)
         }
         
-        static func fromRaw(raw: UInt) -> Options? {
+        public static func fromRaw(raw: UInt) -> Options? {
             return self(raw)
         }
         
-        func toRaw() -> UInt {
+        public func toRaw() -> UInt {
             return value
         }
         
-        var boolValue: Bool {
+        public var boolValue: Bool {
             return value != 0
         }
         
-        static var allZeros: Options {
+        public static var allZeros: Options {
             return self(0)
         }
         
-        static func convertFromNilLiteral() -> Options {
+        public static func convertFromNilLiteral() -> Options {
             return self(0)
         }
         
-        static var None: Options           { return self(0) }
-        static var PKCS7Padding: Options    { return self(UInt(kCCOptionPKCS7Padding)) }
-        static var ECBMode: Options      { return self(UInt(kCCOptionECBMode)) }
+        public static var None: Options           { return self(0) }
+        public static var PKCS7Padding: Options    { return self(UInt(kCCOptionPKCS7Padding)) }
+        public static var ECBMode: Options      { return self(UInt(kCCOptionECBMode)) }
     }
     
-    enum Status : CCCryptorStatus
+    public enum Status : CCCryptorStatus
     {
         case Success          = 0,
         ParamError       = -4300,
@@ -111,11 +111,8 @@ class Cryptor
         RNGFailure       = -4307
         
     }
-    
-    var context = UnsafeMutablePointer<CCCryptorRef>.alloc(1)
-    var status : Status = .Success
-    
-    init(operation: Operation, algorithm: Algorithm, options: Options, key: UnsafePointer<Void>,
+
+    public init(operation: Operation, algorithm: Algorithm, options: Options, key: UnsafePointer<Void>,
         keyLength: UInt, iv: UnsafePointer<Void>)
     {
         let rawStatus = CCCryptorCreate(operation.nativeValue(), algorithm.nativeValue(), CCOptions(options.toRaw()), key, keyLength, iv, context)
@@ -130,7 +127,20 @@ class Cryptor
         }
     }
     
-    func update(dataIn: UnsafePointer<Void>, dataInLength: UInt, dataOut: UnsafeMutablePointer<Void>,
+    public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: [UInt8],
+        iv : [UInt8])
+    {
+        self.init(operation:operation, algorithm:algorithm, options:options, key:key, keyLength:UInt(key.count), iv:iv)
+    }
+    
+    public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: String,
+        iv : String)
+    {
+        self.init(operation:operation, algorithm:algorithm, options:options, key:key, keyLength:UInt(key.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)), iv:iv)
+    }
+    
+    
+    public func update(dataIn: UnsafePointer<Void>, dataInLength: UInt, dataOut: UnsafeMutablePointer<Void>,
         dataOutAvailable : UInt, inout dataOutMoved : UInt) -> Status
     {
         if(status == .Success)
@@ -147,6 +157,14 @@ class Cryptor
             }
         }
         return self.status
+    }
+    
+    public func update(dataIn: [UInt8], inout dataOut: [UInt8]) -> (UInt, Status)
+    {
+        var dataOutAvailable = UInt(dataOut.count)
+        var dataOutMoved = UInt(0)
+        update(dataIn, dataInLength: UInt(dataIn.count), dataOut: &dataOut, dataOutAvailable: UInt(dataOut.count), dataOutMoved: &dataOutMoved)
+        return (dataOutMoved, self.status)
     }
     
     deinit
@@ -166,4 +184,9 @@ class Cryptor
         }
         context.dealloc(1)
     }
+    
+    var context = UnsafeMutablePointer<CCCryptorRef>.alloc(1)
+    var status : Status = .Success
+    
+
 }

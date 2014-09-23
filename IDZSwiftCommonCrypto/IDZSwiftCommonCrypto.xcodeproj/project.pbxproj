@@ -14,6 +14,7 @@
 		0CCB89CB19CE071D00068ED6 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C619CE071D00068ED6 /* HMAC.swift */; };
 		0CCB89CC19CE071D00068ED6 /* KeyDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C719CE071D00068ED6 /* KeyDerivation.swift */; };
 		0CCB89CD19CE071D00068ED6 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C819CE071D00068ED6 /* Random.swift */; };
+		0CCB89D219CF416B00068ED6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89D119CF416B00068ED6 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		0CCB89C619CE071D00068ED6 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
 		0CCB89C719CE071D00068ED6 /* KeyDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyDerivation.swift; sourceTree = "<group>"; };
 		0CCB89C819CE071D00068ED6 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
+		0CCB89D119CF416B00068ED6 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				0CCB89C619CE071D00068ED6 /* HMAC.swift */,
 				0CCB89C719CE071D00068ED6 /* KeyDerivation.swift */,
 				0CCB89C819CE071D00068ED6 /* Random.swift */,
+				0CCB89D119CF416B00068ED6 /* Utilities.swift */,
 				0CCB89B019CE05F800068ED6 /* IDZSwiftCommonCrypto.h */,
 				0CCB89AE19CE05F800068ED6 /* Supporting Files */,
 			);
@@ -222,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CCB89D219CF416B00068ED6 /* Utilities.swift in Sources */,
 				0CCB89CC19CE071D00068ED6 /* KeyDerivation.swift in Sources */,
 				0CCB89C919CE071D00068ED6 /* Cryptor.swift in Sources */,
 				0CCB89CD19CE071D00068ED6 /* Random.swift in Sources */,
