@@ -52,6 +52,7 @@ public class HMAC
     }
     
     typealias Context = UnsafeMutablePointer<CCHmacContext>
+    public var status : Status = .Success
     
     let context = Context.alloc(1)
     var algorithm : Algorithm
@@ -76,13 +77,16 @@ public class HMAC
         CCHmacUpdate(context, buffer, byteCount)
     }
     
-    public func update(b : [UInt8]) {
+    public func update(b : [UInt8]) -> HMAC?
+    {
         update(b, size_t(b.count))
+        return self
     }
     
-    public func update(s : String)
+    public func update(s : String) -> HMAC?
     {
         update(s, size_t(s.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
+        return self
     }
     
     public func final() -> [UInt8]

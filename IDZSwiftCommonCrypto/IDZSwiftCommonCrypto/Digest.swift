@@ -10,26 +10,37 @@ import Foundation
 import CommonCrypto
 
 // MARK: - Public Interface
-/**
- * Public API for message digests.
- *
- * Usage is striaghtforward
- * <pre>
- * let  s = "The quick brown fox jumps over the lazy dog."
- * var md5 : Digest = Digest(algorithm:.MD5)
- * md5.update(s)
- * let digest = md5.final()
- * </pre>
- */
+ /**
+  Public API for message digests.
+
+  Usage is striaghtforward
+  ::
+        let  s = "The quick brown fox jumps over the lazy dog."
+        var md5 : Digest = Digest(algorithm:.MD5)
+        md5.update(s)
+        let digest = md5.final()
+  */
 public class Digest
-{
+{   /**
+        - MD2: Message Digest 2 See: http://en.wikipedia.org/wiki/MD2_(cryptography)
+        - MD4
+        - MD5
+        - SHA1: Secure Hash Algorithm 1
+        - SHA224: Secure Hash Algorithm 2 224-bit
+        - SHA256: Secure Hash Algorithm 2 256-bit
+        - SHA384: Secure Hash Algorithm 2 384-bit
+        - SHA512: Secure Hash Algorithm 2 512-bit
+     */
     public enum Algorithm
     {
         case MD2, MD4, MD5, SHA1, SHA224, SHA256, SHA384, SHA512
     }
     
     var engine: DigestEngine
-    
+    /**
+       Create an algorithm-specific digest calculator
+       :param: alrgorithm the desired message digest algorithm
+     */
     public init(algorithm: Algorithm)
     {
         switch algorithm {
@@ -51,25 +62,47 @@ public class Digest
             engine = DigestEngineCC<CC_SHA512_CTX>(initializer:CC_SHA512_Init, updater:CC_SHA512_Update, finalizer:CC_SHA512_Final, length:CC_SHA512_DIGEST_LENGTH)
         }
     }
-    
+    /**
+        Low-level update routine. Updates the message digest calculation with
+        the contents of a byte buffer.
+        
+        :param: buffer the buffer
+        :returns: this Digest object (for optional chaining)
+    */
     public func update(buffer: UnsafePointer<UInt8>, _ byteCount: CC_LONG) -> Digest?
     {
         engine.update(buffer, byteCount)
         return self
     }
+    /**
+        Updates the message digest with a byte buffer.
     
+        :param: buffer the buffer
+        :returns: this Digest object (for optional chaining)
+    */
     public func update(buffer : [UInt8]) -> Digest?
     {
         engine.update(buffer, CC_LONG(buffer.count))
         return self
     }
     
+    /**
+       Updates the message digest being calculated with the contents
+       of a string interpreted as UTF8.
+    
+       :param: s the string
+       :returns: this Digest object (for optional chaining)
+    */
     public func update(s : String) -> Digest?
     {
         engine.update(s, CC_LONG(s.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
         return self
     }
     
+    /**
+       Completes the calculate of the messge digest
+       :returns: the message digest
+     */
     public func final() -> [UInt8]
     {
         return engine.final()

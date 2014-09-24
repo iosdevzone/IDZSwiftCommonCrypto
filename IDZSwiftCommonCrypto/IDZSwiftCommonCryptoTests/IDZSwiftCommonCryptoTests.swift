@@ -63,6 +63,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         
         let s1 = "The quick brown fox"
         let s2 = " jumps over the lazy dog."
+        var d : Digest? = nil
         digest = Digest(algorithm: .MD5).update(s1)?.update(s2)?.final()
         XCTAssertEqual(digest!, expected, "PASS")
         
@@ -77,14 +78,13 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         var key = arrayFromHexString("0102030405060708090a0b0c0d0e0f10111213141516171819")
         var data : [UInt8] = Array(count:50, repeatedValue:0xcd)
         var expected = arrayFromHexString("4c9007f4026250c6bc8414f9bf50c86c2d7235da")
-        var hmac = HMAC(algorithm:.SHA1, key:key)
-        hmac.update(data)
-        let digest = hmac.final()
-        
+        var hmac = HMAC(algorithm:.SHA1, key:key).update(data)?.final()
+        XCTAssertEqual(hmac!, expected, "PASS")
     }
     
     
     // MARK: - KeyDerivation tests
+    // See: https://www.ietf.org/rfc/rfc6070.txt
     func test_KeyDerivation_deriveKey()
     {        
         let tests = [ ("password", "salt", 1, 20, "0c60c80f961f0e71f3a9b524af6012062fe037a6"),
@@ -105,8 +105,6 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     }
 
     // MARK: - Random tests
-    // See: https://www.ietf.org/rfc/rfc6070.txt
-    
     func test_Random_generateBytes()
     {
         let count = 256*256

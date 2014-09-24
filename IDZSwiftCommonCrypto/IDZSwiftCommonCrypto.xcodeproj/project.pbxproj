@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C67310219D1EB80009828B8 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67310119D1EB80009828B8 /* Status.swift */; };
+		0C9F5B2E19D2948F00E0B5FF /* Cryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9F5B2D19D2948F00E0B5FF /* Cryptor.swift */; };
 		0CCB89B119CE05F800068ED6 /* IDZSwiftCommonCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CCB89B019CE05F800068ED6 /* IDZSwiftCommonCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0CCB89BB19CE05F800068ED6 /* IDZSwiftCommonCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89BA19CE05F800068ED6 /* IDZSwiftCommonCryptoTests.swift */; };
-		0CCB89C919CE071D00068ED6 /* Cryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C419CE071D00068ED6 /* Cryptor.swift */; };
+		0CCB89C919CE071D00068ED6 /* StreamCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C419CE071D00068ED6 /* StreamCryptor.swift */; };
 		0CCB89CA19CE071D00068ED6 /* Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C519CE071D00068ED6 /* Digest.swift */; };
 		0CCB89CB19CE071D00068ED6 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C619CE071D00068ED6 /* HMAC.swift */; };
 		0CCB89CC19CE071D00068ED6 /* KeyDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C719CE071D00068ED6 /* KeyDerivation.swift */; };
@@ -28,13 +30,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C67310119D1EB80009828B8 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
+		0C8D2B7419D2832B00552664 /* DemoPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = DemoPlayground.playground; sourceTree = "<group>"; };
+		0C9F5B2D19D2948F00E0B5FF /* Cryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cryptor.swift; sourceTree = "<group>"; };
 		0CCB89AB19CE05F800068ED6 /* IDZSwiftCommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IDZSwiftCommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CCB89AF19CE05F800068ED6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CCB89B019CE05F800068ED6 /* IDZSwiftCommonCrypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDZSwiftCommonCrypto.h; sourceTree = "<group>"; };
 		0CCB89B619CE05F800068ED6 /* IDZSwiftCommonCryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IDZSwiftCommonCryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CCB89B919CE05F800068ED6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CCB89BA19CE05F800068ED6 /* IDZSwiftCommonCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDZSwiftCommonCryptoTests.swift; sourceTree = "<group>"; };
-		0CCB89C419CE071D00068ED6 /* Cryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cryptor.swift; sourceTree = "<group>"; };
+		0CCB89C419CE071D00068ED6 /* StreamCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCryptor.swift; sourceTree = "<group>"; };
 		0CCB89C519CE071D00068ED6 /* Digest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Digest.swift; sourceTree = "<group>"; };
 		0CCB89C619CE071D00068ED6 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
 		0CCB89C719CE071D00068ED6 /* KeyDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyDerivation.swift; sourceTree = "<group>"; };
@@ -63,6 +68,7 @@
 		0CCB89A119CE05F800068ED6 = {
 			isa = PBXGroup;
 			children = (
+				0C8D2B7419D2832B00552664 /* DemoPlayground.playground */,
 				0CCB89AD19CE05F800068ED6 /* IDZSwiftCommonCrypto */,
 				0CCB89B719CE05F800068ED6 /* IDZSwiftCommonCryptoTests */,
 				0CCB89AC19CE05F800068ED6 /* Products */,
@@ -81,11 +87,13 @@
 		0CCB89AD19CE05F800068ED6 /* IDZSwiftCommonCrypto */ = {
 			isa = PBXGroup;
 			children = (
-				0CCB89C419CE071D00068ED6 /* Cryptor.swift */,
+				0C9F5B2D19D2948F00E0B5FF /* Cryptor.swift */,
+				0CCB89C419CE071D00068ED6 /* StreamCryptor.swift */,
 				0CCB89C519CE071D00068ED6 /* Digest.swift */,
 				0CCB89C619CE071D00068ED6 /* HMAC.swift */,
 				0CCB89C719CE071D00068ED6 /* KeyDerivation.swift */,
 				0CCB89C819CE071D00068ED6 /* Random.swift */,
+				0C67310119D1EB80009828B8 /* Status.swift */,
 				0CCB89D119CF416B00068ED6 /* Utilities.swift */,
 				0CCB89B019CE05F800068ED6 /* IDZSwiftCommonCrypto.h */,
 				0CCB89AE19CE05F800068ED6 /* Supporting Files */,
@@ -227,7 +235,9 @@
 			files = (
 				0CCB89D219CF416B00068ED6 /* Utilities.swift in Sources */,
 				0CCB89CC19CE071D00068ED6 /* KeyDerivation.swift in Sources */,
-				0CCB89C919CE071D00068ED6 /* Cryptor.swift in Sources */,
+				0C67310219D1EB80009828B8 /* Status.swift in Sources */,
+				0C9F5B2E19D2948F00E0B5FF /* Cryptor.swift in Sources */,
+				0CCB89C919CE071D00068ED6 /* StreamCryptor.swift in Sources */,
 				0CCB89CD19CE071D00068ED6 /* Random.swift in Sources */,
 				0CCB89CA19CE071D00068ED6 /* Digest.swift in Sources */,
 				0CCB89CB19CE071D00068ED6 /* HMAC.swift in Sources */,
@@ -421,6 +431,7 @@
 				0CCB89C019CE05F800068ED6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0CCB89C119CE05F800068ED6 /* Build configuration list for PBXNativeTarget "IDZSwiftCommonCryptoTests" */ = {
 			isa = XCConfigurationList;
@@ -429,6 +440,7 @@
 				0CCB89C319CE05F800068ED6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
