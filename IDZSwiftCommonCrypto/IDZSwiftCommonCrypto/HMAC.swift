@@ -15,6 +15,14 @@ public class HMAC
     {
         case SHA1, MD5, SHA224, SHA256, SHA384, SHA512
         
+        static let fromNative : [CCHmacAlgorithm: Algorithm] = [
+            CCHmacAlgorithm(kCCHmacAlgSHA1):.SHA1,
+            CCHmacAlgorithm(kCCHmacAlgSHA1):.MD5,
+            CCHmacAlgorithm(kCCHmacAlgSHA256):.SHA256,
+            CCHmacAlgorithm(kCCHmacAlgSHA384):.SHA384,
+            CCHmacAlgorithm(kCCHmacAlgSHA512):.SHA512,
+            CCHmacAlgorithm(kCCHmacAlgSHA224):.SHA224 ]
+        
         func nativeValue() -> CCHmacAlgorithm {
             switch self {
             case .SHA1:
@@ -31,6 +39,11 @@ public class HMAC
                 return CCHmacAlgorithm(kCCHmacAlgSHA512)
                 
             }
+        }
+        
+        static func fromNativeValue(nativeAlg : CCHmacAlgorithm) -> Algorithm?
+        {
+            return fromNative[nativeAlg]
         }
         
         public func digestLength() -> Int {
@@ -57,7 +70,21 @@ public class HMAC
     let context = Context.alloc(1)
     var algorithm : Algorithm
     
-    public init(algorithm : Algorithm, key : [UInt8]) {
+    init(algorithm : Algorithm, keyBuffer: UnsafePointer<Void>, keyByteCount: Int)
+    {
+        self.algorithm = algorithm
+        CCHmacInit(context, algorithm.nativeValue(), keyBuffer, size_t(keyByteCount))
+    }
+    
+    public init(algorithm : Algorithm, key : NSData)
+    {
+        self.algorithm = algorithm
+        CCHmacInit(context, algorithm.nativeValue(), key.bytes, size_t(key.length))
+    }
+    
+        
+    public init(algorithm : Algorithm, key : [UInt8])
+    {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), key, size_t(key.count))
     }
@@ -76,16 +103,22 @@ public class HMAC
     {
         CCHmacUpdate(context, buffer, byteCount)
     }
-    
-    public func update(b : [UInt8]) -> HMAC?
+        
+    public func update(data: NSData) -> HMAC?
     {
-        update(b, size_t(b.count))
+        update(data.bytes, size_t(data.length))
         return self
     }
     
-    public func update(s : String) -> HMAC?
+    public func update(byteArray : [UInt8]) -> HMAC?
     {
-        update(s, size_t(s.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
+        update(byteArray, size_t(byteArray.count))
+        return self
+    }
+    
+    public func update(string: String) -> HMAC?
+    {
+        update(string, size_t(string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
         return self
     }
     
@@ -96,3 +129,4 @@ public class HMAC
         return hmac
     }
 }
+

@@ -10,7 +10,6 @@ import UIKit
 import XCTest
 import IDZSwiftCommonCrypto
 
-
 class IDZSwiftCommonCryptoTests: XCTestCase {
     
     override func setUp() {
@@ -32,10 +31,23 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         
         var aesEncrypt = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
         var dataOut = Array<UInt8>(count:cipherText.count, repeatedValue:UInt8(0))
-        let (c, status) = aesEncrypt.update(plainText, dataOut: &dataOut)
+        let (c, status) = aesEncrypt.update(plainText, byteArrayOut: &dataOut)
         XCTAssert(cipherText.count == Int(c) , "Counts are as expected")
         XCTAssertEqual(dataOut, cipherText, "Obtained expected cipher text")
     }
+    
+    func test_Cryptor_AES_ECB_Short() {
+        var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+        var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e11739317")
+        var expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
+        
+        var cryptor = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
+        var cipherText = cryptor.update(plainText)?.final()
+        XCTAssert(cipherText == nil, "Expected nil cipherText")
+        XCTAssertEqual(cryptor.status, Status.AlignmentError, "Expected AlignmentError")
+    }
+    
+
     // MARK: - Digest tests
     func testMD5_1()
     {
@@ -48,6 +60,18 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         md5.update(s)
         let digest = md5.final()
         XCTAssertEqual(digest, expected, "PASS")
+    }
+    
+    func test_Digest_MD5_NSData()
+    {
+        let a : [UInt8] = [0x54,0x68,0x65,0x20,0x71,0x75,0x69,0x63,0x6b,0x20,0x62,0x72,0x6f,0x77,0x6e,0x20,0x66,0x6f,0x78,0x20,0x6a,0x75,0x6d,0x70,0x73,0x20,0x6f,0x76,0x65,0x72,0x20,0x74,0x68,0x65,0x20,0x6c,0x61,0x7a,0x79,0x20,0x64,0x6f,0x67,0x2e]
+        let data = dataFromByteArray(a)
+        let expected : Array<UInt8> = [0xe4,0xd9,0x09,0xc2,
+            0x90,0xd0,0xfb,0x1c,
+            0xa0,0x68,0xff,0xad,
+            0xdf,0x22,0xcb,0xd0]
+        var digest = Digest(algorithm: .MD5).update(data)?.final()
+        XCTAssertEqual(digest!, expected, "PASS")
     }
     
     func test_Digest_MD5_Composition()
@@ -82,6 +106,15 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         XCTAssertEqual(hmac!, expected, "PASS")
     }
     
+    func test_HMAC_SHA1_NSData()
+    {
+        var key = dataFromHexString("0102030405060708090a0b0c0d0e0f10111213141516171819")
+        var data = dataFromByteArray(Array<UInt8>(count:50, repeatedValue:0xcd))
+        var expected = arrayFromHexString("4c9007f4026250c6bc8414f9bf50c86c2d7235da")
+        var hmac = HMAC(algorithm:.SHA1, key:key).update(data)?.final()
+        XCTAssertEqual(hmac!, expected, "PASS")
+    }
+    
     
     // MARK: - KeyDerivation tests
     // See: https://www.ietf.org/rfc/rfc6070.txt
@@ -90,7 +123,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         let tests = [ ("password", "salt", 1, 20, "0c60c80f961f0e71f3a9b524af6012062fe037a6"),
             ("password", "salt", 2, 20, "ea6c014dc72d6f8ccd1ed92ace1d41f0d8de8957"),
             ("password", "salt", 4096, 20, "4b007901b765489abead49d926f721d065a429c1"),
-            ("password", "salt", 16777216, 20, "eefe3d61cd4da4e4e9945b3d6ba2158c2634e984"),
+//            ("password", "salt", 16777216, 20, "eefe3d61cd4da4e4e9945b3d6ba2158c2634e984"),
             ("passwordPASSWORDpassword", "saltSALTsaltSALTsaltSALTsaltSALTsalt", 4096, 25, "3d2eec4fe41c849b80c8d83662c0e44a8b291a964cf2f07038"),
             ("pass\0word", "sa\0lt", 4096, 16, "56fa6aa75548099dcc37d7f03425e0c3"),
         ]

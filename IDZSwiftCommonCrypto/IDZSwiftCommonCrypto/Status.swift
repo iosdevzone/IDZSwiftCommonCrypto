@@ -9,7 +9,7 @@
 import Foundation
 import CommonCrypto
 
-public enum Status : CCCryptorStatus
+public enum Status : CCCryptorStatus, Printable
 {
     case Success,
     ParamError,
@@ -41,10 +41,13 @@ public enum Status : CCCryptorStatus
                             AlignmentError: "AlignmentError",   DecodeError: "DecodeError",
                             Unimplemented: "Unimplemented",     Overflow: "Overflow",
                             RNGFailure: "RNGFailure"]
-    public func description() -> String
+    public var description : String
     {
         return (Status.descriptions[self] != nil) ? Status.descriptions[self]! : ""
     }
+    
+
+    
     
     public static func fromRaw(status : CCCryptorStatus) -> Status?
     {

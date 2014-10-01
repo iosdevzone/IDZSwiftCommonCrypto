@@ -13,7 +13,7 @@ import CommonCrypto
  /**
   Public API for message digests.
 
-  Usage is striaghtforward
+  Usage is straightforward
   ::
         let  s = "The quick brown fox jumps over the lazy dog."
         var md5 : Digest = Digest(algorithm:.MD5)
@@ -67,6 +67,7 @@ public class Digest
         the contents of a byte buffer.
         
         :param: buffer the buffer
+        :param: the number of bytes in buffer
         :returns: this Digest object (for optional chaining)
     */
     public func update(buffer: UnsafePointer<UInt8>, _ byteCount: CC_LONG) -> Digest?
@@ -75,14 +76,25 @@ public class Digest
         return self
     }
     /**
-        Updates the message digest with a byte buffer.
+    Updates the message digest with an NSData buffer.
     
-        :param: buffer the buffer
+    :param: data the data buffer
+    :returns: this Digest object (for optional chaining)
+    */
+    public func update(data : NSData) -> Digest?
+    {
+        engine.update(data.bytes, CC_LONG(data.length))
+        return self
+    }
+    /**
+        Updates the message digest with the contents of a Swift byte array
+    
+        :param: byteArray the byteArray
         :returns: this Digest object (for optional chaining)
     */
-    public func update(buffer : [UInt8]) -> Digest?
+    public func update(byteArray : [UInt8]) -> Digest?
     {
-        engine.update(buffer, CC_LONG(buffer.count))
+        engine.update(byteArray, CC_LONG(byteArray.count))
         return self
     }
     
@@ -93,9 +105,9 @@ public class Digest
        :param: s the string
        :returns: this Digest object (for optional chaining)
     */
-    public func update(s : String) -> Digest?
+    public func update(string : String) -> Digest?
     {
-        engine.update(s, CC_LONG(s.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
+        engine.update(string, CC_LONG(string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
         return self
     }
     

@@ -19,6 +19,7 @@ var hmac = HMAC(algorithm:.SHA1, key:key).update(data)?.final()
 var sha1String = hexStringFromArray(hmac!)
 sha1String
 
+
 // MARK: - Key Digest Demo
 // Data from RFC 6070
 let tests = [ ("password", "salt", 1, 20, "0c60c80f961f0e71f3a9b524af6012062fe037a6")]
@@ -40,9 +41,15 @@ func test_StreamCryptor_AES_ECB() {
     var aesEncrypt = StreamCryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
     var cipherText : [UInt8] = []
     var dataOut = Array<UInt8>(count:plainText.count, repeatedValue:UInt8(0))
-    var (byteCount, status) = aesEncrypt.update(plainText, dataOut: &dataOut)
+    var (byteCount, status) = aesEncrypt.update(plainText, byteArrayOut: &dataOut)
     dataOut
-    status.description()
+    "\(status)"
+    status
+    
+    
+    var c = UIColor.redColor()
+
+    
     cipherText += dataOut[0..<Int(byteCount)]
     //(byteCount, status) = aesEncrypt.final(&dataOut)
     //assert(byteCount == 0, "Final byte count is 0")
@@ -95,7 +102,37 @@ func test_Cryptor_AES_CBC_1() {
     assert(expectedCipherText == cipherText!, "Obtained expected cipher text")
 }
 
-test_Cryptor_AES_CBC_1()
+// Single block ECB mode
+func test_Cryptor_AES_ECB_Short() {
+    var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+    var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e11739317")
+    var expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
+    
+    var cryptor = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
+    var cipherText = cryptor.update(plainText)?.final()
+    if(cipherText == nil)
+    {
+        println("Encryption failed (as expected) with status \(cryptor.status)")
+    }
+}
+
+test_Cryptor_AES_ECB_Short()
+
+func test_Cryptor_AES_ECB_Short_Padding() {
+    var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+    var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e11739317")
+    var expectedCipherText = arrayFromHexString("21ea2ba3e445a0ef710a7c26618d1975")
+    
+    var cryptor = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode | .PKCS7Padding, key:key, iv:Array<UInt8>())
+    var cipherText = cryptor.update(plainText)?.final()
+    assert(cipherText != nil)
+    assert(cipherText! == expectedCipherText)
+}
+
+//test_Cryptor_AES_ECB_Short_Padding()
+
+
+//test_Cryptor_AES_CBC_1()
 
 func test_Cryptor_AES_CBC_2() {
     var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
@@ -107,15 +144,20 @@ func test_Cryptor_AES_CBC_2() {
     var optionalCipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.None, key:key, iv:Array<UInt8>()).update(plainText)?.final()
     if let cipherText = optionalCipherText
     {
-        println(hexStringFromArray(cipherText))
-        println(hexStringFromArray(expectedCipherText))
+
         
         assert(expectedCipherText.count == cipherText.count , "Counts are as expected")
         assert(expectedCipherText == cipherText, "Obtained expected cipher text")
     }
 }
 
-test_Cryptor_AES_CBC_2()
+//test_Cryptor_AES_CBC_2()
+
+var algorithm = Cryptor.Algorithm.AES
+
+var m = reflect(algorithm)
+m.count
+
 
 
 

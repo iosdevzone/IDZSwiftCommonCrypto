@@ -21,9 +21,7 @@ func convertHexDigit(c : UnicodeScalar) -> UInt8
 
 public func arrayFromHexString(s : String) -> [UInt8]
 {
-    reflect(s)
     var g = s.unicodeScalars.generate()
-    
     var a : [UInt8] = []
     while let msn = g.next()
     {
@@ -39,7 +37,23 @@ public func arrayFromHexString(s : String) -> [UInt8]
     return a
 }
 
+public func dataFromHexString(s : String) -> NSData
+{
+    let a = arrayFromHexString(s)
+    return NSData(bytes:a, length:a.count)
+}
+
+public func dataFromByteArray(a : [UInt8]) -> NSData
+{
+    return NSData(bytes:a, length:a.count)
+}
+
 public func hexStringFromArray(a : [UInt8], uppercase : Bool = false) -> String
+{
+    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", +)
+}
+
+public func hexNSStringFromArray(a : [UInt8], uppercase : Bool = false) -> NSString
 {
     return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", +)
 }
