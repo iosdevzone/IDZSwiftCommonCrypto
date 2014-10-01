@@ -1,0 +1,46 @@
+#!/bin/bash
+if [[ $BASH_SOURCE != $0 ]]; then echo "$BASH_SOURCE must be executed, not sourced."; return 255; fi
+#
+# A script to fool iOS playgrounds into allowing access to CommonCrypto
+#
+# The script creates a dummy CommonCrypto.framework in the SDK's System
+# Framework Library Directory with a module map that points to the
+# umbrella header
+#
+# Usage:
+# ./GenerateCommonCryptoModule
+#
+# Don't forget to chmod the script first!
+# The script depends on xcrun to find the SDK directory
+#
+ 
+# Find the SDK path and make sure it exists
+SDK_PATH=`xcrun --sdk iphonesimulator8.0 --show-sdk-path`
+if [ ! -e $SDK_PATH ] ; then
+  echo "ERROR: The SDK path '$SDK_PATH' did not exist"
+  exit 1
+fi
+ 
+# Only proceed if there is *not* a CommonCrypto.framework already
+CC_PATH=$SDK_PATH/System/Library/Frameworks/CommonCrypto.framework
+if [ -e $CC_PATH ] ; then
+  echo "ERROR: CommonCrypto.framework already exists"
+  exit 1
+fi
+ 
+# Check the CommonCrypto header is where I expect it to be
+HEADER_FILE=$SDK_PATH/usr/include/CommonCrypto/CommonCrypto.h
+if [ ! -e $HEADER_FILE ] ; then
+  echo "ERROR: The CommonCrypto.h head file could not be found."
+  exit 1
+fi
+ 
+mkdir $CC_PATH
+ 
+# Write the module.map file
+cat <<_IDZ_EOF_ > $CC_PATH/module.map
+module CommonCrypto [system] {
+  header "$HEADER_FILE"
+  export *
+}
+_IDZ_EOF_
