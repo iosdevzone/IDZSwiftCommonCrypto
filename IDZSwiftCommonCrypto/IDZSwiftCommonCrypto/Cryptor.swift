@@ -9,7 +9,7 @@
 import Foundation
 
 /**
-     Encrypts or decrypts accumulating result.
+     Encrypts or decrypts, accumulating result.
 
      Useful for small in-memory buffers.
 

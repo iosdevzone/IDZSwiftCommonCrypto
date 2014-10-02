@@ -72,8 +72,8 @@ public class StreamCryptor
         private var value: UInt = 0
         
         
-        init(_ value: UInt) {
-            self.value = value
+        public init(_ rawValue: UInt) {
+            self.value = rawValue
         }
         
         public static func fromMask(raw: UInt) -> Options {
