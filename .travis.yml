@@ -2,6 +2,7 @@ language: objective-c
 
 script:
 - pushd IDZSwiftCommonCrypto
+- rm -rf CommonCrypto
 - ./GenerateCommonCryptoModule iphonesimulator8.0 .
 - cat CommonCrypto/module.map
 - pwd
