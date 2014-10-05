@@ -1,5 +1,7 @@
 language: objective-c
 
 script:
+- pushd IDZSwiftCommonCrypto
 - xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.0'
 - xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.0'
+- popd
