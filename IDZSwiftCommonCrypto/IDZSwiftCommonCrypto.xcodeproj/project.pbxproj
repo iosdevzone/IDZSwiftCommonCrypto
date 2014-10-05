@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C09D79B19E0D4C900A93684 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0C09D79A19E0D4C900A93684 /* README.md */; };
 		0C67310219D1EB80009828B8 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67310119D1EB80009828B8 /* Status.swift */; };
 		0C9F5B2E19D2948F00E0B5FF /* Cryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9F5B2D19D2948F00E0B5FF /* Cryptor.swift */; };
 		0CCB89B119CE05F800068ED6 /* IDZSwiftCommonCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CCB89B019CE05F800068ED6 /* IDZSwiftCommonCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -30,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C09D79919E0CFB500A93684 /* README.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = README.playground; sourceTree = "<group>"; };
+		0C09D79A19E0D4C900A93684 /* README.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; fileEncoding = 4; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		0C3079D619DD47900018E538 /* GenerateCommonCryptoModule */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = GenerateCommonCryptoModule; sourceTree = "<group>"; };
 		0C67310119D1EB80009828B8 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		0C8D2B7419D2832B00552664 /* DemoPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = DemoPlayground.playground; sourceTree = "<group>"; };
@@ -69,6 +72,8 @@
 		0CCB89A119CE05F800068ED6 = {
 			isa = PBXGroup;
 			children = (
+				0C09D79A19E0D4C900A93684 /* README.md */,
+				0C09D79919E0CFB500A93684 /* README.playground */,
 				0C3079D619DD47900018E538 /* GenerateCommonCryptoModule */,
 				0C8D2B7419D2832B00552664 /* DemoPlayground.playground */,
 				0CCB89AD19CE05F800068ED6 /* IDZSwiftCommonCrypto */,
@@ -241,6 +246,7 @@
 				0C9F5B2E19D2948F00E0B5FF /* Cryptor.swift in Sources */,
 				0CCB89C919CE071D00068ED6 /* StreamCryptor.swift in Sources */,
 				0CCB89CD19CE071D00068ED6 /* Random.swift in Sources */,
+				0C09D79B19E0D4C900A93684 /* README.md in Sources */,
 				0CCB89CA19CE071D00068ED6 /* Digest.swift in Sources */,
 				0CCB89CB19CE071D00068ED6 /* HMAC.swift in Sources */,
 			);

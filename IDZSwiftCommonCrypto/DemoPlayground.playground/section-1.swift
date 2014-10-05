@@ -3,6 +3,10 @@ import UIKit
 import CommonCrypto
 import IDZSwiftCommonCrypto
 
+var ss  = ""
+ss.stringByAppendingPathComponent("hello")
+
+
 // MARK: - Message Digest Demo
 let  s = "The quick brown fox jumps over the lazy dog."
 var md5 = Digest(algorithm: .MD5)
@@ -91,16 +95,7 @@ func test_Cryptor_AES_ECB_2() {
 test_Cryptor_AES_ECB_2()
 
 
-func test_Cryptor_AES_CBC_1() {
-    var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
-    var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
-    var expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
-    
-    var cipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.None, key:key, iv:Array<UInt8>()).update(plainText)?.final()
-    
-    assert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
-    assert(expectedCipherText == cipherText!, "Obtained expected cipher text")
-}
+
 
 // Single block ECB mode
 func test_Cryptor_AES_ECB_Short() {
@@ -151,12 +146,7 @@ func test_Cryptor_AES_CBC_2() {
     }
 }
 
-//test_Cryptor_AES_CBC_2()
 
-var algorithm = Cryptor.Algorithm.AES
-
-var m = reflect(algorithm)
-m.count
 
 
 

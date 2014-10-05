@@ -70,12 +70,26 @@ public class StreamCryptor
     */
     public struct Options : RawOptionSetType, BooleanType {
         private var value: UInt = 0
-        
+        typealias RawValue = UInt
+        public var rawValue : UInt { return self.value }
         
         public init(_ rawValue: UInt) {
             self.value = rawValue
         }
         
+        
+        // Needed for 1.1 RawRepresentable
+        public init(rawValue: UInt) {
+            self.value = rawValue
+        }
+        
+        // Needed for 1.1 NilLiteralConverable
+        public init(nilLiteral: ())
+        {
+            
+        }
+        
+        // Needed for 1.0 _RawOptionSet
         public static func fromMask(raw: UInt) -> Options {
             return self(raw)
         }
@@ -105,8 +119,10 @@ public class StreamCryptor
         public static var ECBMode: Options      { return self(UInt(kCCOptionECBMode)) }
     }
     
+
+    
     /**
-        The status code resulting from the last method call to this Cryptor. 
+        The status code resulting from the last method call to this Cryptor.
         Used to get additional information when optional chaining collapes.
     */
     public var status : Status = .Success
