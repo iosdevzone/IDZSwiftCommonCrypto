@@ -1,6 +1,11 @@
 language: objective-c
 
+install:
+- npm install -g swift-playground-builder
+
 script:
+# Generate README.playground from README.md
+- make
 - pushd IDZSwiftCommonCrypto
 - rm -rf CommonCrypto
 - ./GenerateCommonCryptoModule iphonesimulator8.0 .
