@@ -6,6 +6,9 @@ install:
 script:
 # Generate README.playground from README.md
 - make
+- git add .
+- git commit -m"Playground update from Travis [ci skip]"
+- git push
 - pushd IDZSwiftCommonCrypto
 - rm -rf CommonCrypto
 - ./GenerateCommonCryptoModule iphonesimulator8.0 .
