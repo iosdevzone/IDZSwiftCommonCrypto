@@ -1,5 +1,5 @@
-IDZSwiftCommonCrypto
-====================
+# IDZSwiftCommonCrypto [![Build Status](https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto.svg?branch=master)](https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto)
+
 
 A wrapper for Apple's Common Crypto library written in Swift. (This is still a work in progress. Use at your own risk!)
 
