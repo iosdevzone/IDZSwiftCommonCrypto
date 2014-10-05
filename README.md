@@ -106,6 +106,9 @@ assert(decryptedString == plainText)
 
 ## Using `StreamCryptor`
 
+To encrypt a large file or a network stream use `StreamCryptor`. The `StreamCryptor` class does not accumulate the encrypted or decrypted data, instead each call to `update` produces an output buffer. 
+
+The example below shows how to use `StreamCryptor` to encrypt and decrypt an image file.
 ```swift
 func crypt(sc : StreamCryptor,  inputStream: NSInputStream, outputStream: NSOutputStream, bufferSize: Int)
 {
