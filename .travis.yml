@@ -7,8 +7,7 @@ script:
 # Generate README.playground from README.md
 - make
 - git config --global push.default simple
-- git commit -a -m"Playground update from Travis [ci skip]"
-- git push
+- git diff-files --exit-code; if [[ "$?" == "1" ]]; then git commit -a -m "Playground update from Travis [ci skip]"; git push; fi
 - pushd IDZSwiftCommonCrypto
 - rm -rf CommonCrypto
 - ./GenerateCommonCryptoModule iphonesimulator8.0 .
