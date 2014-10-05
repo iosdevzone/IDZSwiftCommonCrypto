@@ -6,5 +6,6 @@ $(PG): README.md
 	mkdir -p  ${RSRC_DIR}
 	cp IDZSwiftCommonCrypto/Riscal.jpg ${RSRC_DIR}
 
+
 clean:
 	rm -rf $(PG)
