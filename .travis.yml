@@ -7,5 +7,6 @@ script:
 - cat CommonCrypto/module.map
 - pwd
 - xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.0'
-- xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.0'
+# Remove testing pending solution to https://github.com/travis-ci/travis-ci/issues/2829
+#- xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.0'
 - popd
