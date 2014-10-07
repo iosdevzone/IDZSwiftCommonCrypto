@@ -1,4 +1,4 @@
-# IDZSwiftCommonCrypto [![Build Status](https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto.svg?branch=Travis2829)](https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto)
+# IDZSwiftCommonCrypto [![Build Status](https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto.svg?branch=master)](https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto)
 
 
 A Swift wrapper for Apple's `CommonCrypto` library.
