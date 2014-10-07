@@ -1,0 +1,58 @@
+2014-10-06 11:15:23.917 xcodebuild[34659:1007] [MT] DVTAssertions: Warning in /SourceCache/IDEFrameworks/IDEFrameworks-6539/IDEFoundation/SourceControl/Model/IDESourceControlManager.m:423
+Details:  Error Domain=com.apple.dt.IDESourceControlErrorDomain Code=-1 "Missing extension: public.vcs.subversion" UserInfo=0x7ff244bd5f70 {NSLocalizedDescription=Missing extension: public.vcs.subversion}
+Object:   <IDESourceControlManager: 0x7ff244b7fce0>
+Method:   -loadRepositories
+Thread:   <NSThread: 0x7ff243513a70>{name = (null), num = 1}
+Please file a bug at http://bugreport.apple.com with this warning message and any useful information you can provide.
+=== BUILD TARGET IDZSwiftCommonCrypto OF PROJECT IDZSwiftCommonCrypto WITH CONFIGURATION Debug ===
+
+Check dependencies
+warning: no rule to process file '/Users/idz/Documents/src/IDZSwiftCommonCrypto/README.md' of type net.daringfireball.markdown for architecture x86_64
+
+=== BUILD TARGET IDZSwiftCommonCryptoTests OF PROJECT IDZSwiftCommonCrypto WITH CONFIGURATION Debug ===
+
+Check dependencies
+
+Test Suite 'All tests' started at 2014-10-06 18:15:47 +0000
+Test Suite 'IDZSwiftCommonCryptoTests.xctest' started at 2014-10-06 18:15:47 +0000
+Test Suite 'IDZSwiftCommonCryptoTests' started at 2014-10-06 18:15:47 +0000
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Cryptor_AES_CBC_1]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Cryptor_AES_CBC_1]' passed (0.149 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Cryptor_AES_ECB]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Cryptor_AES_ECB]' passed (0.032 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Cryptor_AES_ECB_2]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Cryptor_AES_ECB_2]' passed (0.033 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Cryptor_AES_ECB_Short]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Cryptor_AES_ECB_Short]' passed (0.008 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Digest_MD5_Composition_Bytes]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Digest_MD5_Composition_Bytes]' passed (0.001 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Digest_MD5_Composition_String]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Digest_MD5_Composition_String]' passed (0.085 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Digest_MD5_Composition_String_2]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Digest_MD5_Composition_String_2]' passed (0.003 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Digest_MD5_NSData]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Digest_MD5_NSData]' passed (0.008 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_HMAC_SHA1]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_HMAC_SHA1]' passed (0.068 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_HMAC_SHA1_NSData]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_HMAC_SHA1_NSData]' passed (0.006 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_KeyDerivation_deriveKey]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_KeyDerivation_deriveKey]' passed (0.088 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Random_generateBytes]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Random_generateBytes]' passed (0.014 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Utilities_arrayFromHexString_lowerCase]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Utilities_arrayFromHexString_lowerCase]' passed (0.004 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Utilities_arrayFromHexString_upperCase]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests test_Utilities_arrayFromHexString_upperCase]' passed (0.006 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests testHexStringFromArray]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests testHexStringFromArray]' passed (0.002 seconds).
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests testMD5_1]' started.
+Test Case '-[IDZSwiftCommonCryptoTests.IDZSwiftCommonCryptoTests testMD5_1]' passed (0.002 seconds).
+Test Suite 'IDZSwiftCommonCryptoTests' passed at 2014-10-06 18:15:47 +0000.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.510 (0.538) seconds
+Test Suite 'IDZSwiftCommonCryptoTests.xctest' passed at 2014-10-06 18:15:47 +0000.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.510 (0.540) seconds
+Test Suite 'All test** TEST SUCCEEDED **
+
+s' passed at 2014-10-06 18:15:47 +0000.
+	 Executed 16 tests, with 0 failures (0 unexpected) in 0.510 (0.544) seconds
