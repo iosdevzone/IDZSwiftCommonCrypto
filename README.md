@@ -6,7 +6,7 @@ A Swift wrapper for Apple's `CommonCrypto` library.
 Using `IDZSwiftCommonCrypto`
 ----------------------------
 
-Since `CommonCrypto` is not a standalone module, you need to generate a fake module map to convince Xcode into allowing you to `import CommonCrypto`. The `GenerateCommonCryptoModule` script provides two methods for doing this. Which method you choosed depends on whether you want to able to use `CommonCrypto` and, by extension, `IDZSwiftCommonCrypto` in playgrounds.
+Since `CommonCrypto` is not a standalone module, you need to generate a fake module map to convince Xcode into allowing you to `import CommonCrypto`. The `GenerateCommonCryptoModule` script provides two methods for doing this. Which method you choose depends on whether you want to able to use `CommonCrypto` and, by extension, `IDZSwiftCommonCrypto` in playgrounds.
 
 To make `CommonCrypto` available to frameworks and playground use the command:
 ```bash
