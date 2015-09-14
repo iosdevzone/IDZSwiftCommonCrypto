@@ -5,11 +5,11 @@ func crypt(sc : StreamCryptor,  inputStream: NSInputStream, outputStream: NSOutp
     inputStream.open()
     outputStream.open()
 
-    var cryptedBytes : UInt = 0    
+    var cryptedBytes = 0    
     while inputStream.hasBytesAvailable
     {
         let bytesRead = inputStream.read(&inputBuffer, maxLength: inputBuffer.count)
-        let status = sc.update(inputBuffer, byteCountIn: UInt(bytesRead), bufferOut: &outputBuffer, byteCapacityOut: UInt(outputBuffer.count), byteCountOut: &cryptedBytes)
+        let status = sc.update(inputBuffer, byteCountIn: bytesRead, bufferOut: &outputBuffer, byteCapacityOut: outputBuffer.count, byteCountOut: &cryptedBytes)
         assert(status == Status.Success)
         if(cryptedBytes > 0)
         {
@@ -17,7 +17,7 @@ func crypt(sc : StreamCryptor,  inputStream: NSInputStream, outputStream: NSOutp
             assert(bytesWritten == Int(cryptedBytes))
         }
     }
-    let status = sc.final(&outputBuffer, byteCapacityOut: UInt(outputBuffer.count), byteCountOut: &cryptedBytes)    
+    let status = sc.final(&outputBuffer, byteCapacityOut: outputBuffer.count, byteCountOut: &cryptedBytes)    
     assert(status == Status.Success)
     if(cryptedBytes > 0)
     {
@@ -29,7 +29,7 @@ func crypt(sc : StreamCryptor,  inputStream: NSInputStream, outputStream: NSOutp
 }
 
 let imagePath = NSBundle.mainBundle().pathForResource("Riscal", ofType:"jpg")!
-let tmp = NSTemporaryDirectory()
+let tmp = NSTemporaryDirectory() as NSString
 let encryptedFilePath = tmp.stringByAppendingPathComponent("Riscal.xjpgx")
 var decryptedFilePath = tmp.stringByAppendingPathComponent("RiscalDecrypted.jpg")
 
@@ -39,13 +39,20 @@ var encryptedFileInputStream = NSInputStream(fileAtPath: encryptedFilePath)
 var decryptedFileOutputStream = NSOutputStream(toFileAtPath: decryptedFilePath, append:false)
 
 var sc = StreamCryptor(operation:.Encrypt, algorithm:.AES, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
-crypt(sc, imageInputStream, encryptedFileOutputStream, 1024)
 
-// Uncomment this line to verify that the file is encrypted
-//var encryptedImage = UIImage(contentsOfFile:encryptedFile)
+if let imageInputStream = imageInputStream,
+   let encryptedFileInputStream = encryptedFileInputStream,
+   let encryptedFileOutputStream = encryptedFileOutputStream,
+   let decryptedFileOutputStream = decryptedFileOutputStream
+{
+    crypt(sc, inputStream:imageInputStream, outputStream:encryptedFileOutputStream, bufferSize:1024)
 
-sc = StreamCryptor(operation:.Decrypt, algorithm:.AES, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
-crypt(sc, encryptedFileInputStream, decryptedFileOutputStream, 1024)
+    // Uncomment this line to verify that the file is encrypted
+    //var encryptedImage = UIImage(contentsOfFile:encryptedFile)
 
-var image = UIImage(named:"Riscal.jpg")
-var decryptedImage = UIImage(contentsOfFile:decryptedFilePath)
+    sc = StreamCryptor(operation:.Decrypt, algorithm:.AES, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
+    crypt(sc, inputStream:encryptedFileInputStream, outputStream:decryptedFileOutputStream, bufferSize:1024)
+
+    var image = UIImage(named:"Riscal.jpg")
+    var decryptedImage = UIImage(contentsOfFile:decryptedFilePath)
+}

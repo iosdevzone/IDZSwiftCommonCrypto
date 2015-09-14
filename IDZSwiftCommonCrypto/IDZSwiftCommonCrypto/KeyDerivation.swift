@@ -27,14 +27,14 @@ public class PBKDF
             }
         }
     }
-    public class func calibrate(passwordLength: UInt, saltLength: UInt, algorithm: PseudoRandomAlgorithm, derivedKeyLength: UInt, msec : UInt32) -> UInt
+    public class func calibrate(passwordLength: Int, saltLength: Int, algorithm: PseudoRandomAlgorithm, derivedKeyLength: Int, msec : UInt32) -> UInt
     {
         return UInt(CCCalibratePBKDF(CCPBKDFAlgorithm(kCCPBKDF2), passwordLength, saltLength, algorithm.nativeValue(), derivedKeyLength, msec))
     }
     
-    public class func deriveKey(password: UnsafePointer<Int8>, passwordLen: UInt, salt: UnsafePointer<UInt8>, saltLen: UInt, prf: PseudoRandomAlgorithm, rounds: uint, derivedKey: UnsafeMutablePointer<UInt8>, derivedKeyLen: UInt)
+    public class func deriveKey(password: UnsafePointer<Int8>, passwordLen: Int, salt: UnsafePointer<UInt8>, saltLen: Int, prf: PseudoRandomAlgorithm, rounds: uint, derivedKey: UnsafeMutablePointer<UInt8>, derivedKeyLen: Int)
     {
-        var status : Int32 = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2), password, passwordLen, salt, saltLen, prf.nativeValue(), rounds, derivedKey, derivedKeyLen)
+        let status : Int32 = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2), password, passwordLen, salt, saltLen, prf.nativeValue(), rounds, derivedKey, derivedKeyLen)
         if(status != Int32(kCCSuccess))
         {
             NSLog("ERROR: CCKeyDerivationPBDK failed with stats \(status).")
@@ -45,7 +45,7 @@ public class PBKDF
     public class func deriveKey(password : String, salt : String, prf: PseudoRandomAlgorithm, rounds: uint, derivedKeyLength: UInt) -> [UInt8]
     {
         var derivedKey = Array<UInt8>(count:Int(derivedKeyLength), repeatedValue: 0)
-        var status : Int32 = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2), password, UInt(password.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)), salt, UInt(salt.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)), prf.nativeValue(), rounds, &derivedKey, UInt(derivedKey.count))
+        let status : Int32 = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2), password, password.lengthOfBytesUsingEncoding(NSUTF8StringEncoding), salt, salt.lengthOfBytesUsingEncoding(NSUTF8StringEncoding), prf.nativeValue(), rounds, &derivedKey, derivedKey.count)
         if(status != Int32(kCCSuccess))
         {
             NSLog("ERROR: CCKeyDerivationPBDK failed with stats \(status).")

@@ -9,7 +9,7 @@
 import Foundation
 import CommonCrypto
 
-public enum Status : CCCryptorStatus, Printable
+public enum Status : CCCryptorStatus, CustomStringConvertible
 {
     case Success,
     ParamError,

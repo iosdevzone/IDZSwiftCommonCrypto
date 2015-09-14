@@ -39,7 +39,7 @@ public class Digest
     var engine: DigestEngine
     /**
        Create an algorithm-specific digest calculator
-       :param: alrgorithm the desired message digest algorithm
+       - parameter alrgorithm: the desired message digest algorithm
      */
     public init(algorithm: Algorithm)
     {
@@ -66,9 +66,9 @@ public class Digest
         Low-level update routine. Updates the message digest calculation with
         the contents of a byte buffer.
         
-        :param: buffer the buffer
-        :param: the number of bytes in buffer
-        :returns: this Digest object (for optional chaining)
+        - parameter buffer: the buffer
+        - parameter the: number of bytes in buffer
+        - returns: this Digest object (for optional chaining)
     */
     public func update(buffer: UnsafePointer<UInt8>, _ byteCount: CC_LONG) -> Digest?
     {
@@ -78,8 +78,8 @@ public class Digest
     /**
     Updates the message digest with an NSData buffer.
     
-    :param: data the data buffer
-    :returns: this Digest object (for optional chaining)
+    - parameter data: the data buffer
+    - returns: this Digest object (for optional chaining)
     */
     public func update(data : NSData) -> Digest?
     {
@@ -89,8 +89,8 @@ public class Digest
     /**
         Updates the message digest with the contents of a Swift byte array
     
-        :param: byteArray the byteArray
-        :returns: this Digest object (for optional chaining)
+        - parameter byteArray: the byteArray
+        - returns: this Digest object (for optional chaining)
     */
     public func update(byteArray : [UInt8]) -> Digest?
     {
@@ -102,8 +102,8 @@ public class Digest
        Updates the message digest being calculated with the contents
        of a string interpreted as UTF8.
     
-       :param: s the string
-       :returns: this Digest object (for optional chaining)
+       - parameter s: the string
+       - returns: this Digest object (for optional chaining)
     */
     public func update(string : String) -> Digest?
     {
@@ -113,7 +113,7 @@ public class Digest
     
     /**
        Completes the calculate of the messge digest
-       :returns: the message digest
+       - returns: the message digest
      */
     public func final() -> [UInt8]
     {

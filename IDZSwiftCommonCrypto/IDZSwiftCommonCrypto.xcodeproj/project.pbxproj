@@ -189,6 +189,8 @@
 		0CCB89A219CE05F800068ED6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = iOSDeveloperZone.com;
 				TargetAttributes = {

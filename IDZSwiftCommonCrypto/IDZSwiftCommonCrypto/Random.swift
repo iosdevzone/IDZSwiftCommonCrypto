@@ -11,7 +11,7 @@ import CommonCrypto
 
 public class Random
 {
-    public class func generateBytes(bytes : UnsafeMutablePointer<Void>, byteCount : UInt )
+    public class func generateBytes(bytes : UnsafeMutablePointer<Void>, byteCount : Int )
     {
         CCRandomGenerateBytes(bytes, byteCount)
     }
@@ -23,7 +23,7 @@ public class Random
             fatalError("generateBytes: byteCount must be positve and non-zero")
         }
         var bytes : [UInt8] = Array(count:byteCount, repeatedValue:UInt8(0))
-        CCRandomGenerateBytes(&bytes, UInt(byteCount))
+        CCRandomGenerateBytes(&bytes, byteCount)
         return bytes
     }
 }

@@ -3,7 +3,7 @@ import UIKit
 import CommonCrypto
 import IDZSwiftCommonCrypto
 
-var ss  = ""
+var ss  = "" as NSString
 ss.stringByAppendingPathComponent("hello")
 
 
@@ -38,21 +38,17 @@ var randomBytes = hexStringFromArray(Random.generateBytes(16))
 
 // MARK: - Crypto Demo
 func test_StreamCryptor_AES_ECB() {
-    var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
-    var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
-    var expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
+    let key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+    let plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
+    let expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
     
-    var aesEncrypt = StreamCryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
+    let aesEncrypt = StreamCryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
     var cipherText : [UInt8] = []
     var dataOut = Array<UInt8>(count:plainText.count, repeatedValue:UInt8(0))
-    var (byteCount, status) = aesEncrypt.update(plainText, byteArrayOut: &dataOut)
+    let (byteCount, status) = aesEncrypt.update(plainText, byteArrayOut: &dataOut)
     dataOut
     "\(status)"
     status
-    
-    
-    var c = UIColor.redColor()
-
     
     cipherText += dataOut[0..<Int(byteCount)]
     //(byteCount, status) = aesEncrypt.final(&dataOut)
@@ -64,11 +60,11 @@ func test_StreamCryptor_AES_ECB() {
 test_StreamCryptor_AES_ECB()
 // Single block ECB mode
 func test_Cryptor_AES_ECB_1() {
-    var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
-    var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
-    var expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
+    let key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+    let plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
+    let expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
     
-    var cipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>()).update(plainText)?.final()
+    let cipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>()).update(plainText)?.final()
 
     assert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
     assert(expectedCipherText == cipherText!, "Obtained expected cipher text")
@@ -79,14 +75,14 @@ test_Cryptor_AES_ECB_1()
 // Double repeated block ECB mode 
 // Shows weakness of ECB mode -- same plaintext block gets same ciphertext
 func test_Cryptor_AES_ECB_2() {
-    var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+    let key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
     var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
     var expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
     
     plainText += plainText
     expectedCipherText += expectedCipherText
     
-    var cipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>()).update(plainText)?.final()
+    let cipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>()).update(plainText)?.final()
     
     assert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
     assert(expectedCipherText == cipherText!, "Obtained expected cipher text")
@@ -99,27 +95,29 @@ test_Cryptor_AES_ECB_2()
 
 // Single block ECB mode
 func test_Cryptor_AES_ECB_Short() {
-    var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
-    var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e11739317")
-    var expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
+    let key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+    let plainText = arrayFromHexString("6bc1bee22e409f96e93d7e11739317")
+    let expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
     
-    var cryptor = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
-    var cipherText = cryptor.update(plainText)?.final()
+    let cryptor = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
+    let cipherText = cryptor.update(plainText)?.final()
     if(cipherText == nil)
     {
-        println("Encryption failed (as expected) with status \(cryptor.status)")
+        print("Encryption failed (as expected) with status \(cryptor.status)")
     }
 }
 
 test_Cryptor_AES_ECB_Short()
 
 func test_Cryptor_AES_ECB_Short_Padding() {
-    var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
-    var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e11739317")
-    var expectedCipherText = arrayFromHexString("21ea2ba3e445a0ef710a7c26618d1975")
+    let key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+    let plainText = arrayFromHexString("6bc1bee22e409f96e93d7e11739317")
+    let expectedCipherText = arrayFromHexString("21ea2ba3e445a0ef710a7c26618d1975")
     
-    var cryptor = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode | .PKCS7Padding, key:key, iv:Array<UInt8>())
-    var cipherText = cryptor.update(plainText)?.final()
+    let cryptor = Cryptor(operation:.Encrypt,
+        algorithm:.AES,
+        options:[.ECBMode,.PKCS7Padding], key:key, iv:Array<UInt8>())
+    let cipherText = cryptor.update(plainText)?.final()
     assert(cipherText != nil)
     assert(cipherText! == expectedCipherText)
 }
@@ -130,13 +128,13 @@ func test_Cryptor_AES_ECB_Short_Padding() {
 //test_Cryptor_AES_CBC_1()
 
 func test_Cryptor_AES_CBC_2() {
-    var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+    let key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
     var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
-    var expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97025c61efee87e604cd1b12ce9dde5c51")
+    let expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97025c61efee87e604cd1b12ce9dde5c51")
     
     plainText += plainText
     
-    var optionalCipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.None, key:key, iv:Array<UInt8>()).update(plainText)?.final()
+    let optionalCipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.None, key:key, iv:Array<UInt8>()).update(plainText)?.final()
     if let cipherText = optionalCipherText
     {
 

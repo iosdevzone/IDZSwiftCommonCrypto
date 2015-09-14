@@ -50,10 +50,10 @@ public func dataFromByteArray(a : [UInt8]) -> NSData
 
 public func hexStringFromArray(a : [UInt8], uppercase : Bool = false) -> String
 {
-    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", +)
+    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", combine: +)
 }
 
 public func hexNSStringFromArray(a : [UInt8], uppercase : Bool = false) -> NSString
 {
-    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", +)
+    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", combine: +)
 }

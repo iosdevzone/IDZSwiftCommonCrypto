@@ -68,9 +68,9 @@ public class StreamCryptor
     * NSHipster
     * From: http://nshipster.com/rawoptionsettype/
     */
-    public struct Options : RawOptionSetType, BooleanType {
+    public struct Options : OptionSetType, BooleanType {
         private var value: UInt = 0
-        typealias RawValue = UInt
+        public typealias RawValue = UInt
         public var rawValue : UInt { return self.value }
         
         public init(_ rawValue: UInt) {
@@ -91,11 +91,11 @@ public class StreamCryptor
         
         // Needed for 1.0 _RawOptionSet
         public static func fromMask(raw: UInt) -> Options {
-            return self(raw)
+            return self.init(raw)
         }
         
         public static func fromRaw(raw: UInt) -> Options? {
-            return self(raw)
+            return self.init(raw)
         }
         
         public func toRaw() -> UInt {
@@ -107,16 +107,16 @@ public class StreamCryptor
         }
         
         public static var allZeros: Options {
-            return self(0)
+            return self.init(0)
         }
         
         public static func convertFromNilLiteral() -> Options {
-            return self(0)
+            return self.init(0)
         }
         
-        public static var None: Options           { return self(0) }
-        public static var PKCS7Padding: Options    { return self(UInt(kCCOptionPKCS7Padding)) }
-        public static var ECBMode: Options      { return self(UInt(kCCOptionECBMode)) }
+        public static var None: Options           { return self.init(0) }
+        public static var PKCS7Padding: Options    { return self.init(UInt(kCCOptionPKCS7Padding)) }
+        public static var ECBMode: Options      { return self.init(UInt(kCCOptionECBMode)) }
     }
     
 
@@ -131,69 +131,69 @@ public class StreamCryptor
     /**
         Creates a new StreamCryptor
     
-        :param: operation the operation to perform see Operation (Encrypt, Decrypt)
-        :param: algorithm the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
-        :param: key a byte array containing key data
-        :param: iv a byte array containing initialization vector
+        - parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
+        - parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
+        - parameter key: a byte array containing key data
+        - parameter iv: a byte array containing initialization vector
     */
     public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: [UInt8],
         iv : [UInt8])
     {
-        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:key, keyByteCount:UInt(key.count), ivBuffer:iv)
+        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:key, keyByteCount:key.count, ivBuffer:iv)
     }
     /**
         Creates a new StreamCryptor
         
-        :param: operation the operation to perform see Operation (Encrypt, Decrypt)
-        :param: algorithm the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
-        :param: key a string containing key data (will be interpreted as UTF8)
-        :param: iv a string containing initialization vector data (will be interpreted as UTF8)
+        - parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
+        - parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
+        - parameter key: a string containing key data (will be interpreted as UTF8)
+        - parameter iv: a string containing initialization vector data (will be interpreted as UTF8)
     */
     public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: String,
         iv : String)
     {
-        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:key, keyByteCount:UInt(key.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)), ivBuffer:iv)
+        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:key, keyByteCount:key.lengthOfBytesUsingEncoding(NSUTF8StringEncoding), ivBuffer:iv)
     }
     /**
         Add the contents of an Objective-C NSData buffer to the current encryption/decryption operation.
         
-        :param: dataIn the input data
-        :param: byteArrayOut output data
-        :returns: a tuple containing the number of output bytes produced and the status (see Status)
+        - parameter dataIn: the input data
+        - parameter byteArrayOut: output data
+        - returns: a tuple containing the number of output bytes produced and the status (see Status)
     */
-    public func update(dataIn: NSData, inout byteArrayOut: [UInt8]) -> (UInt, Status)
+    public func update(dataIn: NSData, inout byteArrayOut: [UInt8]) -> (Int, Status)
     {
-        var dataOutAvailable = UInt(byteArrayOut.count)
-        var dataOutMoved = UInt(0)
-        update(dataIn.bytes, byteCountIn: UInt(dataIn.length), bufferOut: &byteArrayOut, byteCapacityOut: UInt(byteArrayOut.count), byteCountOut: &dataOutMoved)
+        let dataOutAvailable = byteArrayOut.count
+        var dataOutMoved = 0
+        update(dataIn.bytes, byteCountIn: dataIn.length, bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
         return (dataOutMoved, self.status)
     }
     /**
         Add the contents of a Swift byte array to the current encryption/decryption operation.
 
-        :param: byteArrayIn the input data
-        :param: byteArrayOut output data
-        :returns: a tuple containing the number of output bytes produced and the status (see Status)
+        - parameter byteArrayIn: the input data
+        - parameter byteArrayOut: output data
+        - returns: a tuple containing the number of output bytes produced and the status (see Status)
     */
-    public func update(byteArrayIn: [UInt8], inout byteArrayOut: [UInt8]) -> (UInt, Status)
+    public func update(byteArrayIn: [UInt8], inout byteArrayOut: [UInt8]) -> (Int, Status)
     {
-        var dataOutAvailable = UInt(byteArrayOut.count)
-        var dataOutMoved = UInt(0)
-        update(byteArrayIn, byteCountIn: UInt(byteArrayIn.count), bufferOut: &byteArrayOut, byteCapacityOut: UInt(byteArrayOut.count), byteCountOut: &dataOutMoved)
+        let dataOutAvailable = byteArrayOut.count
+        var dataOutMoved = 0
+        update(byteArrayIn, byteCountIn: byteArrayIn.count, bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
         return (dataOutMoved, self.status)
     }
     /**
         Add the contents of a string (interpreted as UTF8) to the current encryption/decryption operation.
 
-        :param: byteArrayIn the input data
-        :param: byteArrayOut output data
-        :returns: a tuple containing the number of output bytes produced and the status (see Status)
+        - parameter byteArrayIn: the input data
+        - parameter byteArrayOut: output data
+        - returns: a tuple containing the number of output bytes produced and the status (see Status)
     */
-    public func update(stringIn: String, inout byteArrayOut: [UInt8]) -> (UInt, Status)
+    public func update(stringIn: String, inout byteArrayOut: [UInt8]) -> (Int, Status)
     {
-        var dataOutAvailable = UInt(byteArrayOut.count)
-        var dataOutMoved = UInt(0)
-        update(stringIn, byteCountIn: UInt(stringIn.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)), bufferOut: &byteArrayOut, byteCapacityOut: UInt(byteArrayOut.count), byteCountOut: &dataOutMoved)
+        let dataOutAvailable = byteArrayOut.count
+        var dataOutMoved = 0
+        update(stringIn, byteCountIn: stringIn.lengthOfBytesUsingEncoding(NSUTF8StringEncoding), bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
         return (dataOutMoved, self.status)
     }
     /**
@@ -205,27 +205,27 @@ public class StreamCryptor
 
         :note: This method updates the status property
 
-        :param: byteArrayOut the output bffer        
-        :returns: a tuple containing the number of output bytes produced and the status (see Status)
+        - parameter byteArrayOut: the output bffer        
+        - returns: a tuple containing the number of output bytes produced and the status (see Status)
     */
-    public func final(inout byteArrayOut: [UInt8]) -> (UInt, Status)
+    public func final(inout byteArrayOut: [UInt8]) -> (Int, Status)
     {
-        var dataOutAvailable = UInt(byteArrayOut.count)
-        var dataOutMoved = UInt(0)
-        final(&byteArrayOut, byteCapacityOut: UInt(byteArrayOut.count), byteCountOut: &dataOutMoved)
+        let dataOutAvailable = byteArrayOut.count
+        var dataOutMoved = 0
+        final(&byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
         return (dataOutMoved, self.status)
     }
     
     // MARK: - Low-level interface
     /**
-        :param: operation the operation to perform see Operation (Encrypt, Decrypt)
-        :param: algorithm the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
-        :param: keyBuffer pointer to key buffer
-        :param: keyByteCount number of bytes in the key
-        :param: ivBuffer initialization vector buffer
+        - parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
+        - parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
+        - parameter keyBuffer: pointer to key buffer
+        - parameter keyByteCount: number of bytes in the key
+        - parameter ivBuffer: initialization vector buffer
     */
     public init(operation: Operation, algorithm: Algorithm, options: Options, keyBuffer: UnsafePointer<Void>,
-        keyByteCount: UInt, ivBuffer: UnsafePointer<Void>)
+        keyByteCount: Int, ivBuffer: UnsafePointer<Void>)
     {
         let rawStatus = CCCryptorCreate(operation.nativeValue(), algorithm.nativeValue(), CCOptions(options.toRaw()), keyBuffer, keyByteCount, ivBuffer, context)
         if let status = Status.fromRaw(rawStatus)
@@ -239,14 +239,14 @@ public class StreamCryptor
         }
     }
     /**
-        :param: bufferIn pointer to input buffer
-        :param: inByteCount number of bytes contained in input buffer 
-        :param: bufferOut pointer to output buffer
-        :param: outByteCapacity capacity of the output buffer in bytes
-        :param: outByteCount on successful completion, the number of bytes written to the output buffer
-        :returns: 
+        - parameter bufferIn: pointer to input buffer
+        - parameter inByteCount: number of bytes contained in input buffer 
+        - parameter bufferOut: pointer to output buffer
+        - parameter outByteCapacity: capacity of the output buffer in bytes
+        - parameter outByteCount: on successful completion, the number of bytes written to the output buffer
+        - returns: 
     */
-    public func update(bufferIn: UnsafePointer<Void>, byteCountIn: UInt, bufferOut: UnsafeMutablePointer<Void>, byteCapacityOut : UInt, inout byteCountOut : UInt) -> Status
+    public func update(bufferIn: UnsafePointer<Void>, byteCountIn: Int, bufferOut: UnsafeMutablePointer<Void>, byteCapacityOut : Int, inout byteCountOut : Int) -> Status
     {
         if(self.status == Status.Success)
         {
@@ -273,11 +273,11 @@ public class StreamCryptor
     
         :note: This method updates the status property
         
-        :param: bufferOut pointer to output buffer
-        :param: outByteCapacity capacity of the output buffer in bytes
-        :param: outByteCount on successful completion, the number of bytes written to the output buffer
+        - parameter bufferOut: pointer to output buffer
+        - parameter outByteCapacity: capacity of the output buffer in bytes
+        - parameter outByteCount: on successful completion, the number of bytes written to the output buffer
     */
-    public func final(bufferOut: UnsafeMutablePointer<Void>, byteCapacityOut : UInt, inout byteCountOut : UInt) -> Status
+    public func final(bufferOut: UnsafeMutablePointer<Void>, byteCapacityOut : Int, inout byteCountOut : Int) -> Status
     {
         if(self.status == Status.Success)
         {
@@ -298,10 +298,10 @@ public class StreamCryptor
         Determines the number of bytes that wil be output by this Cryptor if inputBytes of additional
         data is input.
         
-        :param: inputByteCount number of bytes that will be input.
-        :param: isFinal true if buffer to be input will be the last input buffer, false otherwise.
+        - parameter inputByteCount: number of bytes that will be input.
+        - parameter isFinal: true if buffer to be input will be the last input buffer, false otherwise.
     */
-    public func getOutputLength(inputByteCount : UInt, isFinal : Bool = false) -> UInt
+    public func getOutputLength(inputByteCount : Int, isFinal : Bool = false) -> Int
     {
         return CCCryptorGetOutputLength(context.memory, inputByteCount, isFinal)
     }

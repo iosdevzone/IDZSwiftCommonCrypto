@@ -22,24 +22,24 @@ public class Cryptor : StreamCryptor
         Upates the accumulated encrypted/decrypted data with the contents
         of a Objective-C NSData buffer.
         
-        :param: data the data buffer
-        :returns: this Cryptor object or nil if an error occurs (for optional chaining)
+        - parameter data: the data buffer
+        - returns: this Cryptor object or nil if an error occurs (for optional chaining)
     */
     public func update(data: NSData) -> Cryptor?
     {
-        update(data.bytes, byteCount: UInt(data.length))
+        update(data.bytes, byteCount: data.length)
         return self.status == Status.Success ? self : nil
     }
     /**
         Upates the accumulated encrypted/decrypted data with the contents
         of a Swift byte array.
         
-        :param: byteArray the Swift byte array
-        :returns: this Cryptor object or nil if an error occurs (for optional chaining)
+        - parameter byteArray: the Swift byte array
+        - returns: this Cryptor object or nil if an error occurs (for optional chaining)
     */
     public func update(byteArray: [UInt8]) -> Cryptor?
     {
-        update(byteArray, byteCount: UInt(byteArray.count))
+        update(byteArray, byteCount: byteArray.count)
         return self.status == Status.Success ? self : nil
     }
     /**
@@ -48,24 +48,23 @@ public class Cryptor : StreamCryptor
         
         This is really only useful for encryption.
         
-        :returns: this Cryptor object or nil if an error occurs (for optional chaining)
+        - returns: this Cryptor object or nil if an error occurs (for optional chaining)
     */
     public func update(string: String) -> Cryptor?
     {
-        update(string, byteCount: UInt(string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
+        update(string, byteCount: string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
         return self.status == Status.Success ? self : nil
     }
     /**
         Retrieves the encrypted or decrypted data.
         
-        :returns: the encrypted or decrypted data or nil if an error occured.
+        - returns: the encrypted or decrypted data or nil if an error occured.
     */
     public func final() -> [UInt8]?
     {
-        var byteCount = Int(self.getOutputLength(0, isFinal: true))
+        let byteCount = Int(self.getOutputLength(0, isFinal: true))
         var dataOut = Array<UInt8>(count:byteCount, repeatedValue:0)
-        var dataOutAvailable = UInt(dataOut.count)
-        var dataOutMoved = UInt(0)
+        var dataOutMoved = 0
         (dataOutMoved, self.status) = final(&dataOut)
         if(self.status != Status.Success) {
             return nil
@@ -81,14 +80,14 @@ public class Cryptor : StreamCryptor
         
         It is not envisaged the users of the framework will need to call this directly.
         
-        :returns: this Cryptor object or nil if an error occurs (for optional chaining)
+        - returns: this Cryptor object or nil if an error occurs (for optional chaining)
     */
-    public func update(buffer: UnsafePointer<Void>, byteCount: UInt) -> Cryptor?
+    public func update(buffer: UnsafePointer<Void>, byteCount: Int) -> Cryptor?
     {
-        var outputLength = Int(self.getOutputLength(byteCount, isFinal: false))
+        let outputLength = self.getOutputLength(byteCount, isFinal: false)
         var dataOut = Array<UInt8>(count:outputLength, repeatedValue:0)
-        var dataOutMoved = UInt(0)
-        update(buffer, byteCountIn: byteCount, bufferOut: &dataOut, byteCapacityOut: UInt(dataOut.count), byteCountOut: &dataOutMoved)
+        var dataOutMoved = 0
+        update(buffer, byteCountIn: byteCount, bufferOut: &dataOut, byteCapacityOut: dataOut.count, byteCountOut: &dataOutMoved)
         if(self.status != Status.Success) {
             return nil
         }
