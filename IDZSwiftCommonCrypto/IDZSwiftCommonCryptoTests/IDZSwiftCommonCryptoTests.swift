@@ -163,7 +163,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     {
         let key = self.hmacDefaultKeySHA1
         let data = dataFromByteArray(Array<UInt8>(count:50, repeatedValue:0xcd))
-        let expected = self.hmacDefaultKeySHA1
+        let expected = self.hmacDefaultResultSHA1
         
         let hmac = HMAC(algorithm:.SHA1, key:key).update(data)?.final()
         
