@@ -28,13 +28,11 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     var aesCipherText1Bytes = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
     
     func test_Cryptor_AES_ECB() {
-        var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
-        var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
-        
-        var aesEncrypt = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode,
+        let aesEncrypt = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode,
             key:aesKey1Bytes, iv:Array<UInt8>())
         var dataOut = Array<UInt8>(count:aesCipherText1Bytes.count, repeatedValue:UInt8(0))
         let (c, status) = aesEncrypt.update(aesPlaintext1Bytes, byteArrayOut: &dataOut)
+        XCTAssert(status == .Success);
         XCTAssert(aesCipherText1Bytes.count == Int(c) , "Counts are as expected")
         XCTAssertEqual(dataOut, aesCipherText1Bytes, "Obtained expected cipher text")
     }
@@ -43,11 +41,11 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     results in repeated ciphertext block.
     */
     func test_Cryptor_AES_ECB_2() {
-        var key = aesKey1Bytes //arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
-        var plainText = aesPlaintext1Bytes + aesPlaintext1Bytes
-        var expectedCipherText = aesCipherText1Bytes + aesCipherText1Bytes
+        let key = aesKey1Bytes
+        let plainText = aesPlaintext1Bytes + aesPlaintext1Bytes
+        let expectedCipherText = aesCipherText1Bytes + aesCipherText1Bytes
         
-        var cipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>()).update(plainText)?.final()
+        let cipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>()).update(plainText)?.final()
         
         assert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
         assert(expectedCipherText == cipherText!, "Obtained expected cipher text")
@@ -57,12 +55,10 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     of blocks long.
     */
     func test_Cryptor_AES_ECB_Short() {
-        var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
-        var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e11739317")
-        var expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
-        
-        var cryptor = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
-        var cipherText = cryptor.update(plainText)?.final()
+        let key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+        let plainText = arrayFromHexString("6bc1bee22e409f96e93d7e11739317")        
+        let cryptor = Cryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
+        let cipherText = cryptor.update(plainText)?.final()
         XCTAssert(cipherText == nil, "Expected nil cipherText")
         XCTAssertEqual(cryptor.status, Status.AlignmentError, "Expected AlignmentError")
     }
@@ -70,16 +66,20 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     Single block CBC mode. Results should be identical to ECB mode.
     */
     func test_Cryptor_AES_CBC_1() {
-        var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
-        var plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
-        var expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
+        let key =   arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+        let iv =    arrayFromHexString("00000000000000000000000000000000")
+        let plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
+        let expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
         
-        var cipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.None, key:key, iv:Array<UInt8>()).update(plainText)?.final()
+        //var cipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.None, key:key, iv:Array<UInt8>()).update(plainText)?.final()
+        let cipherText = Cryptor(operation:.Encrypt, algorithm:.AES, options:.None, key:key, iv:iv).update(plainText)?.final()
         
-        assert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
-        assert(expectedCipherText == cipherText!, "Obtained expected cipher text")
+        XCTAssert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
+        XCTAssert(expectedCipherText == cipherText!, "Obtained expected cipher text")
         
-        var decryptedText = Cryptor(operation:.Decrypt, algorithm:.AES, options:.None, key:key, iv:Array<UInt8>()).update(cipherText!)?.final()
+        print(hexStringFromArray(cipherText!))
+        
+        let decryptedText = Cryptor(operation:.Decrypt, algorithm:.AES, options:.None, key:key, iv:iv).update(cipherText!)?.final()
         XCTAssertEqual(decryptedText!, plainText, "Recovered plaintext.")
     }
     
@@ -100,7 +100,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     // MARK: - Digest tests
     func testMD5_1()
     {
-        var md5 : Digest = Digest(algorithm:.MD5)
+        let md5 : Digest = Digest(algorithm:.MD5)
         md5.update(qbfString)
         let digest = md5.final()
         
@@ -110,7 +110,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     func test_Digest_MD5_NSData()
     {
         let qbfData : NSData = dataFromByteArray(self.qbfBytes)
-        var digest = Digest(algorithm: .MD5).update(qbfData)?.final()
+        let digest = Digest(algorithm: .MD5).update(qbfData)?.final()
         
         XCTAssertEqual(digest!, qbfMD5, "PASS")
     }
@@ -119,7 +119,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     */
     func test_Digest_MD5_Composition_String()
     {
-        var digest = Digest(algorithm: .MD5).update(qbfString)?.final()
+        let digest = Digest(algorithm: .MD5).update(qbfString)?.final()
         XCTAssertEqual(digest!, qbfMD5, "PASS")
     }
     /**
@@ -129,7 +129,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     {
         let s1 = "The quick brown fox"
         let s2 = " jumps over the lazy dog."
-        var digest = Digest(algorithm: .MD5).update(s1)?.update(s2)?.final()
+        let digest = Digest(algorithm: .MD5).update(s1)?.update(s2)?.final()
         
         XCTAssertEqual(digest!, qbfMD5, "PASS")
     }
@@ -138,31 +138,34 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     */
     func test_Digest_MD5_Composition_Bytes()
     {
-        var digest = Digest(algorithm: .MD5).update(qbfBytes)?.final()
+        let digest = Digest(algorithm: .MD5).update(qbfBytes)?.final()
         
         XCTAssertEqual(digest!, qbfMD5, "PASS")
     }
 
     // MARK: - HMAC tests
+    let hmacDefaultKeySHA1 = arrayFromHexString("0102030405060708090a0b0c0d0e0f10111213141516171819")
+    let hmacDefaultResultSHA1 = arrayFromHexString("4c9007f4026250c6bc8414f9bf50c86c2d7235da")
+    
     // See: https://www.ietf.org/rfc/rfc2202.txt
     func test_HMAC_SHA1()
     {
-        var key = arrayFromHexString("0102030405060708090a0b0c0d0e0f10111213141516171819")
-        var data : [UInt8] = Array(count:50, repeatedValue:0xcd)
-        var expected = arrayFromHexString("4c9007f4026250c6bc8414f9bf50c86c2d7235da")
+        let key = self.hmacDefaultKeySHA1
+        let data : [UInt8] = Array(count:50, repeatedValue:0xcd)
+        let expected = self.hmacDefaultResultSHA1
         
-        var hmac = HMAC(algorithm:.SHA1, key:key).update(data)?.final()
+        let hmac = HMAC(algorithm:.SHA1, key:key).update(data)?.final()
         
         XCTAssertEqual(hmac!, expected, "PASS")
     }
     
     func test_HMAC_SHA1_NSData()
     {
-        var key = dataFromHexString("0102030405060708090a0b0c0d0e0f10111213141516171819")
-        var data = dataFromByteArray(Array<UInt8>(count:50, repeatedValue:0xcd))
-        var expected = arrayFromHexString("4c9007f4026250c6bc8414f9bf50c86c2d7235da")
+        let key = self.hmacDefaultKeySHA1
+        let data = dataFromByteArray(Array<UInt8>(count:50, repeatedValue:0xcd))
+        let expected = self.hmacDefaultKeySHA1
         
-        var hmac = HMAC(algorithm:.SHA1, key:key).update(data)?.final()
+        let hmac = HMAC(algorithm:.SHA1, key:key).update(data)?.final()
         
         XCTAssertEqual(hmac!, expected, "PASS")
     }
@@ -193,7 +196,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     func test_Random_generateBytes()
     {
         let count = 256*256
-        var bytes = Random.generateBytes(count)
+        let bytes = Random.generateBytes(count)
         XCTAssert(bytes.count == count, "Count has expected value")
     }
 
@@ -201,23 +204,23 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     // MARK: - Utilities tests
     func test_Utilities_arrayFromHexString_lowerCase()
     {
-        var s = "deadface"
-        var expected : [UInt8] = [ 0xde, 0xad, 0xfa, 0xce ]
-        var result = arrayFromHexString(s)
+        let s = "deadface"
+        let expected : [UInt8] = [ 0xde, 0xad, 0xfa, 0xce ]
+        let result = arrayFromHexString(s)
         XCTAssertEqual(result, expected, "PASS")
     }
     
     func test_Utilities_arrayFromHexString_upperCase()
     {
-        var s = "DEADFACE"
-        var expected : [UInt8] = [ 0xde, 0xad, 0xfa, 0xce ]
-        var result = arrayFromHexString(s)
+        let s = "DEADFACE"
+        let expected : [UInt8] = [ 0xde, 0xad, 0xfa, 0xce ]
+        let result = arrayFromHexString(s)
         XCTAssertEqual(result, expected, "PASS")
     }
     
     func testHexStringFromArray()
     {
-        var v : [UInt8] = [ 0xde, 0xad, 0xfa, 0xce ]
+        let v : [UInt8] = [ 0xde, 0xad, 0xfa, 0xce ]
         XCTAssertEqual(hexStringFromArray(v), "deadface", "PASS (lowercase)")
         XCTAssertEqual(hexStringFromArray(v, uppercase: true), "DEADFACE", "PASS (lowercase)")
     }

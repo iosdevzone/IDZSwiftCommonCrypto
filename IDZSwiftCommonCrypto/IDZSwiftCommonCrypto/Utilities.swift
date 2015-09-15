@@ -57,3 +57,8 @@ public func hexNSStringFromArray(a : [UInt8], uppercase : Bool = false) -> NSStr
 {
     return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", combine: +)
 }
+
+public func hexListFromArray(a : [UInt8]) -> String
+{
+    return a.map() { String(format:"0x%02x, ", $0) }.reduce("", combine: +)    
+}

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C09D79B19E0D4C900A93684 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0C09D79A19E0D4C900A93684 /* README.md */; };
 		0C67310219D1EB80009828B8 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67310119D1EB80009828B8 /* Status.swift */; };
 		0C9F5B2E19D2948F00E0B5FF /* Cryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9F5B2D19D2948F00E0B5FF /* Cryptor.swift */; };
 		0CCB89B119CE05F800068ED6 /* IDZSwiftCommonCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CCB89B019CE05F800068ED6 /* IDZSwiftCommonCrypto.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -27,6 +26,7 @@
 		308499CA1BA77BC20025B41D /* IDZSwiftCommonCryptoTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308499C91BA77BC20025B41D /* IDZSwiftCommonCryptoTestAppUITests.swift */; };
 		308499D51BA77F2B0025B41D /* IDZSwiftCommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CCB89AB19CE05F800068ED6 /* IDZSwiftCommonCrypto.framework */; };
 		308499D61BA77F2B0025B41D /* IDZSwiftCommonCrypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CCB89AB19CE05F800068ED6 /* IDZSwiftCommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		308499DB1BA78C600025B41D /* CommonCryptoAPITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 308499DA1BA78C600025B41D /* CommonCryptoAPITests.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +106,7 @@
 		308499C51BA77BC20025B41D /* IDZSwiftCommonCryptoTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IDZSwiftCommonCryptoTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		308499C91BA77BC20025B41D /* IDZSwiftCommonCryptoTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDZSwiftCommonCryptoTestAppUITests.swift; sourceTree = "<group>"; };
 		308499CB1BA77BC20025B41D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		308499DA1BA78C600025B41D /* CommonCryptoAPITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonCryptoAPITests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				0CCB89BA19CE05F800068ED6 /* IDZSwiftCommonCryptoTests.swift */,
+				308499DA1BA78C600025B41D /* CommonCryptoAPITests.m */,
 				0CCB89B819CE05F800068ED6 /* Supporting Files */,
 			);
 			path = IDZSwiftCommonCryptoTests;
@@ -458,7 +460,6 @@
 				0C9F5B2E19D2948F00E0B5FF /* Cryptor.swift in Sources */,
 				0CCB89C919CE071D00068ED6 /* StreamCryptor.swift in Sources */,
 				0CCB89CD19CE071D00068ED6 /* Random.swift in Sources */,
-				0C09D79B19E0D4C900A93684 /* README.md in Sources */,
 				0CCB89CA19CE071D00068ED6 /* Digest.swift in Sources */,
 				0CCB89CB19CE071D00068ED6 /* HMAC.swift in Sources */,
 			);
@@ -468,6 +469,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				308499DB1BA78C600025B41D /* CommonCryptoAPITests.m in Sources */,
 				0CCB89BB19CE05F800068ED6 /* IDZSwiftCommonCryptoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
