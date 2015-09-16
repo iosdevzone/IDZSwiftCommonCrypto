@@ -20,8 +20,10 @@ import CommonCrypto
         md5.update(s)
         let digest = md5.final()
   */
-public class Digest
-{   /**
+public class Digest : Updateable
+{
+    public var status = Status.Success
+    /**
         - MD2: Message Digest 2 See: http://en.wikipedia.org/wiki/MD2_(cryptography)
         - MD4
         - MD5
@@ -70,44 +72,9 @@ public class Digest
         - parameter the: number of bytes in buffer
         - returns: this Digest object (for optional chaining)
     */
-    public func update(buffer: UnsafePointer<UInt8>, _ byteCount: CC_LONG) -> Digest?
+    public func update(buffer: UnsafePointer<Void>, _ byteCount: size_t) -> Self?
     {
-        engine.update(buffer, byteCount)
-        return self
-    }
-    /**
-    Updates the message digest with an NSData buffer.
-    
-    - parameter data: the data buffer
-    - returns: this Digest object (for optional chaining)
-    */
-    public func update(data : NSData) -> Digest?
-    {
-        engine.update(data.bytes, CC_LONG(data.length))
-        return self
-    }
-    /**
-        Updates the message digest with the contents of a Swift byte array
-    
-        - parameter byteArray: the byteArray
-        - returns: this Digest object (for optional chaining)
-    */
-    public func update(byteArray : [UInt8]) -> Digest?
-    {
-        engine.update(byteArray, CC_LONG(byteArray.count))
-        return self
-    }
-    
-    /**
-       Updates the message digest being calculated with the contents
-       of a string interpreted as UTF8.
-    
-       - parameter s: the string
-       - returns: this Digest object (for optional chaining)
-    */
-    public func update(string : String) -> Digest?
-    {
-        engine.update(string, CC_LONG(string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
+        engine.update(buffer, CC_LONG(byteCount))
         return self
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 import CommonCrypto
 
-public class HMAC
+public class HMAC : Updateable
 {
     public enum Algorithm
     {
@@ -99,29 +99,12 @@ public class HMAC
         context.dealloc(1)
     }
     
-    public func update(buffer : UnsafePointer<Void>, _ byteCount : size_t)
+    public func update(buffer : UnsafePointer<Void>, _ byteCount : size_t) -> Self?
     {
         CCHmacUpdate(context, buffer, byteCount)
+        return self 
     }
-        
-    public func update(data: NSData) -> HMAC?
-    {
-        update(data.bytes, size_t(data.length))
-        return self
-    }
-    
-    public func update(byteArray : [UInt8]) -> HMAC?
-    {
-        update(byteArray, size_t(byteArray.count))
-        return self
-    }
-    
-    public func update(string: String) -> HMAC?
-    {
-        update(string, size_t(string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
-        return self
-    }
-    
+            
     public func final() -> [UInt8]
     {
         var hmac = Array<UInt8>(count:algorithm.digestLength(), repeatedValue:0)

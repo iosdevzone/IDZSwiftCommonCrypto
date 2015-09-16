@@ -196,8 +196,13 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     func test_Random_generateBytes()
     {
         let count = 256*256
-        let bytes = Random.generateBytes(count)
-        XCTAssert(bytes.count == count, "Count has expected value")
+        do {
+            let bytes = try Random.generateBytes(count)
+            XCTAssert(bytes.count == count, "Count has expected value")
+        }
+        catch {
+            XCTAssert(false, "Should never happen.")
+        }
     }
 
     

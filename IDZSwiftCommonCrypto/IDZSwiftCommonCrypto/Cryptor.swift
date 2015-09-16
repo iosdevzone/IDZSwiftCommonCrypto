@@ -15,46 +15,9 @@ import Foundation
 
      For large files or network streams use StreamCryptor.
  */
-public class Cryptor : StreamCryptor
+public class Cryptor : StreamCryptor, Updateable
 {
     var accumulator : [UInt8] = []
-    /**
-        Upates the accumulated encrypted/decrypted data with the contents
-        of a Objective-C NSData buffer.
-        
-        - parameter data: the data buffer
-        - returns: this Cryptor object or nil if an error occurs (for optional chaining)
-    */
-    public func update(data: NSData) -> Cryptor?
-    {
-        update(data.bytes, byteCount: data.length)
-        return self.status == Status.Success ? self : nil
-    }
-    /**
-        Upates the accumulated encrypted/decrypted data with the contents
-        of a Swift byte array.
-        
-        - parameter byteArray: the Swift byte array
-        - returns: this Cryptor object or nil if an error occurs (for optional chaining)
-    */
-    public func update(byteArray: [UInt8]) -> Cryptor?
-    {
-        update(byteArray, byteCount: byteArray.count)
-        return self.status == Status.Success ? self : nil
-    }
-    /**
-        Upates the accumulated encrypted/decrypted data with the contents
-        of a string (interpreted as UTF8).
-        
-        This is really only useful for encryption.
-        
-        - returns: this Cryptor object or nil if an error occurs (for optional chaining)
-    */
-    public func update(string: String) -> Cryptor?
-    {
-        update(string, byteCount: string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
-        return self.status == Status.Success ? self : nil
-    }
     /**
         Retrieves the encrypted or decrypted data.
         
@@ -82,7 +45,7 @@ public class Cryptor : StreamCryptor
         
         - returns: this Cryptor object or nil if an error occurs (for optional chaining)
     */
-    public func update(buffer: UnsafePointer<Void>, byteCount: Int) -> Cryptor?
+    public func update(buffer: UnsafePointer<Void>, _ byteCount: Int) -> Self?
     {
         let outputLength = self.getOutputLength(byteCount, isFinal: false)
         var dataOut = Array<UInt8>(count:outputLength, repeatedValue:0)

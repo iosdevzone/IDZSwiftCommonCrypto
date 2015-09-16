@@ -66,6 +66,6 @@ public class Random
         var bytes : [UInt8] = Array(count:byteCount, repeatedValue:UInt8(0))
         let status = generateBytes(&bytes, byteCount: byteCount)
         throw status
-        return bytes
+        //return bytes
     }
 }

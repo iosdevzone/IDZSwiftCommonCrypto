@@ -17,6 +17,7 @@
 		0CCB89CC19CE071D00068ED6 /* KeyDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C719CE071D00068ED6 /* KeyDerivation.swift */; };
 		0CCB89CD19CE071D00068ED6 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C819CE071D00068ED6 /* Random.swift */; };
 		0CCB89D219CF416B00068ED6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89D119CF416B00068ED6 /* Utilities.swift */; };
+		3012B11B1BAA237C008504EB /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3012B11A1BAA237C008504EB /* Updateable.swift */; settings = {ASSET_TAGS = (); }; };
 		3050B9B41BA9F7C700177A38 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050B9B31BA9F7C700177A38 /* Crypto.swift */; settings = {ASSET_TAGS = (); }; };
 		308499AA1BA77BC20025B41D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308499A91BA77BC20025B41D /* AppDelegate.swift */; };
 		308499AC1BA77BC20025B41D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308499AB1BA77BC20025B41D /* ViewController.swift */; };
@@ -95,6 +96,7 @@
 		0CCB89C719CE071D00068ED6 /* KeyDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyDerivation.swift; sourceTree = "<group>"; };
 		0CCB89C819CE071D00068ED6 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		0CCB89D119CF416B00068ED6 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		3012B11A1BAA237C008504EB /* Updateable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updateable.swift; sourceTree = "<group>"; };
 		3050B9B31BA9F7C700177A38 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		308499A71BA77BC20025B41D /* IDZSwiftCommonCryptoTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IDZSwiftCommonCryptoTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		308499A91BA77BC20025B41D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		0CCB89AD19CE05F800068ED6 /* IDZSwiftCommonCrypto */ = {
 			isa = PBXGroup;
 			children = (
+				3012B11A1BAA237C008504EB /* Updateable.swift */,
 				0CCB89C519CE071D00068ED6 /* Digest.swift */,
 				0C9F5B2D19D2948F00E0B5FF /* Cryptor.swift */,
 				0CCB89C419CE071D00068ED6 /* StreamCryptor.swift */,
@@ -464,6 +467,7 @@
 				3050B9B41BA9F7C700177A38 /* Crypto.swift in Sources */,
 				0C9F5B2E19D2948F00E0B5FF /* Cryptor.swift in Sources */,
 				0CCB89C919CE071D00068ED6 /* StreamCryptor.swift in Sources */,
+				3012B11B1BAA237C008504EB /* Updateable.swift in Sources */,
 				0CCB89CD19CE071D00068ED6 /* Random.swift in Sources */,
 				0CCB89CA19CE071D00068ED6 /* Digest.swift in Sources */,
 				0CCB89CB19CE071D00068ED6 /* HMAC.swift in Sources */,
