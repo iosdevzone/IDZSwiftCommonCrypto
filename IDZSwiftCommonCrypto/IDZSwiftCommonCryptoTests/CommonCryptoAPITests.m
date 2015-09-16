@@ -2,7 +2,7 @@
 //  CommonCryptoAPITests.m
 //  IDZSwiftCommonCrypto
 //
-//  Created by Danny Keogan on 9/14/15.
+//  Created by idz on 9/14/15.
 //  Copyright © 2015 iOSDeveloperZone.com. All rights reserved.
 //
 
