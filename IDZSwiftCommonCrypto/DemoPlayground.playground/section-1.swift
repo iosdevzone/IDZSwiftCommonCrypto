@@ -6,13 +6,14 @@ import IDZSwiftCommonCrypto
 var ss  = "" as NSString
 ss.stringByAppendingPathComponent("hello")
 
-
 // MARK: - Message Digest Demo
 let  s = "The quick brown fox jumps over the lazy dog."
 var md5 = Digest(algorithm: .MD5)
 md5.update(s)
 var digest = md5.final()
 var md5String = hexStringFromArray(digest)
+
+s.MD5
 
 // MARK: - HMAC Demo
 // Data from RFC 2202
@@ -34,9 +35,28 @@ for (password, salt, rounds, dkLen, expected) in tests
 }
 
 // MARK: - Random Demo
-var randomBytes = hexStringFromArray(Random.generateBytes(16))
+var randomBytes = hexStringFromArray(try Random.generateBytes(16))
+
+do {
+    try Random.generateBytesThrow(16)
+}
+catch let e {
+    print("generateBytesThrow threw \(e)")
+}
+
+
+do {
+    try Random.generateBytesThrow(16)
+}
+catch {
+    print("generateBytesThrow threw an error (expected).")
+}
+
 
 // MARK: - Crypto Demo
+// Test data from NIST Special Publication 
+// F.1.1 p24
+// http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf
 func test_StreamCryptor_AES_ECB() {
     let key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
     let plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
