@@ -276,11 +276,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0CCB89BE19CE05F800068ED6 /* Build configuration list for PBXNativeTarget "IDZSwiftCommonCrypto" */;
 			buildPhases = (
+				303E19651BAA7E1E00044959 /* ShellScript */,
 				0CCB89A619CE05F800068ED6 /* Sources */,
 				0CCB89A719CE05F800068ED6 /* Frameworks */,
 				0CCB89A819CE05F800068ED6 /* Headers */,
 				0CCB89A919CE05F800068ED6 /* Resources */,
-				303E19651BAA7E1E00044959 /* ShellScript */,
 			);
 			buildRules = (
 			);
