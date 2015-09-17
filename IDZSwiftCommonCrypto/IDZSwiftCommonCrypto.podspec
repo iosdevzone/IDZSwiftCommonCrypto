@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "IDZSwiftCommonCrypto"
-  s.version      = "0.5.5"
+  s.version      = "0.5.6"
   s.summary      = "A wrapper for Apple's Common Crypto library written in Swift."
 
   s.homepage     = "https://github.com/iosdevzone/IDZSwiftCommonCrypto"
@@ -56,8 +56,8 @@ Pod::Spec.new do |s|
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
-  s.ios.deployment_target = "9.0"
-  s.osx.deployment_target = "10.7"
+  # s.ios.deployment_target = "9.0"
+  # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
 
 
