@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "IDZSwiftCommonCrypto"
-  s.version      = "0.5.3"
+  s.version      = "0.5.4"
   s.summary      = "A wrapper for Apple's Common Crypto library written in Swift."
 
   s.homepage     = "https://github.com/iosdevzone/IDZSwiftCommonCrypto"
@@ -77,8 +77,7 @@ Pod::Spec.new do |s|
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
-
-  s.source_files  = "IDZSwiftCommonCrypto/*.swift"
+  s.source_files  = "IDZSwiftCommonCrypto"
 
   # s.public_header_files = "Classes/**/*.h"
 
