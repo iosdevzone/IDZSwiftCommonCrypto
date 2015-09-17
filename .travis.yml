@@ -5,15 +5,17 @@ install:
 
 script:
 # Generate README.playground from README.md
+- echo Available SDKs
+- xcodebuild -showsdks
 - make
 - git config --global push.default simple
 - git diff-files --exit-code; if [[ "$?" == "1" ]]; then git commit -a -m "Playground update from Travis [ci skip]"; git push; fi
 - pushd IDZSwiftCommonCrypto
 - rm -rf CommonCrypto
-- ./GenerateCommonCryptoModule iphonesimulator8.0 .
+- ./GenerateCommonCryptoModule iphonesimulator8.1 .
 - cat CommonCrypto/module.map
 - pwd
-- xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.0'
+- xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.1'
 # Remove testing pending solution to https://github.com/travis-ci/travis-ci/issues/2829
-- xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.0'
+- xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.1'
 - popd
