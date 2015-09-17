@@ -280,6 +280,7 @@
 				0CCB89A719CE05F800068ED6 /* Frameworks */,
 				0CCB89A819CE05F800068ED6 /* Headers */,
 				0CCB89A919CE05F800068ED6 /* Resources */,
+				303E19651BAA7E1E00044959 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -455,6 +456,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		303E19651BAA7E1E00044959 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "echo Checking for $PROJECT_DIR/CommonCrypto\nif [ ! -e $PROJECT_DIR/CommonCrypto ] ; then\necho Generating $PROJECT_DIR/CommonCrypto\n./GenerateCommonCryptoModule iphonesimulator9.0 $PROJECT_DIR\nelse\necho Directory exists, skipping generation of $PROJECT_DIR/CommonCrypto\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0CCB89A619CE05F800068ED6 /* Sources */ = {
