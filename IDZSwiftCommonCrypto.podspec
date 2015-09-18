@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "IDZSwiftCommonCrypto"
-  s.version      = "0.5.11"
+  s.version      = "0.5.13"
   s.summary      = "A wrapper for Apple's Common Crypto library written in Swift."
 
   s.homepage     = "https://github.com/iosdevzone/IDZSwiftCommonCrypto"
@@ -79,6 +79,7 @@ Pod::Spec.new do |s|
   #
   s.prepare_command = <<-CMD
   
+  touch prepare_command.txt
   echo 'Running prepare_command'
   if [ ! -e CommonCrypto ]; then 
     pwd
@@ -129,7 +130,7 @@ CMD
 
   # s.requires_arc = true
 
-  # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
+  s.xcconfig = { "SWIFT_INCLUDE_PATHS" => "$(PROJECT_DIR)/IDZSwiftCommonCrypto" }
   # s.dependency "JSONKit", "~> 1.4"
 
 end
