@@ -1,5 +1,6 @@
 #!/bin/bash
 
+    KEYCHAIN=IDZSwiftCommonCrypto.keychain
     SCRIPT_DIR=.
 
     # If this environment variable is missing, we must not be running on Travis.
