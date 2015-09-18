@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "IDZSwiftCommonCrypto"
-  s.version      = "0.5.15"
+  s.version      = "0.5.16"
   s.summary      = "A wrapper for Apple's Common Crypto library written in Swift."
 
   s.homepage     = "https://github.com/iosdevzone/IDZSwiftCommonCrypto"
@@ -130,7 +130,7 @@ CMD
 
   # s.requires_arc = true
 
-  s.xcconfig = { "SWIFT_INCLUDE_PATHS" => "$(PROJECT_DIR)/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto" }
+  s.xcconfig = { "SWIFT_INCLUDE_PATHS" => "$(PROJECT_DIR)/IDZSwiftCommonCrypto" }
   # s.dependency "JSONKit", "~> 1.4"
 
 end
