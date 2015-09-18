@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "IDZSwiftCommonCrypto"
-  s.version      = "0.5.10"
+  s.version      = "0.5.11"
   s.summary      = "A wrapper for Apple's Common Crypto library written in Swift."
 
   s.homepage     = "https://github.com/iosdevzone/IDZSwiftCommonCrypto"
@@ -77,7 +77,18 @@ Pod::Spec.new do |s|
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
-  s.prepare_command = "echo 'Running prepare_command'; if [ ! -e CommonCrypto ]; then ./GenerateCommonCryptoModule iphonesimulator9.0 . ; else echo 'Skipped GenerateCommonCryptoModule'; fi"
+  s.prepare_command = <<-CMD
+  
+  echo 'Running prepare_command'
+  if [ ! -e CommonCrypto ]; then 
+    pwd
+    echo Running GenerateCommonCryptoModule
+    ./GenerateCommonCryptoModule iphonesimulator9.0 .  
+  else 
+    echo Skipped GenerateCommonCryptoModule 
+  fi
+
+CMD
   s.source_files  = "IDZSwiftCommonCrypto"
 
   # s.public_header_files = "Classes/**/*.h"
