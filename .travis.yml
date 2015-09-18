@@ -17,9 +17,7 @@ script:
 - ./GenerateCommonCryptoModule iphonesimulator9.0 .
 - cat CommonCrypto/module.map
 - pwd
-- xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone
-  6,OS=9.0'
-- xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone
-  6,OS=9.0'
+- xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
+- xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
 - ./delete_keychain.bash
 - echo TRAVIS_TEST_RESULT=$TRAVIS_TEST_RESULT
