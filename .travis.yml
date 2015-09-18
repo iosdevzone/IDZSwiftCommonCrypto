@@ -1,7 +1,7 @@
 language: objective-c
 osx_image: xcode7
 install:
-- import_certs.bash
+- ./import_certs.bash
 - npm install -g playground
 script:
 - make
@@ -16,7 +16,7 @@ script:
   6,OS=9.0'
 - xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone
   6,OS=9.0'
-- delete_keychain
+- ./delete_keychain.bash
 env:
   matrix:
     secure: a2fi02GPkxw27jVjW47EkvB/BW/SOIxlmLQJaiZ3xqbKe4udUxKE0ZigD0nVJDmxpiVHv5/Uc9ZQDPtKvvmU9kakusxjBVqMy+IxCYsH4+aDaATdaY9WHvVbARXJGjE/KmKnTfos/P8G8XqXahNKznql/gF2wZNoQIQD49JNk8s=
