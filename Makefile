@@ -1,6 +1,9 @@
 REPO=IDZPodspecs
 NAME=IDZSwiftCommonCrypto
 
+all:
+  
+
 # push tags to GitHub
 push_tags:
 	git push origin --tags
