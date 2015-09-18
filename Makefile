@@ -1,11 +1,14 @@
-PG=IDZSwiftCommonCrypto/README.playground
-RSRC_DIR=$(PG)/Resources
+REPO=IDZPodspecs
+NAME=IDZSwiftCommonCrypto
 
-$(PG): README.md
-	playground README.md -p ios -d IDZSwiftCommonCrypto
-	mkdir -p  ${RSRC_DIR}
-	cp IDZSwiftCommonCrypto/Riscal.jpg ${RSRC_DIR}
+# push tags to GitHub
+push_tags:
+	git push origin --tags
 
+# Lint the podspec
+lint_pod:
+	pod spec lint --verbose ${NAME}.podspec --sources=https://github.com/iosdevzone/IDZPodspecs.git
 
-clean:
-	rm -rf $(PG)
+# Push pod to private spec repository
+push_pod:
+	pod repo push ${REPO} ${NAME}.podspec
