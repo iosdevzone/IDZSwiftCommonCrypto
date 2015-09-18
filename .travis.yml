@@ -9,8 +9,6 @@ env:
 
 script:
 - make
-- git config --global push.default simple
-- git diff-files --exit-code; if [[ "$?" == "1" ]]; then git commit -a -m "Playground update from Travis [ci skip]"; git push; fi
 - rm -rf CommonCrypto
 - ./GenerateCommonCryptoModule iphonesimulator9.0 .
 - cat CommonCrypto/module.map
