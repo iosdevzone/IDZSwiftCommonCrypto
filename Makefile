@@ -1,12 +1,12 @@
 REPO=IDZPodspecs
 NAME=IDZSwiftCommonCrypto
-PG=IDZSwiftCommonCrypto/README.playground
+PG=README.playground
 RSRC_DIR=$(PG)/Resources
 
 $(PG): README.md
-	playground README.md -p ios -d IDZSwiftCommonCrypto
+	playground README.md -p ios 
 	mkdir -p  ${RSRC_DIR}
-	cp IDZSwiftCommonCrypto/Riscal.jpg ${RSRC_DIR}
+	cp Riscal.jpg ${RSRC_DIR}
 
 
 clean:

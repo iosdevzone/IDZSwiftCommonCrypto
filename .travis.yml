@@ -2,7 +2,7 @@ language: objective-c
 osx_image: xcode7
 
 install:
-- npm install -g swift-playground-builder
+- npm install -g playground
 
 script:
 # Generate README.playground from README.md
