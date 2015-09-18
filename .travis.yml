@@ -1,18 +1,22 @@
 language: objective-c
 osx_image: xcode7
-
 install:
+- import_certs.bash
 - npm install -g playground
-
 script:
-# Generate README.playground from README.md
 - make
 - git config --global push.default simple
-- git diff-files --exit-code; if [[ "$?" == "1" ]]; then git commit -a -m "Playground update from Travis [ci skip]"; git push; fi
+- git diff-files --exit-code; if [[ "$?" == "1" ]]; then git commit -a -m "Playground
+  update from Travis [ci skip]"; git push; fi
 - rm -rf CommonCrypto
 - ./GenerateCommonCryptoModule iphonesimulator9.0 .
 - cat CommonCrypto/module.map
 - pwd
-- xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
-# Remove testing pending solution to https://github.com/travis-ci/travis-ci/issues/2829
-- xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
+- xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone
+  6,OS=9.0'
+- xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone
+  6,OS=9.0'
+- delete_keychain
+env:
+  matrix:
+    secure: a2fi02GPkxw27jVjW47EkvB/BW/SOIxlmLQJaiZ3xqbKe4udUxKE0ZigD0nVJDmxpiVHv5/Uc9ZQDPtKvvmU9kakusxjBVqMy+IxCYsH4+aDaATdaY9WHvVbARXJGjE/KmKnTfos/P8G8XqXahNKznql/gF2wZNoQIQD49JNk8s=
