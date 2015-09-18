@@ -8,3 +8,4 @@ KEYCHAIN=IDZSwiftCommonCrypto.keychain
     fi
 
     security delete-keychain "$KEYCHAIN"
+    echo "Deleted keycain."
