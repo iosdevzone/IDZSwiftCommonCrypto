@@ -171,7 +171,7 @@ class DigestEngineCC<C> : DigestEngine {
     
     func final() -> [UInt8]
     {
-        let digestLength = Int(CC_MD5_DIGEST_LENGTH)
+        let digestLength = Int(self.length)
         var digest = Array<UInt8>(count:digestLength, repeatedValue: 0)
         finalizer(&digest, context)
         return digest
