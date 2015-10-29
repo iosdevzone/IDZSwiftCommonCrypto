@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "IDZSwiftCommonCrypto"
-  s.version      = "0.6.1"
+  s.version      = "0.6.2"
   s.summary      = "A wrapper for Apple's Common Crypto library written in Swift."
 
   s.homepage     = "https://github.com/iosdevzone/IDZSwiftCommonCrypto"
@@ -52,7 +52,7 @@ Pod::Spec.new do |s|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  s.platform     = :ios, "9.0"
+  s.platform     = :ios, "9.1"
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
@@ -84,7 +84,7 @@ Pod::Spec.new do |s|
   if [ ! -e CommonCrypto ]; then 
     pwd
     echo Running GenerateCommonCryptoModule
-    ./GenerateCommonCryptoModule iphonesimulator9.0 .  
+    ./GenerateCommonCryptoModule iphonesimulator9.1 .  
   else 
     echo Skipped GenerateCommonCryptoModule 
   fi
