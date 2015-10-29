@@ -9,18 +9,33 @@
 import Foundation
 import CommonCrypto
 
+///
+/// Links the native CommonCryptoStatus enumeration to Swiftier versions.
+///
 public enum Status : CCCryptorStatus, CustomStringConvertible, ErrorType
 {
+    /// Successful
     case Success,
+    /// Parameter Error
     ParamError,
+    /// Buffer too Small
     BufferTooSmall,
+    /// Memory Failure
     MemoryFailure,
+    /// Alignment Error
     AlignmentError,
+    /// Decode Error
     DecodeError,
+    /// Unimplemented
     Unimplemented,
+    /// Overflow
     Overflow,
+    /// Random Number Generator Err
     RNGFailure
     
+    ///
+    /// Converts this value to a native `CCCryptorStatus` value.
+    ///
     public func toRaw() -> CCCryptorStatus
     {
         switch self {
@@ -36,19 +51,25 @@ public enum Status : CCCryptorStatus, CustomStringConvertible, ErrorType
         }
     }
     
+    ///
+    /// Human readable descriptions of the values. (Not needed in Swift 2.0?)
+    ///
     static let descriptions = [ Success: "Success",                 ParamError: "ParamError",
                             BufferTooSmall: "BufferTooSmall",   MemoryFailure: "MemoryFailure",
                             AlignmentError: "AlignmentError",   DecodeError: "DecodeError",
                             Unimplemented: "Unimplemented",     Overflow: "Overflow",
                             RNGFailure: "RNGFailure"]
+    
+    ///
+    /// Obtain human-readable string from enum value.
+    ///
     public var description : String
     {
         return (Status.descriptions[self] != nil) ? Status.descriptions[self]! : ""
     }
-    
-
-    
-    
+    ///
+    /// Create enum value from raw `CCCryptorStatus` value.
+    ///
     public static func fromRaw(status : CCCryptorStatus) -> Status?
     {
         var from = [ kCCSuccess: Success, kCCParamError: ParamError,
@@ -56,18 +77,6 @@ public enum Status : CCCryptorStatus, CustomStringConvertible, ErrorType
             kCCAlignmentError: AlignmentError, kCCDecodeError: DecodeError, kCCUnimplemented: Unimplemented,
             kCCOverflow: Overflow, kCCRNGFailure: RNGFailure]
         return from[Int(status)]
-        
-
-//        switch status {
-//        case kCCSuccess:          return Success
-//        case kCCParamError:       return ParamError
-//        case kCCBufferTooSmall:   return BufferTooSmall
-//        case kCCMemoryFailure:    return MemoryFailure
-//        case kCCAlignmentError:   return AlignmentError
-//        case kCCDecodeError:      return DecodeError
-//        case kCCUnimplemented:    return Unimplemented
-//        case kCCOverflow:         return Overflow
-//        case kCCRNGFailure:       return RNGFailure
-//        }
+    
     }
 }

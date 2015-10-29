@@ -9,11 +9,28 @@
 import Foundation
 import CommonCrypto
 
+///
+/// Calculates a cryptographic Hash-Based Message Authentication Code (HMAC).
+///
 public class HMAC : Updateable
 {
+    ///
+    /// Enumerates available algorithms.
+    ///
     public enum Algorithm
     {
-        case SHA1, MD5, SHA224, SHA256, SHA384, SHA512
+        /// Message Digest 5
+        case MD5,
+        /// Secure Hash Algorithm 1
+            SHA1,
+        /// Secure Hash Algorithm 2 224-bit
+            SHA224,
+        /// Secure Hash Algorithm 2 256-bit
+            SHA256,
+        /// Secure Hash Algorithm 2 384-bit
+            SHA384,
+        /// Secure Hash Algorithm 2 512-bit
+            SHA512
         
         static let fromNative : [CCHmacAlgorithm: Algorithm] = [
             CCHmacAlgorithm(kCCHmacAlgSHA1):.SHA1,
@@ -46,6 +63,9 @@ public class HMAC : Updateable
             return fromNative[nativeAlg]
         }
         
+        ///
+        /// Obtains the digest length produced by this algorithm (in bytes).
+        ///
         public func digestLength() -> Int {
             switch self {
             case .SHA1:
@@ -65,6 +85,8 @@ public class HMAC : Updateable
     }
     
     typealias Context = UnsafeMutablePointer<CCHmacContext>
+    
+    /// Status of the calculation
     public var status : Status = .Success
     
     let context = Context.alloc(1)
@@ -76,19 +98,37 @@ public class HMAC : Updateable
         CCHmacInit(context, algorithm.nativeValue(), keyBuffer, size_t(keyByteCount))
     }
     
+    ///
+    /// Creates a new HMAC instance with the specified algorithm and key.
+    ///
+    /// - parameter algorithm: selects the algorithm
+    /// - parameter key: specifies the key
+    ///
     public init(algorithm : Algorithm, key : NSData)
     {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), key.bytes, size_t(key.length))
     }
     
-        
+    ///
+    /// Creates a new HMAC instance with the specified algorithm and key.
+    ///
+    /// - parameter algorithm: selects the algorithm
+    /// - parameter key: specifies the key
+    ///
     public init(algorithm : Algorithm, key : [UInt8])
     {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), key, size_t(key.count))
     }
     
+    ///
+    /// Creates a new HMAC instance with the specified algorithm and key string.
+    /// The key string is converted to bytes using UTF8 encoding.
+    ///
+    /// - parameter algorithm: selects the algorithm
+    /// - parameter key: specifies the key
+    ///
     init(algorithm : Algorithm, key : String)
     {
         self.algorithm = algorithm
@@ -98,13 +138,23 @@ public class HMAC : Updateable
     deinit {
         context.dealloc(1)
     }
-    
+ 
+    ///
+    /// Updates the calculation of the HMAC with the contents of a buffer.
+    ///
+    /// - returns: the calculated HMAC
+    ///
     public func update(buffer : UnsafePointer<Void>, _ byteCount : size_t) -> Self?
     {
         CCHmacUpdate(context, buffer, byteCount)
         return self 
     }
-            
+    
+    ///
+    /// Finalizes the HMAC calculation
+    ///
+    /// - returns: the calculated HMAC
+    ///
     public func final() -> [UInt8]
     {
         var hmac = Array<UInt8>(count:algorithm.digestLength(), repeatedValue:0)

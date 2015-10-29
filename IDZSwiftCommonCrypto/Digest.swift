@@ -14,28 +14,43 @@ import CommonCrypto
   Public API for message digests.
 
   Usage is straightforward
-  ::
+  ````
         let  s = "The quick brown fox jumps over the lazy dog."
         var md5 : Digest = Digest(algorithm:.MD5)
         md5.update(s)
         let digest = md5.final()
+ ````
   */
 public class Digest : Updateable
 {
+    ///
+    /// The status of the Digest.
+    /// For CommonCrypto this will always be `.Success`.
+    /// It is here to provide for engines which can fail.
+    ///
     public var status = Status.Success
-    /**
-        - MD2: Message Digest 2 See: http://en.wikipedia.org/wiki/MD2_(cryptography)
-        - MD4
-        - MD5
-        - SHA1: Secure Hash Algorithm 1
-        - SHA224: Secure Hash Algorithm 2 224-bit
-        - SHA256: Secure Hash Algorithm 2 256-bit
-        - SHA384: Secure Hash Algorithm 2 384-bit
-        - SHA512: Secure Hash Algorithm 2 512-bit
-     */
+    
+    ///
+    /// Enumerates available Digest algorithms
+    ///
     public enum Algorithm
     {
-        case MD2, MD4, MD5, SHA1, SHA224, SHA256, SHA384, SHA512
+        /// Message Digest 2 See: http://en.wikipedia.org/wiki/MD2_(cryptography)
+        case MD2,
+        /// Message Digest 4
+        MD4,
+        /// Message Digest 5
+        MD5,
+        /// Secure Hash Algorithm 1
+        SHA1,
+        /// Secure Hash Algorithm 2 224-bit
+        SHA224,
+        /// Secure Hash Algorithm 2 256-bit
+        SHA256,
+        /// Secure Hash Algorithm 2 384-bit
+        SHA384,
+        /// Secure Hash Algorithm 2 512-bit
+        SHA512
     }
     
     var engine: DigestEngine

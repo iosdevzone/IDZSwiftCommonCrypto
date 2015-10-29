@@ -8,6 +8,12 @@
 
 import Foundation
 
+///
+/// Converts a single hexadecimal digit encoded as a Unicode Scalar to it's corresponding value.
+///
+/// - parameter c: A Unicode scalar in the set 0..9a..fA..F
+/// - returns: the hexadecimal value of the digit
+///
 func convertHexDigit(c : UnicodeScalar) -> UInt8
 {
     switch c {
@@ -18,7 +24,12 @@ func convertHexDigit(c : UnicodeScalar) -> UInt8
     }
 }
 
-
+///
+/// Converts a string of hexadecimal digits to a Swift array.
+///
+/// - parameter s: the hex string (must contain an even number of digits)
+/// - returns: a Swift array
+///
 public func arrayFromHexString(s : String) -> [UInt8]
 {
     var g = s.unicodeScalars.generate()
@@ -37,27 +48,60 @@ public func arrayFromHexString(s : String) -> [UInt8]
     return a
 }
 
+///
+/// Converts a string of hexadecimal digits to an `NSData` object.
+///
+/// - parameter s: the hex string (must contain an even number of digits)
+/// - returns: an NSData object
+///
 public func dataFromHexString(s : String) -> NSData
 {
     let a = arrayFromHexString(s)
     return NSData(bytes:a, length:a.count)
 }
 
+///
+/// Converts a Swift array to an `NSData` object.
+///
+/// - parameter a: the Swift array
+/// - returns: an NSData object
+///
 public func dataFromByteArray(a : [UInt8]) -> NSData
 {
     return NSData(bytes:a, length:a.count)
 }
 
+///
+/// Converts a Swift array to a string of hexadecimal digits.
+///
+/// - parameter a: the Swift array
+/// - parameter uppercase: if true use uppercase for letter digits, lowercase otherwise
+/// - returns: a Swift string
+///
 public func hexStringFromArray(a : [UInt8], uppercase : Bool = false) -> String
 {
     return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", combine: +)
 }
 
+///
+/// Converts a Swift array to an `NSString` object.
+///
+/// - parameter a: the Swift array
+/// - parameter uppercase: if true use uppercase for letter digits, lowercase otherwise
+/// - returns: an `NSString` object
+///
 public func hexNSStringFromArray(a : [UInt8], uppercase : Bool = false) -> NSString
 {
     return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", combine: +)
 }
 
+///
+/// Converts a Swift array to a Swift `String` containing a comma separated list of bytes.
+/// This is used to generate test data programmatically.
+///
+/// - parameter a: the Swift array
+/// - returns: a Swift string
+///
 public func hexListFromArray(a : [UInt8]) -> String
 {
     return a.map() { String(format:"0x%02x, ", $0) }.reduce("", combine: +)    

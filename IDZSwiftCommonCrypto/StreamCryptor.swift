@@ -12,7 +12,7 @@ import CommonCrypto
 /**
     Encrypts or decrypts return results as they become available.
 
-    :note: The underlying cipher may be a block or a stream cipher.
+    - note: The underlying cipher may be a block or a stream cipher.
 
     Use for large files or network streams.
 
@@ -20,10 +20,17 @@ import CommonCrypto
 */
 public class StreamCryptor
 {
+    ///
+    /// Enumerates Cryptor operations
+    ///
     public enum Operation
     {
-        case Encrypt, Decrypt
+        /// Encrypting
+        case Encrypt,
+        /// Decrypting
+        Decrypt
         
+        /// Convert to native `CCOperation`
         func nativeValue() -> CCOperation {
             switch self {
             case Encrypt : return CCOperation(kCCEncrypt)
@@ -32,10 +39,25 @@ public class StreamCryptor
         }
     }
     
+    ///
+    /// Enumerates available algorithms
+    ///
     public enum Algorithm
     {
-        case AES, DES, TripleDES, CAST, RC2, Blowfish
+        /// Advanced Encryption Standard
+        case AES,
+        /// Data Encryption Standard
+        DES,
+        /// Triple DES
+        TripleDES,
+        /// CAST
+        CAST,
+        /// RC2
+        RC2,
+        /// Blowfish
+        Blowfish
         
+        /// Blocksize, in bytes, of algorithm.
         public func blockSize() -> Int {
             switch self {
             case AES : return kCCBlockSizeAES128
@@ -46,7 +68,7 @@ public class StreamCryptor
             case Blowfish : return kCCBlockSizeBlowfish
             }
         }
-        
+        /// Native, CommonCrypto constant for algorithm.
         func nativeValue() -> CCAlgorithm
         {
             switch self {
@@ -68,54 +90,74 @@ public class StreamCryptor
     * NSHipster
     * From: http://nshipster.com/rawoptionsettype/
     */
+    ///
+    /// Maps CommonCryptoOptions onto a Swift struct.
+    ///
     public struct Options : OptionSetType, BooleanType {
         private var value: UInt = 0
         public typealias RawValue = UInt
+        
+        // Needed by 2.0 RawRepresentable
+        /// Convert to native raw value
         public var rawValue : UInt { return self.value }
         
+        
+        /// Initialize from a raw value
         public init(_ rawValue: UInt) {
             self.value = rawValue
         }
         
         
         // Needed for 1.1 RawRepresentable
+        // Needed for 2.0 OptionSetType
+        /// Convert from a native value (i.e. `0`, `kCCOptionPKCS7Padding`, `kCCOptionECBMode`)
         public init(rawValue: UInt) {
             self.value = rawValue
         }
         
         // Needed for 1.1 NilLiteralConverable
+        /// Initialize from a nil literal
         public init(nilLiteral: ())
         {
             
         }
         
         // Needed for 1.0 _RawOptionSet
+        /// Create from a mask
         public static func fromMask(raw: UInt) -> Options {
             return self.init(raw)
         }
         
+        /// Convert from native raw value.
         public static func fromRaw(raw: UInt) -> Options? {
             return self.init(raw)
         }
         
+        /// Convert to native raw value.
         public func toRaw() -> UInt {
             return value
         }
         
+        /// Convert to boolean value.
         public var boolValue: Bool {
             return value != 0
         }
         
+        /// Initialize to value appropriate for "all zeros" of a mask.
         public static var allZeros: Options {
             return self.init(0)
         }
         
+        /// nil is consider the same a zero or None.
         public static func convertFromNilLiteral() -> Options {
             return self.init(0)
         }
         
+        /// No options
         public static var None: Options           { return self.init(0) }
+        /// Use padding. Needed unless the input is a integral number of blocks long.
         public static var PKCS7Padding: Options    { return self.init(UInt(kCCOptionPKCS7Padding)) }
+        /// Electronic Code Book Mode. Don't use this.
         public static var ECBMode: Options      { return self.init(UInt(kCCOptionECBMode)) }
     }
     

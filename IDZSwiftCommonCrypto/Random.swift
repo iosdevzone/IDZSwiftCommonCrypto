@@ -12,6 +12,9 @@ import CommonCrypto
 
 public typealias RNGStatus = Status
 
+///
+/// Generates buffers of random bytes.
+///
 public class Random
 {
     /**
