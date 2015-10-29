@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 iOSDeveloperZone.com. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for IDZSwiftCommonCrypto.
 FOUNDATION_EXPORT double IDZSwiftCommonCryptoVersionNumber;
