@@ -3,8 +3,35 @@
 
 A Swift wrapper for Apple's `CommonCrypto` library.
 
-Using `IDZSwiftCommonCrypto`
-----------------------------
+# Using `IDZSwiftCommonCrypto`
+
+There are three ways to add IDZCommonCrypto to your project:
+* Use CocoaPods
+* Use Carthage
+* Manually
+
+## CocoaPods
+
+If you are using CocoaPods, add the following to your Podfile:
+```bash
+pod 'IDZSwiftCommonCrypto`
+```
+
+Then, run the following command to install the IDZSwiftCommonCrypto pod: 
+```bash
+pod install
+```
+## Carthage
+
+If you are using Carthage, add the following to your Cartfile:
+
+```bash
+github "iosdevzone/IDZCommonCrypto"
+```
+
+Run `carthage` to build the framework and drag the built 'IDZCommonCrypto.framework' into your project or workspace.
+
+## Manually
 
 Since `CommonCrypto` is not a standalone module, you need to generate a fake module map to convince Xcode into allowing you to `import CommonCrypto`. The `GenerateCommonCryptoModule` script provides two methods for doing this. Which method you choose depends on whether you want to able to use `CommonCrypto` and, by extension, `IDZSwiftCommonCrypto` in playgrounds.
 
