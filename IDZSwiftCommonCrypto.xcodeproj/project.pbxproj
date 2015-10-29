@@ -17,8 +17,8 @@
 		0CCB89CC19CE071D00068ED6 /* KeyDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C719CE071D00068ED6 /* KeyDerivation.swift */; };
 		0CCB89CD19CE071D00068ED6 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89C819CE071D00068ED6 /* Random.swift */; };
 		0CCB89D219CF416B00068ED6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89D119CF416B00068ED6 /* Utilities.swift */; };
-		3012B11B1BAA237C008504EB /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3012B11A1BAA237C008504EB /* Updateable.swift */; settings = {ASSET_TAGS = (); }; };
-		3050B9B41BA9F7C700177A38 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050B9B31BA9F7C700177A38 /* Crypto.swift */; settings = {ASSET_TAGS = (); }; };
+		3012B11B1BAA237C008504EB /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3012B11A1BAA237C008504EB /* Updateable.swift */; };
+		3050B9B41BA9F7C700177A38 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050B9B31BA9F7C700177A38 /* Crypto.swift */; };
 		308499AA1BA77BC20025B41D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308499A91BA77BC20025B41D /* AppDelegate.swift */; };
 		308499AC1BA77BC20025B41D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308499AB1BA77BC20025B41D /* ViewController.swift */; };
 		308499AF1BA77BC20025B41D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 308499AD1BA77BC20025B41D /* Main.storyboard */; };
@@ -28,8 +28,8 @@
 		308499CA1BA77BC20025B41D /* IDZSwiftCommonCryptoTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308499C91BA77BC20025B41D /* IDZSwiftCommonCryptoTestAppUITests.swift */; };
 		308499D51BA77F2B0025B41D /* IDZSwiftCommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CCB89AB19CE05F800068ED6 /* IDZSwiftCommonCrypto.framework */; };
 		308499D61BA77F2B0025B41D /* IDZSwiftCommonCrypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0CCB89AB19CE05F800068ED6 /* IDZSwiftCommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		308499DB1BA78C600025B41D /* CommonCryptoAPITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 308499DA1BA78C600025B41D /* CommonCryptoAPITests.m */; settings = {ASSET_TAGS = (); }; };
-		308499DC1BA7A4920025B41D /* IDZSwiftCommonCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89BA19CE05F800068ED6 /* IDZSwiftCommonCryptoTests.swift */; settings = {ASSET_TAGS = (); }; };
+		308499DB1BA78C600025B41D /* CommonCryptoAPITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 308499DA1BA78C600025B41D /* CommonCryptoAPITests.m */; };
+		308499DC1BA7A4920025B41D /* IDZSwiftCommonCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCB89BA19CE05F800068ED6 /* IDZSwiftCommonCryptoTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -595,6 +595,8 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -641,6 +643,8 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
