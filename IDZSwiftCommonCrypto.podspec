@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "IDZSwiftCommonCrypto"
-  s.version      = "0.5.16"
+  s.version      = "0.6.1"
   s.summary      = "A wrapper for Apple's Common Crypto library written in Swift."
 
   s.homepage     = "https://github.com/iosdevzone/IDZSwiftCommonCrypto"
