@@ -14,12 +14,13 @@ import CommonCrypto
   Public API for message digests.
 
   Usage is straightforward
-  ````
-        let  s = "The quick brown fox jumps over the lazy dog."
-        var md5 : Digest = Digest(algorithm:.MD5)
-        md5.update(s)
-        let digest = md5.final()
- ````
+
+    ````
+    let  s = "The quick brown fox jumps over the lazy dog."
+    var md5 : Digest = Digest(algorithm:.MD5)
+    md5.update(s)
+    let digest = md5.final()
+    ````
   */
 public class Digest : Updateable
 {

@@ -15,3 +15,5 @@ script:
 - pwd
 - xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
 - make test
+
+after_success: slather

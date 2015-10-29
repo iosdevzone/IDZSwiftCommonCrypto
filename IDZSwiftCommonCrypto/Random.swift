@@ -28,27 +28,27 @@ public class Random
      */
     public class func generateBytes(bytes : UnsafeMutablePointer<Void>, byteCount : Int ) -> RNGStatus
     {
-        let status = Status(rawValue: CCRandomGenerateBytes(bytes, byteCount))
-        if(status == nil)
-        {
-            fatalError("")
+        let statusCode = CCRandomGenerateBytes(bytes, byteCount)
+        guard let status = Status(rawValue: statusCode) else {
+            fatalError("CCRandomGenerateBytes returned unexpected status code: \(statusCode)")
         }
-        return status!
+        return status
     }
     /**
     Generates an array of random bytes.
     
     - parameter bytesCount: number of random bytes to generate
     - return: an array of random bytes
+    - throws: an `RNGStatus` on failure
     */
     public class func generateBytes(byteCount : Int ) throws -> [UInt8]
     {
-        if(byteCount <= 0)
-        {
-            fatalError("generateBytes: byteCount must be positve and non-zero")
-        }
+        guard byteCount > 0 else { throw RNGStatus.ParamError }
+        
         var bytes : [UInt8] = Array(count:byteCount, repeatedValue:UInt8(0))
-        CCRandomGenerateBytes(&bytes, byteCount)
+        let status = generateBytes(&bytes, byteCount: byteCount)
+        
+        guard status == .Success else { throw status }
         return bytes
     }
     

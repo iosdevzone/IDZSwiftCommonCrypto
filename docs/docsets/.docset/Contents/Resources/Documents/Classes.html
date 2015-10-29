@@ -277,13 +277,13 @@
                       <div class="abstract">
                         <p>Public API for message digests.</p>
 
-<p>Usage is straightforward
- <code>
-       let  s = &quot;The quick brown fox jumps over the lazy dog.&quot;
-       var md5 : Digest = Digest(algorithm:.MD5)
-       md5.update(s)
-       let digest = md5.final()
-</code></p>
+<p>Usage is straightforward</p>
+
+<pre class="highlight plaintext"><code>  let  s = "The quick brown fox jumps over the lazy dog."
+  var md5 : Digest = Digest(algorithm:.MD5)
+  md5.update(s)
+  let digest = md5.final()
+</code></pre>
 
                         <a href="Classes/Digest.html" class="slightly-smaller">See more</a>
                       </div>

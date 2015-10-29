@@ -98,6 +98,23 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         0xdf,0x22,0xcb,0xd0]
     
     // MARK: - Digest tests
+    // MARK: MD2 (RFC1319)
+    let md2inputs = ["", "a", "abc", "message digest", "abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", "12345678901234567890123456789012345678901234567890123456789012345678901234567890"]
+    let md2outputs = ["8350e5a3e24c153df2275c9f80692773", "32ec01ec4a6dac72c0ab96fb34c0b5d1",
+    "da853b0d3f88d99b30283a69e6ded6bb", "ab4f496bfb2a530b219ff33031fe06b0", "4e8ddff3650292ab5a4108c3aa47940b", "da33def2a42df13975352846c30338cd", "d5976f79d83d3a0dc9806c3c66f3efd8"]
+    
+    func testMD2() {
+        for i in 0..<md2inputs.count {
+            let input = md2inputs[i]
+            let expectedOutput = arrayFromHexString(md2outputs[i])
+            let d : Digest = Digest(algorithm:.MD2)
+            d.update(input)
+            let output = d.final()
+            XCTAssertEqual(output, expectedOutput)
+        }
+    }
+    
+    // MARK: MD5
     func testMD5_1()
     {
         let md5 : Digest = Digest(algorithm:.MD5)
@@ -144,8 +161,23 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     }
 
     // MARK: - HMAC tests
+    let hmacDefaultKeyMD5 = arrayFromHexString("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b")
+    let hmacDefaultResultMD5 = arrayFromHexString("9294727a3638bb1c13f48ef8158bfc9d")
+    
     let hmacDefaultKeySHA1 = arrayFromHexString("0102030405060708090a0b0c0d0e0f10111213141516171819")
     let hmacDefaultResultSHA1 = arrayFromHexString("4c9007f4026250c6bc8414f9bf50c86c2d7235da")
+    
+    // See: https://www.ietf.org/rfc/rfc2202.txt
+    func test_HMAC_MD5()
+    {
+        let key = self.hmacDefaultKeyMD5
+        let data = "Hi There"
+        let expected = self.hmacDefaultResultMD5
+        
+        let hmac = HMAC(algorithm:.MD5, key:key).update(data)?.final()
+        
+        XCTAssertEqual(hmac!, expected, "PASS")
+    }
     
     // See: https://www.ietf.org/rfc/rfc2202.txt
     func test_HMAC_SHA1()
