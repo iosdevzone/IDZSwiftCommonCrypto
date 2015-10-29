@@ -1,5 +1,8 @@
 REPO=IDZPodspecs
 NAME=IDZSwiftCommonCrypto
+
+OS=9.1
+
 PG=README.playground
 RSRC_DIR=$(PG)/Resources
 
@@ -9,10 +12,13 @@ $(PG): README.md
 	cp Riscal.jpg ${RSRC_DIR}
 	git config --global push.default simple
 	git diff-files --exit-code; if [[ "$?" == "1" ]]; then git commit -a -m "Playground update from Travis [ci skip]"; git push; fi
+#
+# Build
+#
 build:
-	xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
+	xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=${OS}'
 test:
-	xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
+	xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=${OS}'
 clean:
 	rm -rf $(PG)
 
