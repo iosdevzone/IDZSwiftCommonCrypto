@@ -8,7 +8,7 @@ env:
     secure: a2fi02GPkxw27jVjW47EkvB/BW/SOIxlmLQJaiZ3xqbKe4udUxKE0ZigD0nVJDmxpiVHv5/Uc9ZQDPtKvvmU9kakusxjBVqMy+IxCYsH4+aDaATdaY9WHvVbARXJGjE/KmKnTfos/P8G8XqXahNKznql/gF2wZNoQIQD49JNk8s=
 
 before_install:
-- gem install slather -N
+- bundle install
 
 script:
 - make
@@ -19,4 +19,4 @@ script:
 - xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
 - make test
 
-after_success: slather
+after_success: bundle exec slather coverage --input-format profdata IDZSwiftCommonCrypto.xcodeproj
