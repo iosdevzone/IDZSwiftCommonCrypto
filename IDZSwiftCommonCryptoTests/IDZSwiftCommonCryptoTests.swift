@@ -159,6 +159,44 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         
         XCTAssertEqual(digest!, qbfMD5, "PASS")
     }
+    
+    // See: http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA_All.pdf
+    let shaShortBlock = "abc"
+    let sha1ShortBlockOutput = "a9993e364706816aba3e25717850c26c9cd0d89d"
+    let sha224BlockOutput = "23097d223405d8228642a477bda255b32aadbce4bda0b3f7e36c9da7"
+    let sha256BlockOutput = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    let sha384BlockOutput = "cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed8086072ba1e7cc2358baeca134c825a7"
+    let sha512BlockOutput = "ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f"
+    func test_Digest_SHA1_String() {
+        let digest = Digest(algorithm: .SHA1).update(shaShortBlock)?.final()
+        print(hexStringFromArray(digest!))
+        XCTAssertEqual(hexStringFromArray(digest!), sha1ShortBlockOutput)
+        
+    }
+    
+    func test_Digest_SHA224_String() {
+        let digest = Digest(algorithm: .SHA224).update(shaShortBlock)?.final()
+        print(hexStringFromArray(digest!))
+        XCTAssertEqual(hexStringFromArray(digest!), sha224BlockOutput)
+    }
+    
+    func test_Digest_SHA256_String() {
+        let digest = Digest(algorithm: .SHA256).update(shaShortBlock)?.final()
+        print(hexStringFromArray(digest!))
+        XCTAssertEqual(hexStringFromArray(digest!), sha256BlockOutput)
+    }
+    
+    func test_Digest_SHA384_String() {
+        let digest = Digest(algorithm: .SHA384).update(shaShortBlock)?.final()
+        print(hexStringFromArray(digest!))
+        //XCTAssertEqual(hexStringFromArray(digest!), sha384BlockOutput)
+    }
+    
+    func test_Digest_SHA512_String() {
+        let digest = Digest(algorithm: .SHA512).update(shaShortBlock)?.final()
+        print(hexStringFromArray(digest!))
+        //XCTAssertEqual(hexStringFromArray(digest!), sha512BlockOutput)
+    }
 
     // MARK: - HMAC tests
     let hmacDefaultKeyMD5 = arrayFromHexString("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b")
@@ -201,7 +239,59 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         
         XCTAssertEqual(hmac!, expected, "PASS")
     }
+    // For HMAC-SHA1-{224,256,384,512}
+    // See: http://tools.ietf.org/html/rfc4231
+    let rfc4231key1 = "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b" // should be 20 bytes
+    let rfc4231string1 = "Hi There"
+    let rfc4231data1 = "4869205468657265"
+    let rfc4231SHA224Output1 = "896fb1128abbdf196832107cd49df33f47b4b1169912ba4f53684b22"
+    let rfc4231SHA256Output1 = "b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7"
+    let rfc4231SHA384Output1 = "afd03944d84895626b0825f4ab46907f15f9dadbe4101ec682aa034c7cebc59cfaea9ea9076ede7f4af152e8b2fa9cb6"
+    let rfc4231SHA512Output1 = "87aa7cdea5ef619d4ff0b4241a1d6cb02379f4e2ce4ec2787ad0b30545e17cdedaa833b7d6b8a702038b274eaea3f4e4be9d914eeb61f1702e696c203a126854"
     
+    func test_HMAC_SHA224()
+    {
+        let key = arrayFromHexString(self.rfc4231key1)
+        let data : [UInt8] = arrayFromHexString(rfc4231data1)
+        let expected = arrayFromHexString(self.rfc4231SHA224Output1)
+        
+        let hmac = HMAC(algorithm: HMAC.Algorithm.SHA224, key:key).update(data)?.final()
+        
+        XCTAssertEqual(hmac!, expected, "PASS")
+    }
+    
+    func test_HMAC_SHA256()
+    {
+        let key = arrayFromHexString(self.rfc4231key1)
+        let data : [UInt8] = arrayFromHexString(rfc4231data1)
+        let expected = arrayFromHexString(self.rfc4231SHA256Output1)
+        
+        let hmac = HMAC(algorithm: HMAC.Algorithm.SHA256, key:key).update(data)?.final()
+        
+        XCTAssertEqual(hmac!, expected, "PASS")
+    }
+    
+    func test_HMAC_SHA384()
+    {
+        let key = arrayFromHexString(self.rfc4231key1)
+        let data : [UInt8] = arrayFromHexString(rfc4231data1)
+        let expected = arrayFromHexString(self.rfc4231SHA384Output1)
+        
+        let hmac = HMAC(algorithm: HMAC.Algorithm.SHA384, key:key).update(data)?.final()
+        
+        XCTAssertEqual(hmac!, expected, "PASS")
+    }
+    
+    func test_HMAC_SHA512()
+    {
+        let key = arrayFromHexString(self.rfc4231key1)
+        let data : [UInt8] = arrayFromHexString(rfc4231data1)
+        let expected = arrayFromHexString(self.rfc4231SHA512Output1)
+        
+        let hmac = HMAC(algorithm: HMAC.Algorithm.SHA512, key:key).update(data)?.final()
+        
+        XCTAssertEqual(hmac!, expected, "PASS")
+    }
     
     // MARK: - KeyDerivation tests
     // See: https://www.ietf.org/rfc/rfc6070.txt
