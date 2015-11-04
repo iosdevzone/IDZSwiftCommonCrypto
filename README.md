@@ -1,4 +1,5 @@
-# IDZSwiftCommonCrypto [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Build Status](https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto.svg?branch=swift2.0)](https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto)
+# IDZSwiftCommonCrypto 
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Build Status](https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto.svg?branch=swift2.0)](https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto) [![Coverage Status](https://coveralls.io/repos/iosdevzone/IDZSwiftCommonCrypto/badge.svg?branch=swift2.0&service=github)](https://coveralls.io/github/iosdevzone/IDZSwiftCommonCrypto?branch=swift2.0)
 
 
 A Swift wrapper for Apple's `CommonCrypto` library.
