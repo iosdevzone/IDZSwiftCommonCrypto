@@ -3,7 +3,8 @@
 
 A Swift wrapper for Apple's `CommonCrypto` library.
 
-If you're using Swift 2.0 please use the `swift2.0` branch.
+Only use this branch if you need `swift1.2` support. The `swift2.0` branch will be merged with master and development will concentrate on that branch.
+
 
 Using `IDZSwiftCommonCrypto`
 ----------------------------
