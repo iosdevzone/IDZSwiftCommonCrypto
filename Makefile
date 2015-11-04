@@ -18,7 +18,7 @@ $(PG): README.md
 build:
 	xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=${OS}'
 test:
-	xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=${OS}'
+	xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=${OS}' | xcpretty
 clean:
 	rm -rf $(PG)
 
