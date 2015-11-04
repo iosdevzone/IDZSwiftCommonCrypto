@@ -6,6 +6,9 @@ OS=9.1
 PG=README.playground
 RSRC_DIR=$(PG)/Resources
 
+XC=xcodebuild 
+XCPP=xcpretty
+
 $(PG): README.md
 	playground README.md -p ios 
 	mkdir -p  ${RSRC_DIR}
@@ -16,9 +19,9 @@ $(PG): README.md
 # Build
 #
 build:
-	xcodebuild build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=${OS}'
+	$(XC) build -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=${OS}' | $(XCPP)
 test:
-	xcodebuild test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=${OS}' | xcpretty
+	$(XC) test -scheme IDZSwiftCommonCrypto -destination 'platform=iOS Simulator,name=iPhone 6,OS=${OS}' | $(XCPP)
 clean:
 	rm -rf $(PG)
 

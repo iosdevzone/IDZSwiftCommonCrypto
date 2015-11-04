@@ -11,9 +11,29 @@
 <body>
 <div class="content-wrapper">
   <section class="section">
-    <h1 id="idzswiftcommoncrypto-carthage-compatible-https-img-shields-io-badge-carthage-compatible-4bc51d-svg-style-flat-https-github-com-carthage-carthage-build-status-https-travis-ci-org-iosdevzone-idzswiftcommoncrypto-svg-branch-master-https-travis-ci-org-iosdevzone-idzswiftcommoncrypto-">IDZSwiftCommonCrypto <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a> <a href="https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto"><img src="https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto.svg?branch=master" alt="Build Status"></a></h1>
+    <h1 id="idzswiftcommoncrypto">IDZSwiftCommonCrypto</h1>
+<p><a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a> <a href="https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto"><img src="https://travis-ci.org/iosdevzone/IDZSwiftCommonCrypto.svg?branch=swift2.0" alt="Build Status"></a> <a href="https://coveralls.io/github/iosdevzone/IDZSwiftCommonCrypto?branch=swift2.0"><img src="https://coveralls.io/repos/iosdevzone/IDZSwiftCommonCrypto/badge.svg?branch=swift2.0&amp;service=github" alt="Coverage Status"></a></p>
 <p>A Swift wrapper for Apple&#39;s <code>CommonCrypto</code> library.</p>
-<h2 id="using-idzswiftcommoncrypto-">Using <code>IDZSwiftCommonCrypto</code></h2>
+<h1 id="using-idzswiftcommoncrypto-">Using <code>IDZSwiftCommonCrypto</code></h1>
+<p>There are three ways to add IDZCommonCrypto to your project:</p>
+<ul>
+<li>Use CocoaPods</li>
+<li>Use Carthage</li>
+<li>Manually</li>
+</ul>
+<h2 id="cocoapods">CocoaPods</h2>
+<p>If you are using CocoaPods, add the following to your Podfile:</p>
+<pre><code class="lang-bash">pod &#39;IDZSwiftCommonCrypto`
+</code></pre>
+<p>Then, run the following command to install the IDZSwiftCommonCrypto pod: </p>
+<pre><code class="lang-bash">pod install
+</code></pre>
+<h2 id="carthage">Carthage</h2>
+<p>If you are using Carthage, add the following to your Cartfile:</p>
+<pre><code class="lang-bash">github &quot;iosdevzone/IDZCommonCrypto&quot;
+</code></pre>
+<p>Run <code>carthage</code> to build the framework and drag the built &#39;IDZCommonCrypto.framework&#39; into your project or workspace.</p>
+<h2 id="manually">Manually</h2>
 <p>Since <code>CommonCrypto</code> is not a standalone module, you need to generate a fake module map to convince Xcode into allowing you to <code>import CommonCrypto</code>. The <code>GenerateCommonCryptoModule</code> script provides two methods for doing this. Which method you choose depends on whether you want to able to use <code>CommonCrypto</code> and, by extension, <code>IDZSwiftCommonCrypto</code> in playgrounds.</p>
 <p>To make <code>CommonCrypto</code> available to frameworks and playground use the command:</p>
 <pre><code class="lang-bash">    ./GenerateCommonCryptoModule iphonesimulator8.0
