@@ -11,6 +11,8 @@ before_install:
 - bundle install
 
 script:
+- echo Available SDKs
+- xcodebuild -showsdks
 - make
 - rm -rf CommonCrypto
 - ./GenerateCommonCryptoModule iphonesimulator9.0 .
