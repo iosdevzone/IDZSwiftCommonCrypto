@@ -35,4 +35,4 @@ lint_pod:
 
 # Push pod to private spec repository
 push_pod:
-	pod repo push ${REPO} ${NAME}.podspec
+	pod trunk push ${NAME}.podspec
