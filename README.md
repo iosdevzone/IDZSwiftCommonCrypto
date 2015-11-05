@@ -4,6 +4,8 @@
 
 A Swift wrapper for Apple's `CommonCrypto` library.
 
+IDZSwiftCommonCrypto works with both CocoaPods and Cathage. For more details on how to install it into your projects see [INSTALL.md](INSTALL.md)
+
 # Using `IDZSwiftCommonCrypto`
 
 There are three ways to add IDZCommonCrypto to your project:
