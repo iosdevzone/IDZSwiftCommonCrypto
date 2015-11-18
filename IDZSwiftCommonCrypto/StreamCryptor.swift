@@ -93,72 +93,26 @@ public class StreamCryptor
     ///
     /// Maps CommonCryptoOptions onto a Swift struct.
     ///
-    public struct Options : OptionSetType, BooleanType {
-        private var value: UInt = 0
-        public typealias RawValue = UInt
+    public struct Options : OptionSetType {
+        public typealias RawValue = Int
+        public let rawValue: RawValue
         
-        // Needed by 2.0 RawRepresentable
-        /// Convert to native raw value
-        public var rawValue : UInt { return self.value }
-        
-        
-        /// Initialize from a raw value
-        public init(_ rawValue: UInt) {
-            self.value = rawValue
-        }
-        
-        
-        // Needed for 1.1 RawRepresentable
-        // Needed for 2.0 OptionSetType
         /// Convert from a native value (i.e. `0`, `kCCOptionPKCS7Padding`, `kCCOptionECBMode`)
-        public init(rawValue: UInt) {
-            self.value = rawValue
+        public init(rawValue: RawValue) {
+            self.rawValue = rawValue
         }
         
-        // Needed for 1.1 NilLiteralConverable
-        /// Initialize from a nil literal
-        public init(nilLiteral: ())
-        {
-            
-        }
-        
-        // Needed for 1.0 _RawOptionSet
-        /// Create from a mask
-        public static func fromMask(raw: UInt) -> Options {
-            return self.init(raw)
-        }
-        
-        /// Convert from native raw value.
-        public static func fromRaw(raw: UInt) -> Options? {
-            return self.init(raw)
-        }
-        
-        /// Convert to native raw value.
-        public func toRaw() -> UInt {
-            return value
-        }
-        
-        /// Convert to boolean value.
-        public var boolValue: Bool {
-            return value != 0
-        }
-        
-        /// Initialize to value appropriate for "all zeros" of a mask.
-        public static var allZeros: Options {
-            return self.init(0)
-        }
-        
-        /// nil is consider the same a zero or None.
-        public static func convertFromNilLiteral() -> Options {
-            return self.init(0)
+        /// Convert from a native value (i.e. `0`, `kCCOptionPKCS7Padding`, `kCCOptionECBMode`)
+        public init(_ rawValue: RawValue) {
+            self.init(rawValue: rawValue)
         }
         
         /// No options
-        public static var None: Options           { return self.init(0) }
+        public static let None = Options(rawValue: 0)
         /// Use padding. Needed unless the input is a integral number of blocks long.
-        public static var PKCS7Padding: Options    { return self.init(UInt(kCCOptionPKCS7Padding)) }
+        public static var PKCS7Padding =  Options(rawValue:kCCOptionPKCS7Padding)
         /// Electronic Code Book Mode. Don't use this.
-        public static var ECBMode: Options      { return self.init(UInt(kCCOptionECBMode)) }
+        public static var ECBMode = Options(rawValue:kCCOptionECBMode)
     }
     
 
@@ -269,7 +223,7 @@ public class StreamCryptor
     public init(operation: Operation, algorithm: Algorithm, options: Options, keyBuffer: UnsafePointer<Void>,
         keyByteCount: Int, ivBuffer: UnsafePointer<Void>)
     {
-        let rawStatus = CCCryptorCreate(operation.nativeValue(), algorithm.nativeValue(), CCOptions(options.toRaw()), keyBuffer, keyByteCount, ivBuffer, context)
+        let rawStatus = CCCryptorCreate(operation.nativeValue(), algorithm.nativeValue(), CCOptions(options.rawValue), keyBuffer, keyByteCount, ivBuffer, context)
         if let status = Status.fromRaw(rawStatus)
         {
             self.status = status
