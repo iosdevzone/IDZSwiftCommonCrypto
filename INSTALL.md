@@ -9,7 +9,7 @@ There are three ways to add IDZCommonCrypto to your project:
 
 If you are using CocoaPods, add the following to your Podfile:
 ```bash
-pod 'IDZSwiftCommonCrypto`
+pod 'IDZSwiftCommonCrypto'
 ```
 
 Then, run the following command to install the IDZSwiftCommonCrypto pod:
