@@ -106,3 +106,27 @@ public func hexListFromArray(a : [UInt8]) -> String
 {
     return a.map() { String(format:"0x%02x, ", $0) }.reduce("", combine: +)    
 }
+
+///
+/// Zero pads a Swift array such that it is an integral number of `blockSizeinBytes` long.
+///
+/// - parameter a: the Swift array
+/// - parameter blockSizeInBytes: the block size in bytes (cunningly enough!)
+/// - returns: a Swift string
+///
+public func zeroPad(a: [UInt8], _ blockSize: Int) -> [UInt8] {
+    let pad = blockSize - (a.count % blockSize)
+    guard pad != 0 else { return a }
+    return a + Array<UInt8>(count: pad, repeatedValue: 0)
+}
+
+///
+/// Zero pads a Swift string (after UTF8 conversion)  such that it is an integral number of `blockSizeinBytes` long.
+///
+/// - parameter s: the Swift array
+/// - parameter blockSizeInBytes: the block size in bytes (cunningly enough!)
+/// - returns: a Swift string
+///
+public func zeroPad(s: String, _ blockSize: Int) -> [UInt8] {
+    return zeroPad(Array<UInt8>(s.utf8), blockSize)
+}

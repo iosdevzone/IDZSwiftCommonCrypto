@@ -39,6 +39,42 @@ public class StreamCryptor
         }
     }
     
+    public enum ValidKeySize {
+        case Fixed(Int)
+        case Discrete([Int])
+        case Range(Int,Int)
+        
+        /**
+            Determines if a given `keySize` is valid for this algorithm.
+        */
+        func isValidKeySize(keySize: Int) -> Bool {
+            switch self {
+            case .Fixed(let fixed): return (fixed == keySize)
+            case .Range(let min, let max): return ((keySize >= min) && (keySize <= max))
+            case .Discrete(let values): return values.contains(keySize)
+            }
+        }
+        
+        /**
+            Determines the next valid key size; that is, the first valid key size larger 
+            than the given value.
+            Will return `nil` if the passed in `keySize` is greater than the max.
+        */
+        func paddedKeySize(keySize: Int) -> Int? {
+            switch self {
+            case .Fixed(let fixed):
+                return (keySize <= fixed) ? fixed : nil
+            case .Range(let min, let max):
+                return (keySize > max) ? nil : ((keySize < min) ? min : keySize)
+            case .Discrete(let values):
+                return values.sort().reduce(nil) { answer, current in
+                    return answer ?? ((current >= keySize) ? current : nil)
+                }
+            }
+        }
+        
+        
+    }
     ///
     /// Enumerates available algorithms
     ///
@@ -79,6 +115,28 @@ public class StreamCryptor
             case RC2: return CCAlgorithm(kCCAlgorithmRC2)
             case Blowfish : return CCAlgorithm(kCCAlgorithmBlowfish)
             }
+        }
+        
+        /// Determines the valid key size for this algorithm
+        func validKeySize() -> ValidKeySize {
+            switch self {
+            case AES : return .Discrete([kCCKeySizeAES128, kCCKeySizeAES192, kCCKeySizeAES256])
+            case DES : return .Fixed(kCCKeySizeDES)
+            case TripleDES : return .Fixed(kCCKeySize3DES)
+            case CAST : return .Range(kCCKeySizeMinCAST, kCCKeySizeMaxCAST)
+            case RC2: return .Range(kCCKeySizeMinRC2, kCCKeySizeMaxRC2)
+            case Blowfish : return .Range(kCCKeySizeMinBlowfish, kCCKeySizeMaxBlowfish)
+            }
+        }
+        
+        /// Tests if a given keySize is valid for this algorithm
+        func isValidKeySize(keySize: Int) -> Bool {
+            return self.validKeySize().isValidKeySize(keySize)
+        }
+        
+        /// Calculates the next, if any, valid keySize greater or equal to a given `keySize` for this algorithm
+        func paddedKeySize(keySize: Int) -> Int? {
+            return self.validKeySize().paddedKeySize(keySize)
         }
     }
     
@@ -135,7 +193,12 @@ public class StreamCryptor
     public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: [UInt8],
         iv : [UInt8])
     {
-        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:key, keyByteCount:key.count, ivBuffer:iv)
+        guard let paddedKeySize = algorithm.paddedKeySize(key.count) else {
+            fatalError("FATAL_ERROR: Invalid key size")
+        }
+        
+        self.init(operation:operation, algorithm:algorithm, options:options,
+            keyBuffer:zeroPad(key, paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
     }
     /**
         Creates a new StreamCryptor
@@ -148,7 +211,14 @@ public class StreamCryptor
     public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: String,
         iv : String)
     {
-        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:key, keyByteCount:key.lengthOfBytesUsingEncoding(NSUTF8StringEncoding), ivBuffer:iv)
+        let keySize = key.utf8.count
+        guard let paddedKeySize = algorithm.paddedKeySize(keySize) else {
+            fatalError("FATAL_ERROR: Invalid key size")
+        }
+        
+        self.init(operation:operation, algorithm:algorithm, options:options,
+            keyBuffer:zeroPad(key, paddedKeySize),
+            keyByteCount:paddedKeySize, ivBuffer:iv)
     }
     /**
         Add the contents of an Objective-C NSData buffer to the current encryption/decryption operation.
@@ -223,6 +293,8 @@ public class StreamCryptor
     public init(operation: Operation, algorithm: Algorithm, options: Options, keyBuffer: UnsafePointer<Void>,
         keyByteCount: Int, ivBuffer: UnsafePointer<Void>)
     {
+        guard algorithm.isValidKeySize(keyByteCount) else  { fatalError("FATAL_ERROR: Invalid key size.") }
+
         let rawStatus = CCCryptorCreate(operation.nativeValue(), algorithm.nativeValue(), CCOptions(options.rawValue), keyBuffer, keyByteCount, ivBuffer, context)
         if let status = Status.fromRaw(rawStatus)
         {

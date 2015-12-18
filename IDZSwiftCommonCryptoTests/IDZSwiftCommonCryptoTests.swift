@@ -577,5 +577,41 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
 
     }
     
+    func testZeroPadString() {
+        var key1tmp = [UInt8]("thekey".utf8)
+        key1tmp += [0,0]
+        let key1  = zeroPad("thekey", 8)
+        XCTAssertEqual(key1tmp, key1)
+        XCTAssertEqual(key1tmp.count, 8)
+    }
+    
+    func testGitHubIssue9() {
+        let blockSize = Cryptor.Algorithm.DES.blockSize()
+        let key = zeroPad("thekey", blockSize)
+        let plainText = zeroPad("username123", blockSize)
+        let expectedCipherText = arrayFromHexString("b742acfaa07e3d05cf2dc9aaa0258fc2")
+        let cryptor = Cryptor(operation: .Encrypt, algorithm: .DES, options: [.ECBMode], key: key, iv: [UInt8]())
+        let cipherText = cryptor.update(plainText)?.final()
+        XCTAssertEqual(expectedCipherText, cipherText!)
+    }
+    // Check robustness against issue #9 for string key
+    func testGitHubIssue9StringCanary() {
+        let key = "thekey"
+        let plainText = zeroPad("username123", 8)
+        let expectedCipherText = arrayFromHexString("b742acfaa07e3d05cf2dc9aaa0258fc2")
+        let cryptor = Cryptor(operation: .Encrypt, algorithm: .DES, options: [.ECBMode], key: key, iv: "")
+        let cipherText = cryptor.update(plainText)?.final()
+        XCTAssertEqual(expectedCipherText, cipherText!)
+    }
+    // Check robustness against issue #9 for array key
+    func testGitHubIssue9ArrayCanary() {
+        let key = Array<UInt8>("thekey".utf8)
+        let plainText = zeroPad("username123", 8)
+        let expectedCipherText = arrayFromHexString("b742acfaa07e3d05cf2dc9aaa0258fc2")
+        let cryptor = Cryptor(operation: .Encrypt, algorithm: .DES, options: [.ECBMode], key: key, iv: [])
+        let cipherText = cryptor.update(plainText)?.final()
+        XCTAssertEqual(expectedCipherText, cipherText!)
+    }
+    
     
 }
