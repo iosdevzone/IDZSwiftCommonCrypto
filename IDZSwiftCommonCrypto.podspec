@@ -66,19 +66,15 @@ Pod::Spec.new do |s|
   
   touch prepare_command.txt
   echo 'Running prepare_command'
-  if [ ! -e CommonCrypto ]; then 
-    pwd
-    echo Running GenerateCommonCryptoModule
-    swift ./GenerateCommonCryptoModule.swift macosx .
-    swift ./GenerateCommonCryptoModule.swift iphonesimulator .
-    swift ./GenerateCommonCryptoModule.swift iphoneos .
-    swift ./GenerateCommonCryptoModule.swift appletvsimulator .
-    swift ./GenerateCommonCryptoModule.swift appletvos .
-    swift ./GenerateCommonCryptoModule.swift watchsimulator .
-    swift ./GenerateCommonCryptoModule.swift watchos .
-  else 
-    echo Skipped GenerateCommonCryptoModule 
-  fi
+  pwd
+  echo Running GenerateCommonCryptoModule
+  swift ./GenerateCommonCryptoModule.swift macosx .
+  swift ./GenerateCommonCryptoModule.swift iphonesimulator .
+  swift ./GenerateCommonCryptoModule.swift iphoneos .
+  swift ./GenerateCommonCryptoModule.swift appletvsimulator .
+  swift ./GenerateCommonCryptoModule.swift appletvos .
+  swift ./GenerateCommonCryptoModule.swift watchsimulator .
+  swift ./GenerateCommonCryptoModule.swift watchos .
 
 CMD
   s.source_files  = "IDZSwiftCommonCrypto"
@@ -121,7 +117,7 @@ CMD
 
   # s.requires_arc = true
 
-  s.xcconfig = { "SWIFT_INCLUDE_PATHS" => "$(PROJECT_DIR)/IDZSwiftCommonCrypto" }
+  s.xcconfig = { "SWIFT_INCLUDE_PATHS" => "$(PROJECT_DIR)/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)" }
   # s.dependency "JSONKit", "~> 1.4"
 
 end
