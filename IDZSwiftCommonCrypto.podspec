@@ -117,7 +117,10 @@ CMD
 
   # s.requires_arc = true
 
-  s.xcconfig = { "SWIFT_INCLUDE_PATHS" => "$(PROJECT_DIR)/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)" }
+  s.xcconfig = { 
+  "SWIFT_INCLUDE_PATHS" => "$(PROJECT_DIR)/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
+  "FRAMEWORK_SEARCH_PATHS" => "$(PROJECT_DIR)/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)"
+  }
   # s.dependency "JSONKit", "~> 1.4"
 
 end
