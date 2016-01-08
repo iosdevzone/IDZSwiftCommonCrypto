@@ -69,7 +69,7 @@ Pod::Spec.new do |s|
   if [ ! -e CommonCrypto ]; then 
     pwd
     echo Running GenerateCommonCryptoModule
-    swift ./GenerateCommonCryptoModule.swift machos .
+    swift ./GenerateCommonCryptoModule.swift macosx .
     swift ./GenerateCommonCryptoModule.swift iphonesimulator .
     swift ./GenerateCommonCryptoModule.swift iphoneos .
     swift ./GenerateCommonCryptoModule.swift appletvsimulator .
