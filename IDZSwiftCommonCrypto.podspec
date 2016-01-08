@@ -46,6 +46,7 @@ Pod::Spec.new do |s|
   s.author             = { "iOSDevZone" => "idz@iosdeveloperzone.com" }
   s.social_media_url   = "http://twitter.com/iOSDevZone"
   s.platform     = :ios, "8.0"
+  s.tvos.deployment_target = '9.0'
   #
   #  Specify the location from where the source should be retrieved.
   #  Supports git, hg, bzr, svn and HTTP.
@@ -68,7 +69,13 @@ Pod::Spec.new do |s|
   if [ ! -e CommonCrypto ]; then 
     pwd
     echo Running GenerateCommonCryptoModule
-    ./GenerateCommonCryptoModule iphonesimulator .
+    swift ./GenerateCommonCryptoModule.swift machos .
+    swift ./GenerateCommonCryptoModule.swift iphonesimulator .
+    swift ./GenerateCommonCryptoModule.swift iphoneos .
+    swift ./GenerateCommonCryptoModule.swift appletvsimulator .
+    swift ./GenerateCommonCryptoModule.swift appletvos .
+    swift ./GenerateCommonCryptoModule.swift watchsimulator .
+    swift ./GenerateCommonCryptoModule.swift watchos .
   else 
     echo Skipped GenerateCommonCryptoModule 
   fi
