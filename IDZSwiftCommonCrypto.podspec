@@ -93,7 +93,7 @@ CMD
   # s.resource  = "icon.png"
   # s.resources = "Resources/*.png"
 
-  s.preserve_paths = "CommonCrypto"
+  s.preserve_paths = "Frameworks"
 
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
