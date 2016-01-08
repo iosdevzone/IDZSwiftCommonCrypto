@@ -47,6 +47,7 @@ Pod::Spec.new do |s|
   s.social_media_url   = "http://twitter.com/iOSDevZone"
   s.platform     = :ios, "8.0"
   s.tvos.deployment_target = '9.0'
+  s.watchos.deployment_target = '2.0'
   #
   #  Specify the location from where the source should be retrieved.
   #  Supports git, hg, bzr, svn and HTTP.
