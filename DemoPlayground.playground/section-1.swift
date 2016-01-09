@@ -1,5 +1,9 @@
 
-import UIKit
+import Foundation
+//
+// If you get an error on the line below you need to run:
+// sudo xcrun -sdk macosx swift GenerateCommonCryptoModule.swift macosx
+//
 import CommonCrypto
 import IDZSwiftCommonCrypto
 

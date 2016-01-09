@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 iOSDeveloperZone.com. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import XCTest
-import IDZSwiftCommonCrypto
+@testable import IDZSwiftCommonCrypto
 import CommonCrypto
 
 class IDZSwiftCommonCryptoTests: XCTestCase {

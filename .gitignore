@@ -2,6 +2,7 @@ prepate_command.txt
 CommonCrypto
 # Xcode
 #
+Frameworks/
 build/
 *.pbxuser
 !default.pbxuser
