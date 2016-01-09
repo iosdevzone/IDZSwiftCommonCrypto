@@ -45,24 +45,14 @@ Pod::Spec.new do |s|
 
   s.author             = { "iOSDevZone" => "idz@iosdeveloperzone.com" }
   s.social_media_url   = "http://twitter.com/iOSDevZone"
-  s.platform     = :ios, "8.0"
+ 
+  s.osx.deployment_target = '10.10'
+  s.ios.deployment_target = '8.0'
   s.tvos.deployment_target = '9.0'
   s.watchos.deployment_target = '2.0'
-  #
-  #  Specify the location from where the source should be retrieved.
-  #  Supports git, hg, bzr, svn and HTTP.
-  #
-
   s.source       = { :git => "https://github.com/iosdevzone/IDZSwiftCommonCrypto.git", :tag => s.version.to_s }
 
 
-  # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  CocoaPods is smart about how it includes source code. For source files
-  #  giving a folder will include any swift, h, m, mm, c & cpp files.
-  #  For header files it will include any header in the folder.
-  #  Not including the public_header_files will make all headers public.
-  #
   s.prepare_command = <<-CMD
   
   touch prepare_command.txt
