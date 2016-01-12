@@ -129,7 +129,7 @@ public class HMAC : Updateable
     /// - parameter algorithm: selects the algorithm
     /// - parameter key: specifies the key
     ///
-    init(algorithm : Algorithm, key : String)
+    public init(algorithm : Algorithm, key : String)
     {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), key, size_t(key.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))

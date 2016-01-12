@@ -26,6 +26,10 @@ func test_StreamCryptor_AES_ECB() {
     //assert(byteCount == 0, "Final byte count is 0")
     assert(expectedCipherText.count == cipherText.count , "Counts are as expected")
     assert(expectedCipherText == cipherText, "Obtained expected cipher text")
+    
+    // Probing https://github.com/iosdevzone/IDZSwiftCommonCrypto/issues/13
+    let hmac = HMAC(algorithm: .SHA256, key: "secret_key").update("content")?.final() ?? []
+    print(hexStringFromArray(hmac))
 }
 
 @UIApplicationMain
