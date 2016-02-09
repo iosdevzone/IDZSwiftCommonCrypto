@@ -49,6 +49,17 @@ public func arrayFromHexString(s : String) -> [UInt8]
 }
 
 ///
+/// Converts a Swift UTF-8 String to a Swift array.
+///
+/// - parameter s: the string
+/// - returns: a Swift array
+///
+public func arrayFromString(s : String) -> [UInt8]
+{
+    return s.utf8.map { UInt8($0.value) }
+}
+
+///
 /// Converts a string of hexadecimal digits to an `NSData` object.
 ///
 /// - parameter s: the hex string (must contain an even number of digits)
