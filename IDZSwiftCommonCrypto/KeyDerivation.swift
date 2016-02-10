@@ -62,6 +62,28 @@ public class PBKDF
     /// Derives key material from a password and salt.
     ///
     /// -parameter password: the password string, will be converted using UTF8
+    /// -parameter salt: the salt string will be converted using UTF8
+    /// -parameter prf: the pseudo random function
+    /// -parameter round: the number of rounds
+    /// -parameter derivedKeyLength: the length of the desired derived key, in bytes.
+    /// -returns: the derived key
+    ///
+    public class func deriveKey(password : String, salt : String, prf: PseudoRandomAlgorithm, rounds: uint, derivedKeyLength: UInt) -> [UInt8]
+    {
+        var derivedKey = Array<UInt8>(count:Int(derivedKeyLength), repeatedValue: 0)
+        let status : Int32 = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2), password, password.lengthOfBytesUsingEncoding(NSUTF8StringEncoding), salt, salt.lengthOfBytesUsingEncoding(NSUTF8StringEncoding), prf.nativeValue(), rounds, &derivedKey, derivedKey.count)
+        if(status != Int32(kCCSuccess))
+        {
+            NSLog("ERROR: CCKeyDerivationPBDK failed with stats \(status).")
+            fatalError("ERROR: CCKeyDerivationPBDK failed.")
+        }
+        return derivedKey
+    }
+    
+    ///
+    /// Derives key material from a password and salt.
+    ///
+    /// -parameter password: the password string, will be converted using UTF8
     /// -parameter salt: the salt array of bytes
     /// -parameter prf: the pseudo random function
     /// -parameter round: the number of rounds
