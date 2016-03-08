@@ -21,7 +21,7 @@ pod install
 If you are using Carthage, add the following to your Cartfile:
 
 ```bash
-github "iosdevzone/IDZCommonCrypto"
+github "iosdevzone/IDZSwiftCommonCrypto"
 ```
 
 Run `carthage` to build the framework and drag the built 'IDZCommonCrypto.framework' into your project or workspace.
