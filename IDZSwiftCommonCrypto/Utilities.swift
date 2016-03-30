@@ -56,7 +56,8 @@ public func arrayFromHexString(s : String) -> [UInt8]
 ///
 public func arrayFromString(s : String) -> [UInt8]
 {
-    return s.utf8.map { UInt8($0.value) }
+    let array = [UInt8](s.utf8)
+    return array
 }
 
 ///
