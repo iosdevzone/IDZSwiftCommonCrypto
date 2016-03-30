@@ -31,7 +31,8 @@ sha1String
 
 // MARK: - Key Digest Demo
 // Data from RFC 6070
-let tests = [ ("password", arrayFromString("salt"), 1, 20, "0c60c80f961f0e71f3a9b524af6012062fe037a6")]
+let tests = [ ("password", "salt", 1, 20, "0c60c80f961f0e71f3a9b524af6012062fe037a6"),
+              ("password", arrayFromString("salt"), 1, 20, "0c60c80f961f0e71f3a9b524af6012062fe037a6")]
 for (password, salt, rounds, dkLen, expected) in tests
 {
     let key = PBKDF.deriveKey(password, salt: salt, prf: .SHA1, rounds: uint(rounds), derivedKeyLength: UInt(dkLen))
