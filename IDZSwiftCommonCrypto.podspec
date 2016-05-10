@@ -41,8 +41,8 @@ CMD
 
   # Make sure we can find the dummy frameworks
   s.xcconfig = { 
-  "SWIFT_INCLUDE_PATHS" => "$(PROJECT_DIR)/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
-  "FRAMEWORK_SEARCH_PATHS" => "$(PROJECT_DIR)/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)"
+  "SWIFT_INCLUDE_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
+  "FRAMEWORK_SEARCH_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)"
   }
 
 end
