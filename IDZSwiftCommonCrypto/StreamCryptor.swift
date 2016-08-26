@@ -279,7 +279,7 @@ public class StreamCryptor
 	- parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
 	- parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
 	- parameter mode: the mode used by algorithm see Mode (ECB, CBC, CFB, CTR, F8, LRW, OFB, XTS, RC4, CFB8)
-	- parameter padding: the padding to use. PKCS7Padding is the default. When using NoPadding: each block of UPDATE must be correct size
+	- parameter padding: the padding to use. When using NoPadding: each block of UPDATE must be correct size
 	- parameter key: a byte array containing key data
 	- parameter iv: a byte array containing initialization vector
 	
@@ -297,7 +297,7 @@ public class StreamCryptor
 	- parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
 	- parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
 	- parameter mode: the mode used by algorithm see Mode (ECB, CBC, CFB, CTR, F8, LRW, OFB, XTS, RC4, CFB8)
-	- parameter padding: the padding to use. PKCS7Padding is the default. When using NoPadding: each block of UPDATE must be correct size
+	- parameter padding: the padding to use. When using NoPadding: each block of UPDATE must be correct size
 	- parameter key: a string containing key data (will be interpreted as UTF8)
 	- parameter iv: a string containing initialization vector data (will be interpreted as UTF8)
 	
@@ -401,7 +401,7 @@ public class StreamCryptor
 	- parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
 	- parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
 	- parameter mode: the mode used by algorithm see Mode (ECB, CBC, CFB, CTR, F8, LRW, OFB, XTS, RC4, CFB8)
-	- parameter padding: the padding to use. PKCS7Padding is the default. When using NoPadding: each block of UPDATE must be correct size
+	- parameter padding: the padding to use. When using NoPadding: each block of UPDATE must be correct size
 	- parameter keyBuffer: pointer to key buffer
 	- parameter keyByteCount: number of bytes in the key
 	- parameter ivBuffer: initialization vector buffer

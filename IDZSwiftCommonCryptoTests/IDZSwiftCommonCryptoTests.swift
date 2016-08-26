@@ -687,11 +687,36 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
 		
 		XCTAssertEqual(cipherString, "dbf971a44030c146e2ebf35fe4464aecb93cf3ace0e7694e40ff69e6fc6b84b5b7271d8f0e7a2530c0d8921c66079651")
 		
-		let outDataArray = Cryptor(operation: .Decrypt, algorithm: .AES, mode: .CFB, padding: .NoPadding, key: key, iv: iv).update(cipherText)!.final()!
+		let outDataArray: [UInt8]! = Cryptor(operation: .Decrypt, algorithm: .AES, mode: .CFB, padding: .NoPadding, key: key, iv: iv).update(cipherText)?.final()
 		XCTAssertNotNil(outDataArray)
 		XCTAssertEqual(outDataArray, secretMessagePayload)
 		
 		let outDataArrayDecryptedWithInvalidKey = Cryptor(operation: .Decrypt, algorithm: .AES, mode: .CFB, padding: .NoPadding, key: invalidKey, iv: iv).update(cipherText)!.final()!
+		XCTAssertNotEqual(outDataArrayDecryptedWithInvalidKey, secretMessagePayload)
+	}
+	
+	func testCryptorCorrectlyEncryptsAndDecryptsStringMessageInModeCBC() {
+		let key = arrayFromHexString("a9628a8b1d54eef2c9d9b4bd431708765dbb1c9ec913f675138455f450c3f99a")
+		let invalidKey = arrayFromHexString("a9628a8b1d54eef2c9d9b4bd431708865dbb1c9ec913f675138455f450c3f99a")
+		let iv = arrayFromHexString("ffdcf7408390cea2986267368cf386d7")
+		let secretMessage: String = "This is a message that will be encrypted"
+		let secretMessagePayload = zeroPad(secretMessage, Cryptor.Algorithm.AES.blockSize())
+		
+		let cipherText: [UInt8]! = Cryptor(operation: .Encrypt, algorithm: .AES, mode: .CBC , padding: .NoPadding, key: key, iv: iv).update(secretMessagePayload)?.final()
+		XCTAssertNotNil(cipherText)
+		let cipherString = hexStringFromArray(cipherText)
+		
+		XCTAssertEqual(cipherString, "b94f8a088cbd9433d3ba111d85bd268b4a47c29fafd4e29e0a9a5fddb7f7d3aca4a15b818b71f6cb9c40599b7cd4d2b0")
+		
+		let outDataArray: [UInt8]! = Cryptor(operation: .Decrypt, algorithm: .AES, mode: .CBC, padding: .NoPadding, key: key, iv: iv).update(cipherText)?.final()
+		XCTAssertNotNil(outDataArray)
+		XCTAssertEqual(outDataArray, secretMessagePayload)
+		
+		let outDataArrayWithoutPadding = removeTrailingZeroPadding(outDataArray)
+		let outString = String(data: NSData(bytes: outDataArrayWithoutPadding, length: outDataArrayWithoutPadding.count), encoding: NSUTF8StringEncoding)
+		XCTAssertEqual(outString, secretMessage)
+		
+		let outDataArrayDecryptedWithInvalidKey = Cryptor(operation: .Decrypt, algorithm: .AES, mode: .CBC, padding: .NoPadding, key: invalidKey, iv: iv).update(cipherText)!.final()!
 		XCTAssertNotEqual(outDataArrayDecryptedWithInvalidKey, secretMessagePayload)
 	}
 	
