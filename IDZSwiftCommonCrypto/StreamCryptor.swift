@@ -301,7 +301,6 @@ public class StreamCryptor
 	- parameter key: a string containing key data (will be interpreted as UTF8)
 	- parameter iv: a string containing initialization vector data (will be interpreted as UTF8)
 	
-	- returns: <#return value description#>
 	*/
 	public convenience init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding, key: String, iv: String) {
 		let keySize = key.utf8.count
@@ -418,8 +417,8 @@ public class StreamCryptor
 		}
 		else
 		{
-			NSLog("FATAL_ERROR: CCCryptorCreate returned unexpected status (\(rawStatus)).")
-			fatalError("CCCryptorCreate returned unexpected status.")
+			NSLog("FATAL_ERROR: CCCryptorCreateWithMode returned unexpected status (\(rawStatus)).")
+			fatalError("CCCryptorCreateWithMode returned unexpected status.")
 		}
 
 	}
