@@ -75,6 +75,50 @@ public class StreamCryptor
         
         
     }
+	
+	//TODO: Add comments
+	public enum Mode
+	{
+		case ECB
+		case CBC
+		case CFB
+		case CTR
+		case F8	//		= 5, // Unimplemented for now (not included)
+		case LRW//		= 6, // Unimplemented for now (not included)
+		case OFB
+		case XTS
+		case RC4
+		case CFB8
+		
+		func nativeValue() -> CCMode {
+			switch self {
+			case ECB : return CCMode(kCCModeECB)
+			case CBC : return CCMode(kCCModeCBC)
+			case CFB : return CCMode(kCCModeCFB)
+			case CTR : return CCMode(kCCModeCTR)
+			case F8 : return CCMode(kCCModeF8)// Unimplemented for now (not included)
+			case LRW : return CCMode(kCCModeLRW)// Unimplemented for now (not included)
+			case OFB : return CCMode(kCCModeOFB)
+			case XTS : return CCMode(kCCModeXTS)
+			case RC4 : return CCMode(kCCModeRC4)
+			case CFB8 : return CCMode(kCCModeCFB8)
+			}
+		}
+	}
+	
+	public enum Padding
+	{
+		case NoPadding
+		case PKCS7Padding
+		
+		func nativeValue() -> CCPadding {
+			switch self {
+			case .NoPadding : return CCPadding(ccNoPadding)
+			case .PKCS7Padding : return CCPadding(ccPKCS7Padding)
+			}
+		}
+	}
+	
     ///
     /// Enumerates available algorithms
     ///
@@ -220,6 +264,11 @@ public class StreamCryptor
             keyBuffer:zeroPad(key, paddedKeySize),
             keyByteCount:paddedKeySize, ivBuffer:iv)
     }
+	
+	//TODO: Walczymy, czy to jest na pewno najwygodniejszy initializer? Może inny?
+	public convenience init(operation: Operation, algorithm: Algorithm, options: Options, mode: Mode, padding: Padding, key: [UInt8], iv : [UInt8])
+	{
+	}
     /**
         Add the contents of an Objective-C NSData buffer to the current encryption/decryption operation.
         
@@ -306,6 +355,14 @@ public class StreamCryptor
             fatalError("CCCryptorCreate returned unexpected status.")
         }
     }
+	
+	
+	//TODO:
+	//Comment, implement, etc
+	public init(operation: Operation, algorithm: Algorithm, options: Options, mode: Mode, padding: Padding, keyBuffer: UnsafePointer<Void>, keyByteCount: Int, ivBuffer: UnsafePointer<Void>) {
+		
+	}
+	
     /**
         - parameter bufferIn: pointer to input buffer
         - parameter inByteCount: number of bytes contained in input buffer 
