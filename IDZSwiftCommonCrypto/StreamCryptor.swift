@@ -76,7 +76,9 @@ public class StreamCryptor
         
     }
 	
-	//TODO: Add comments
+	///
+	/// Enumerates encryption mode
+	///
 	public enum Mode
 	{
 		case ECB
@@ -106,9 +108,16 @@ public class StreamCryptor
 		}
 	}
 	
+	/**
+	 Enumerated encryption paddings
+	 See: https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Padding
+	*/
 	public enum Padding
 	{
+		/// No Padding -> Use only when you messages have correct block size.
 		case NoPadding
+		
+		/// PKCS7 Padding
 		case PKCS7Padding
 		
 		func nativeValue() -> CCPadding {
@@ -264,10 +273,43 @@ public class StreamCryptor
             keyBuffer:zeroPad(key, paddedKeySize),
             keyByteCount:paddedKeySize, ivBuffer:iv)
     }
+	/**
+	Creates a new StreamCryptor
 	
-	//TODO: Walczymy, czy to jest na pewno najwygodniejszy initializer? Może inny?
-	public convenience init(operation: Operation, algorithm: Algorithm, options: Options, mode: Mode, padding: Padding, key: [UInt8], iv : [UInt8])
-	{
+	- parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
+	- parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
+	- parameter mode: the mode used by algorithm see Mode (ECB, CBC, CFB, CTR, F8, LRW, OFB, XTS, RC4, CFB8)
+	- parameter padding: the padding to use. PKCS7Padding is the default. When using NoPadding: each block of UPDATE must be correct size
+	- parameter key: a byte array containing key data
+	- parameter iv: a byte array containing initialization vector
+	
+	*/
+	public convenience init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding, key: [UInt8], iv : [UInt8]) {
+		if !algorithm.isValidKeySize(key.count) {
+			fatalError("FATAL_ERROR: Invalid key size")
+		}
+		
+		self.init(operation: operation, algorithm: algorithm, mode: mode, padding: padding, keyBuffer: key, keyByteCount: key.count, ivBuffer: iv)
+	}
+	/**
+	Creates a new StreamCryptor
+	
+	- parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
+	- parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
+	- parameter mode: the mode used by algorithm see Mode (ECB, CBC, CFB, CTR, F8, LRW, OFB, XTS, RC4, CFB8)
+	- parameter padding: the padding to use. PKCS7Padding is the default. When using NoPadding: each block of UPDATE must be correct size
+	- parameter key: a string containing key data (will be interpreted as UTF8)
+	- parameter iv: a string containing initialization vector data (will be interpreted as UTF8)
+	
+	- returns: <#return value description#>
+	*/
+	public convenience init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding, key: String, iv: String) {
+		let keySize = key.utf8.count
+		guard let paddedKeySize = algorithm.paddedKeySize(keySize) else {
+			fatalError("FATAL_ERROR: Invalid key size")
+		}
+		
+		self.init(operation:operation, algorithm:algorithm, mode: mode, padding: padding, keyBuffer:zeroPad(key, paddedKeySize), keyByteCount: paddedKeySize, ivBuffer: iv)
 	}
     /**
         Add the contents of an Objective-C NSData buffer to the current encryption/decryption operation.
@@ -355,14 +397,32 @@ public class StreamCryptor
             fatalError("CCCryptorCreate returned unexpected status.")
         }
     }
+	/**
+	- parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
+	- parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
+	- parameter mode: the mode used by algorithm see Mode (ECB, CBC, CFB, CTR, F8, LRW, OFB, XTS, RC4, CFB8)
+	- parameter padding: the padding to use. PKCS7Padding is the default. When using NoPadding: each block of UPDATE must be correct size
+	- parameter keyBuffer: pointer to key buffer
+	- parameter keyByteCount: number of bytes in the key
+	- parameter ivBuffer: initialization vector buffer
 	
-	
-	//TODO:
-	//Comment, implement, etc
-	public init(operation: Operation, algorithm: Algorithm, options: Options, mode: Mode, padding: Padding, keyBuffer: UnsafePointer<Void>, keyByteCount: Int, ivBuffer: UnsafePointer<Void>) {
+	*/
+	public init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding, keyBuffer: UnsafePointer<Void>, keyByteCount: Int, ivBuffer: UnsafePointer<Void>) {
 		
+		guard algorithm.isValidKeySize(keyByteCount) else  { fatalError("FATAL_ERROR: Invalid key size.") }
+		
+		let rawStatus = CCCryptorCreateWithMode(operation.nativeValue(), mode.nativeValue(), algorithm.nativeValue(), padding.nativeValue(), ivBuffer, keyBuffer, keyByteCount, nil, 0, 0, 0, context)
+		if let status = Status.fromRaw(rawStatus)
+		{
+			self.status = status
+		}
+		else
+		{
+			NSLog("FATAL_ERROR: CCCryptorCreate returned unexpected status (\(rawStatus)).")
+			fatalError("CCCryptorCreate returned unexpected status.")
+		}
+
 	}
-	
     /**
         - parameter bufferIn: pointer to input buffer
         - parameter inByteCount: number of bytes contained in input buffer 
