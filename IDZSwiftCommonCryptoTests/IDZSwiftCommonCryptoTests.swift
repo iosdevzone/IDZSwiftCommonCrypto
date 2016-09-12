@@ -232,7 +232,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         
         let key =                 arrayFromHexString("0101010101010101")
         
-        for var i = 0; i < ivs.count; ++i {
+        for i in 0 ..< ivs.count += 1 {
             let iv = arrayFromHexString(ivs[i])
             let cipherText = Cryptor(operation:.Encrypt, algorithm:.DES, options:.ECBMode, key:key, iv:Array<UInt8>()).update(arrayFromHexString(ivs[i]))?.final()
             print("\"\(hexStringFromArray(cipherText!))\", // [\(i)]")
