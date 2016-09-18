@@ -14,12 +14,12 @@ import Foundation
 /// - parameter c: A Unicode scalar in the set 0..9a..fA..F
 /// - returns: the hexadecimal value of the digit
 ///
-func convertHexDigit(c : UnicodeScalar) -> UInt8
+func convertHexDigit(_ c : UnicodeScalar) -> UInt8
 {
     switch c {
         case UnicodeScalar("0")...UnicodeScalar("9"): return UInt8(c.value - UnicodeScalar("0").value)
-        case UnicodeScalar("a")...UnicodeScalar("f"): return UInt8(c.value - UnicodeScalar("a").value + 0xa)
-        case UnicodeScalar("A")...UnicodeScalar("F"): return UInt8(c.value - UnicodeScalar("A").value + 0xa)
+        case UnicodeScalar("a")...UnicodeScalar("f"): return UInt8(c.value - UnicodeScalar("a").value + UInt32(0xa))
+        case UnicodeScalar("A")...UnicodeScalar("F"): return UInt8(c.value - UnicodeScalar("A").value + UInt32(0xa))
         default: fatalError("convertHexDigit: Invalid hex digit")
     }
 }
@@ -30,9 +30,9 @@ func convertHexDigit(c : UnicodeScalar) -> UInt8
 /// - parameter s: the hex string (must contain an even number of digits)
 /// - returns: a Swift array
 ///
-public func arrayFromHexString(s : String) -> [UInt8]
+public func arrayFromHexString(_ s : String) -> [UInt8]
 {
-    var g = s.unicodeScalars.generate()
+    var g = s.unicodeScalars.makeIterator()
     var a : [UInt8] = []
     while let msn = g.next()
     {
@@ -54,7 +54,7 @@ public func arrayFromHexString(s : String) -> [UInt8]
 /// - parameter s: the string
 /// - returns: a Swift array
 ///
-public func arrayFromString(s : String) -> [UInt8]
+public func arrayFromString(_ s : String) -> [UInt8]
 {
     let array = [UInt8](s.utf8)
     return array
@@ -66,10 +66,10 @@ public func arrayFromString(s : String) -> [UInt8]
 /// - parameter s: the hex string (must contain an even number of digits)
 /// - returns: an NSData object
 ///
-public func dataFromHexString(s : String) -> NSData
+public func dataFromHexString(_ s : String) -> Data
 {
     let a = arrayFromHexString(s)
-    return NSData(bytes:a, length:a.count)
+    return Data(bytes: UnsafePointer<UInt8>(a), count:a.count)
 }
 
 ///
@@ -78,9 +78,9 @@ public func dataFromHexString(s : String) -> NSData
 /// - parameter a: the Swift array
 /// - returns: an NSData object
 ///
-public func dataFromByteArray(a : [UInt8]) -> NSData
+public func dataFromByteArray(_ a : [UInt8]) -> Data
 {
-    return NSData(bytes:a, length:a.count)
+    return Data(bytes: UnsafePointer<UInt8>(a), count:a.count)
 }
 
 ///
@@ -90,9 +90,9 @@ public func dataFromByteArray(a : [UInt8]) -> NSData
 /// - parameter uppercase: if true use uppercase for letter digits, lowercase otherwise
 /// - returns: a Swift string
 ///
-public func hexStringFromArray(a : [UInt8], uppercase : Bool = false) -> String
+public func hexStringFromArray(_ a : [UInt8], uppercase : Bool = false) -> String
 {
-    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", combine: +)
+    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", +)
 }
 
 ///
@@ -102,10 +102,10 @@ public func hexStringFromArray(a : [UInt8], uppercase : Bool = false) -> String
 /// - parameter uppercase: if true use uppercase for letter digits, lowercase otherwise
 /// - returns: an `NSString` object
 ///
-public func hexNSStringFromArray(a : [UInt8], uppercase : Bool = false) -> NSString
-{
-    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", combine: +)
-}
+//public func hexNSStringFromArray(_ a : [UInt8], uppercase : Bool = false) -> NSString
+//{
+//    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", +)
+//}
 
 ///
 /// Converts a Swift array to a Swift `String` containing a comma separated list of bytes.
@@ -114,9 +114,9 @@ public func hexNSStringFromArray(a : [UInt8], uppercase : Bool = false) -> NSStr
 /// - parameter a: the Swift array
 /// - returns: a Swift string
 ///
-public func hexListFromArray(a : [UInt8]) -> String
+public func hexListFromArray(_ a : [UInt8]) -> String
 {
-    return a.map() { String(format:"0x%02x, ", $0) }.reduce("", combine: +)    
+    return a.map() { String(format:"0x%02x, ", $0) }.reduce("", +)    
 }
 
 ///
@@ -126,10 +126,10 @@ public func hexListFromArray(a : [UInt8]) -> String
 /// - parameter blockSizeInBytes: the block size in bytes (cunningly enough!)
 /// - returns: a Swift string
 ///
-public func zeroPad(a: [UInt8], _ blockSize: Int) -> [UInt8] {
+public func zeroPad(_ a: [UInt8], _ blockSize: Int) -> [UInt8] {
     let pad = blockSize - (a.count % blockSize)
     guard pad != 0 else { return a }
-    return a + Array<UInt8>(count: pad, repeatedValue: 0)
+    return a + Array<UInt8>(repeating: 0, count: pad)
 }
 
 ///
@@ -139,6 +139,6 @@ public func zeroPad(a: [UInt8], _ blockSize: Int) -> [UInt8] {
 /// - parameter blockSizeInBytes: the block size in bytes (cunningly enough!)
 /// - returns: a Swift string
 ///
-public func zeroPad(s: String, _ blockSize: Int) -> [UInt8] {
+public func zeroPad(_ s: String, _ blockSize: Int) -> [UInt8] {
     return zeroPad(Array<UInt8>(s.utf8), blockSize)
 }
