@@ -47,7 +47,7 @@ open class StreamCryptor
         /**
             Determines if a given `keySize` is valid for this algorithm.
         */
-        func isValidKeySize(_ keySize: Int) -> Bool {
+        func isValidKeySize(keySize: Int) -> Bool {
             switch self {
             case .fixed(let fixed): return (fixed == keySize)
             case .range(let min, let max): return ((keySize >= min) && (keySize <= max))
@@ -60,7 +60,7 @@ open class StreamCryptor
             than the given value.
             Will return `nil` if the passed in `keySize` is greater than the max.
         */
-        func paddedKeySize(_ keySize: Int) -> Int? {
+        func paddedKeySize(keySize: Int) -> Int? {
             switch self {
             case .fixed(let fixed):
                 return (keySize <= fixed) ? fixed : nil

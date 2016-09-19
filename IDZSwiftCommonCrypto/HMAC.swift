@@ -90,9 +90,9 @@ open class HMAC : Updateable
     open var status : Status = .success
     
     let context = Context.allocate(capacity: 1)
-    var algorithm : Algorithm
+    var algorithm: Algorithm
     
-    init(algorithm : Algorithm, keyBuffer: UnsafeRawPointer, keyByteCount: Int)
+    init(algorithm: Algorithm, keyBuffer: UnsafeRawPointer, keyByteCount: Int)
     {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), keyBuffer, size_t(keyByteCount))
@@ -104,7 +104,7 @@ open class HMAC : Updateable
     /// - parameter algorithm: selects the algorithm
     /// - parameter key: specifies the key
     ///
-    public init(algorithm : Algorithm, key : Data)
+    public init(algorithm: Algorithm, key: Data)
     {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), (key as NSData).bytes, size_t(key.count))
@@ -116,7 +116,7 @@ open class HMAC : Updateable
     /// - parameter algorithm: selects the algorithm
     /// - parameter key: specifies the key
     ///
-    public init(algorithm : Algorithm, key : [UInt8])
+    public init(algorithm: Algorithm, key: [UInt8])
     {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), key, size_t(key.count))
@@ -129,7 +129,7 @@ open class HMAC : Updateable
     /// - parameter algorithm: selects the algorithm
     /// - parameter key: specifies the key
     ///
-    public init(algorithm : Algorithm, key : String)
+    public init(algorithm: Algorithm, key: String)
     {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), key, size_t(key.lengthOfBytes(using: String.Encoding.utf8)))
@@ -144,7 +144,7 @@ open class HMAC : Updateable
     ///
     /// - returns: the calculated HMAC
     ///
-    open func update(_ buffer : UnsafeRawPointer, _ byteCount : size_t) -> Self?
+    open func update(buffer: UnsafeRawPointer, byteCount: size_t) -> Self?
     {
         CCHmacUpdate(context, buffer, byteCount)
         return self 

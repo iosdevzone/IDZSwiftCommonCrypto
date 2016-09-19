@@ -88,9 +88,9 @@ open class Digest : Updateable
         - parameter the: number of bytes in buffer
         - returns: this Digest object (for optional chaining)
     */
-    open func update(_ buffer: UnsafeRawPointer, _ byteCount: size_t) -> Self?
+    open func update(buffer: UnsafeRawPointer, byteCount: size_t) -> Self?
     {
-        engine.update(buffer, CC_LONG(byteCount))
+        engine.update(buffer: buffer, byteCount: CC_LONG(byteCount))
         return self
     }
     
@@ -112,7 +112,7 @@ open class Digest : Updateable
  */
 protocol DigestEngine
 {
-    func update(_ buffer: UnsafeRawPointer, _ byteCount: CC_LONG)
+    func update(buffer: UnsafeRawPointer, byteCount: CC_LONG)
     func final() -> [UInt8]
 }
 /**
@@ -147,7 +147,7 @@ class DigestEngineCC<C> : DigestEngine {
         context.deallocate(capacity: 1)
     }
     
-    func update(_ buffer: Buffer, _ byteCount: CC_LONG)
+    func update(buffer: Buffer, byteCount: CC_LONG)
     {
         updater(context, buffer, byteCount)
     }

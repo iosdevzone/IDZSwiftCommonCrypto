@@ -26,7 +26,7 @@ open class Random
     - return: .Success or .RNGFailure as appropriate.
     
      */
-    open class func generateBytes(_ bytes : UnsafeMutableRawPointer, byteCount : Int ) -> RNGStatus
+    open class func generateBytes(bytes: UnsafeMutableRawPointer, byteCount: Int ) -> RNGStatus
     {
         let statusCode = CCRandomGenerateBytes(bytes, byteCount)
         guard let status = Status(rawValue: statusCode) else {
@@ -41,12 +41,12 @@ open class Random
     - return: an array of random bytes
     - throws: an `RNGStatus` on failure
     */
-    open class func generateBytes(_ byteCount : Int ) throws -> [UInt8]
+    open class func generateBytes(byteCount: Int ) throws -> [UInt8]
     {
         guard byteCount > 0 else { throw RNGStatus.paramError }
         
         var bytes : [UInt8] = Array(repeating: UInt8(0), count: byteCount)
-        let status = generateBytes(&bytes, byteCount: byteCount)
+        let status = generateBytes(bytes: &bytes, byteCount: byteCount)
         
         guard status == .success else { throw status }
         return bytes
@@ -60,14 +60,14 @@ open class Random
     - parameter bytesCount: number of random bytes to generate
     - return: an array of random bytes
      */
-    open class func generateBytesThrow(_ byteCount : Int ) throws -> [UInt8]
+    open class func generateBytesThrow(byteCount: Int ) throws -> [UInt8]
     {
         if(byteCount <= 0)
         {
             fatalError("generateBytes: byteCount must be positve and non-zero")
         }
         var bytes : [UInt8] = Array(repeating: UInt8(0), count: byteCount)
-        let status = generateBytes(&bytes, byteCount: byteCount)
+        let status = generateBytes(bytes: &bytes, byteCount: byteCount)
         throw status
         //return bytes
     }

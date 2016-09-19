@@ -14,7 +14,7 @@ import Foundation
 /// - parameter c: A Unicode scalar in the set 0..9a..fA..F
 /// - returns: the hexadecimal value of the digit
 ///
-func convertHexDigit(_ c : UnicodeScalar) -> UInt8
+func convertHexDigit(c : UnicodeScalar) -> UInt8
 {
     switch c {
         case UnicodeScalar("0")...UnicodeScalar("9"): return UInt8(c.value - UnicodeScalar("0").value)
@@ -30,7 +30,7 @@ func convertHexDigit(_ c : UnicodeScalar) -> UInt8
 /// - parameter s: the hex string (must contain an even number of digits)
 /// - returns: a Swift array
 ///
-public func arrayFromHexString(_ s : String) -> [UInt8]
+public func arrayFromHexString(s : String) -> [UInt8]
 {
     var g = s.unicodeScalars.makeIterator()
     var a : [UInt8] = []
@@ -38,7 +38,7 @@ public func arrayFromHexString(_ s : String) -> [UInt8]
     {
         if let lsn = g.next()
         {
-            a += [ (convertHexDigit(msn) << 4 | convertHexDigit(lsn)) ]
+            a += [ (convertHexDigit(c:msn) << 4 | convertHexDigit(c:lsn)) ]
         }
         else
         {
@@ -54,7 +54,7 @@ public func arrayFromHexString(_ s : String) -> [UInt8]
 /// - parameter s: the string
 /// - returns: a Swift array
 ///
-public func arrayFromString(_ s : String) -> [UInt8]
+public func arrayFromString(s : String) -> [UInt8]
 {
     let array = [UInt8](s.utf8)
     return array
@@ -66,9 +66,9 @@ public func arrayFromString(_ s : String) -> [UInt8]
 /// - parameter s: the hex string (must contain an even number of digits)
 /// - returns: an NSData object
 ///
-public func dataFromHexString(_ s : String) -> Data
+public func dataFromHexString(s: String) -> Data
 {
-    let a = arrayFromHexString(s)
+    let a = arrayFromHexString(s: s)
     return Data(bytes: UnsafePointer<UInt8>(a), count:a.count)
 }
 
@@ -78,7 +78,7 @@ public func dataFromHexString(_ s : String) -> Data
 /// - parameter a: the Swift array
 /// - returns: an NSData object
 ///
-public func dataFromByteArray(_ a : [UInt8]) -> Data
+public func dataFromByteArray(a : [UInt8]) -> Data
 {
     return Data(bytes: UnsafePointer<UInt8>(a), count:a.count)
 }
@@ -90,7 +90,7 @@ public func dataFromByteArray(_ a : [UInt8]) -> Data
 /// - parameter uppercase: if true use uppercase for letter digits, lowercase otherwise
 /// - returns: a Swift string
 ///
-public func hexStringFromArray(_ a : [UInt8], uppercase : Bool = false) -> String
+public func hexStringFromArray(a : [UInt8], uppercase : Bool = false) -> String
 {
     return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", +)
 }
@@ -114,7 +114,7 @@ public func hexStringFromArray(_ a : [UInt8], uppercase : Bool = false) -> Strin
 /// - parameter a: the Swift array
 /// - returns: a Swift string
 ///
-public func hexListFromArray(_ a : [UInt8]) -> String
+public func hexListFromArray(a: [UInt8]) -> String
 {
     return a.map() { String(format:"0x%02x, ", $0) }.reduce("", +)    
 }
@@ -126,7 +126,7 @@ public func hexListFromArray(_ a : [UInt8]) -> String
 /// - parameter blockSizeInBytes: the block size in bytes (cunningly enough!)
 /// - returns: a Swift string
 ///
-public func zeroPad(_ a: [UInt8], _ blockSize: Int) -> [UInt8] {
+public func zeroPad(a: [UInt8], blockSize: Int) -> [UInt8] {
     let pad = blockSize - (a.count % blockSize)
     guard pad != 0 else { return a }
     return a + Array<UInt8>(repeating: 0, count: pad)
@@ -139,6 +139,6 @@ public func zeroPad(_ a: [UInt8], _ blockSize: Int) -> [UInt8] {
 /// - parameter blockSizeInBytes: the block size in bytes (cunningly enough!)
 /// - returns: a Swift string
 ///
-public func zeroPad(_ s: String, _ blockSize: Int) -> [UInt8] {
-    return zeroPad(Array<UInt8>(s.utf8), blockSize)
+public func zeroPad(s: String, blockSize: Int) -> [UInt8] {
+    return zeroPad(a: Array<UInt8>(s.utf8), blockSize:blockSize)
 }

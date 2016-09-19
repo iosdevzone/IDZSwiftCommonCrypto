@@ -45,7 +45,7 @@ open class Cryptor : StreamCryptor, Updateable
         
         - returns: this Cryptor object or nil if an error occurs (for optional chaining)
     */
-    open func update(_ buffer: UnsafeRawPointer, _ byteCount: Int) -> Self?
+    open func update(buffer: UnsafeRawPointer, byteCount: Int) -> Self?
     {
         let outputLength = self.getOutputLength(byteCount, isFinal: false)
         var dataOut = Array<UInt8>(repeating: 0, count: outputLength)
