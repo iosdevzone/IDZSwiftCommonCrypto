@@ -41,7 +41,7 @@ extension Updateable {
     ///
     /// - parameters byteArray: the Swift array
     ///
-    public func update(_ byteArray : [UInt8]) -> Self?
+    public func update(byteArray: [UInt8]) -> Self?
     {
         update(buffer: byteArray, byteCount: size_t(byteArray.count))
         return self.status == Status.success ? self : nil
@@ -52,7 +52,7 @@ extension Updateable {
     ///
     /// - parameters string: the Swift string
     ///
-    public func update(_ string: String) -> Self?
+    public func update(string: String) -> Self?
     {
         update(buffer: string, byteCount: size_t(string.lengthOfBytes(using: String.Encoding.utf8)))
         return self.status == Status.success ? self : nil

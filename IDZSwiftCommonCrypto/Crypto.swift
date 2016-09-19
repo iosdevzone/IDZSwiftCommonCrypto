@@ -64,7 +64,7 @@ extension String: CryptoDigest {
     public func digest(algorithm: Digest.Algorithm) -> String {
         // This force unwrap may look scary but for CommonCrypto this cannot fail.
         // The API allows for optionals to support the OpenSSL implementation which can.
-        let result = (Digest(algorithm: algorithm).update(self as String)?.final())!
+        let result = (Digest(algorithm: algorithm).update(string: self)?.final())!
         return hexString(fromArray: result)
         
     }
