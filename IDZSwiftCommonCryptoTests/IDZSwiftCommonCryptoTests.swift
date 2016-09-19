@@ -269,7 +269,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
             let input = md2inputs[i]
             let expectedOutput = arrayFrom(hexString: md2outputs[i])
             let d : Digest = Digest(algorithm:.md2)
-            d.update(input)
+            _ = d.update(input)
             let output = d.final()
             XCTAssertEqual(output, expectedOutput)
         }
@@ -279,7 +279,7 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     func testMD5_1()
     {
         let md5 : Digest = Digest(algorithm:.md5)
-        md5.update(qbfString)
+        _ = md5.update(qbfString)
         let digest = md5.final()
         
         XCTAssertEqual(digest, qbfMD5, "PASS")

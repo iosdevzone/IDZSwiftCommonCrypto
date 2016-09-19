@@ -273,7 +273,7 @@ open class StreamCryptor
     {
         let dataOutAvailable = byteArrayOut.count
         var dataOutMoved = 0
-        final(bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
+        _ = final(bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
         return (dataOutMoved, self.status)
     }
     
@@ -309,7 +309,7 @@ open class StreamCryptor
         - parameter outByteCount: on successful completion, the number of bytes written to the output buffer
         - returns: 
     */
-    open func update(bufferIn: UnsafeRawPointer, byteCountIn: Int, bufferOut: UnsafeMutableRawPointer, byteCapacityOut: Int, byteCountOut: inout Int) -> Status
+    @discardableResult open func update(bufferIn: UnsafeRawPointer, byteCountIn: Int, bufferOut: UnsafeMutableRawPointer, byteCapacityOut: Int, byteCountOut: inout Int) -> Status
     {
         if(self.status == Status.success)
         {
@@ -340,7 +340,7 @@ open class StreamCryptor
         - parameter outByteCapacity: capacity of the output buffer in bytes
         - parameter outByteCount: on successful completion, the number of bytes written to the output buffer
     */
-    open func final(bufferOut: UnsafeMutableRawPointer, byteCapacityOut: Int, byteCountOut: inout Int) -> Status
+    @discardableResult open func final(bufferOut: UnsafeMutableRawPointer, byteCapacityOut: Int, byteCountOut: inout Int) -> Status
     {
         if(self.status == Status.success)
         {

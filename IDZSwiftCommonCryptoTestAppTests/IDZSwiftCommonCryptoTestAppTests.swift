@@ -31,7 +31,7 @@ class IDZSwiftCommonCryptoTestAppTests: XCTestCase {
         let aesEncrypt = StreamCryptor(operation:.encrypt, algorithm:.aes, options:.ECBMode, key:key, iv:Array<UInt8>())
         var cipherText : [UInt8] = []
         var dataOut = Array<UInt8>(repeating:UInt8(0), count:plainText.count)
-        let (byteCount, status) = aesEncrypt.update(byteArrayIn: plainText, byteArrayOut: &dataOut)
+        let (byteCount, _) = aesEncrypt.update(byteArrayIn: plainText, byteArrayOut: &dataOut)
     
         
         cipherText += dataOut[0..<Int(byteCount)]

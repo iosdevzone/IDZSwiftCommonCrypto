@@ -139,7 +139,7 @@ class DigestEngineCC<C> : DigestEngine {
         self.updater = updater
         self.finalizer = finalizer
         self.length = length
-        initializer(context)
+        _ = initializer(context)
     }
     
     deinit
@@ -149,19 +149,14 @@ class DigestEngineCC<C> : DigestEngine {
     
     func update(buffer: Buffer, byteCount: CC_LONG)
     {
-        updater(context, buffer, byteCount)
+        _ = updater(context, buffer, byteCount)
     }
     
     func final() -> [UInt8]
     {
         let digestLength = Int(self.length)
         var digest = Array<UInt8>(repeating: 0, count: digestLength)
-        finalizer(&digest, context)
+        _ = finalizer(&digest, context)
         return digest
     }
 }
-
-
-
-
-
