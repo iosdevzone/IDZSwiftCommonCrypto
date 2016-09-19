@@ -47,7 +47,7 @@ open class StreamCryptor
         /**
             Determines if a given `keySize` is valid for this algorithm.
         */
-        func isValidKeySize(keySize: Int) -> Bool {
+        func isValid(keySize: Int) -> Bool {
             switch self {
             case .fixed(let fixed): return (fixed == keySize)
             case .range(let min, let max): return ((keySize >= min) && (keySize <= max))
@@ -60,7 +60,7 @@ open class StreamCryptor
             than the given value.
             Will return `nil` if the passed in `keySize` is greater than the max.
         */
-        func paddedKeySize(keySize: Int) -> Int? {
+        func padded(keySize: Int) -> Int? {
             switch self {
             case .fixed(let fixed):
                 return (keySize <= fixed) ? fixed : nil
@@ -130,13 +130,13 @@ open class StreamCryptor
         }
         
         /// Tests if a given keySize is valid for this algorithm
-        func isValidKeySize(_ keySize: Int) -> Bool {
-            return self.validKeySize().isValidKeySize(keySize)
+        func isValid(keySize: Int) -> Bool {
+            return self.validKeySize().isValid(keySize: keySize)
         }
         
         /// Calculates the next, if any, valid keySize greater or equal to a given `keySize` for this algorithm
-        func paddedKeySize(_ keySize: Int) -> Int? {
-            return self.validKeySize().paddedKeySize(keySize)
+        func padded(keySize: Int) -> Int? {
+            return self.validKeySize().padded(keySize: keySize)
         }
     }
     
@@ -190,15 +190,13 @@ open class StreamCryptor
         - parameter key: a byte array containing key data
         - parameter iv: a byte array containing initialization vector
     */
-    public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: [UInt8],
-        iv : [UInt8])
+    public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: [UInt8], iv : [UInt8])
     {
-        guard let paddedKeySize = algorithm.paddedKeySize(key.count) else {
+        guard let paddedKeySize = algorithm.padded(keySize:key.count) else {
             fatalError("FATAL_ERROR: Invalid key size")
         }
         
-        self.init(operation:operation, algorithm:algorithm, options:options,
-            keyBuffer:zeroPad(key, paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
+        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(key, paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
     }
     /**
         Creates a new StreamCryptor
@@ -208,17 +206,14 @@ open class StreamCryptor
         - parameter key: a string containing key data (will be interpreted as UTF8)
         - parameter iv: a string containing initialization vector data (will be interpreted as UTF8)
     */
-    public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: String,
-        iv : String)
+    public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: String, iv : String)
     {
         let keySize = key.utf8.count
-        guard let paddedKeySize = algorithm.paddedKeySize(keySize) else {
+        guard let paddedKeySize = algorithm.padded(keySize: keySize) else {
             fatalError("FATAL_ERROR: Invalid key size")
         }
         
-        self.init(operation:operation, algorithm:algorithm, options:options,
-            keyBuffer:zeroPad(key, paddedKeySize),
-            keyByteCount:paddedKeySize, ivBuffer:iv)
+        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(key, paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
     }
     /**
         Add the contents of an Objective-C NSData buffer to the current encryption/decryption operation.
@@ -227,11 +222,11 @@ open class StreamCryptor
         - parameter byteArrayOut: output data
         - returns: a tuple containing the number of output bytes produced and the status (see Status)
     */
-    open func update(_ dataIn: Data, byteArrayOut: inout [UInt8]) -> (Int, Status)
+    open func update(dataIn: Data, byteArrayOut: inout [UInt8]) -> (Int, Status)
     {
         let dataOutAvailable = byteArrayOut.count
         var dataOutMoved = 0
-        update((dataIn as NSData).bytes, byteCountIn: dataIn.count, bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
+        update(bufferIn: (dataIn as NSData).bytes, byteCountIn: dataIn.count, bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
         return (dataOutMoved, self.status)
     }
     /**
@@ -241,11 +236,11 @@ open class StreamCryptor
         - parameter byteArrayOut: output data
         - returns: a tuple containing the number of output bytes produced and the status (see Status)
     */
-    open func update(_ byteArrayIn: [UInt8], byteArrayOut: inout [UInt8]) -> (Int, Status)
+    open func update(byteArrayIn: [UInt8], byteArrayOut: inout [UInt8]) -> (Int, Status)
     {
         let dataOutAvailable = byteArrayOut.count
         var dataOutMoved = 0
-        update(byteArrayIn, byteCountIn: byteArrayIn.count, bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
+        update(bufferIn: byteArrayIn, byteCountIn: byteArrayIn.count, bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
         return (dataOutMoved, self.status)
     }
     /**
@@ -255,11 +250,11 @@ open class StreamCryptor
         - parameter byteArrayOut: output data
         - returns: a tuple containing the number of output bytes produced and the status (see Status)
     */
-    open func update(_ stringIn: String, byteArrayOut: inout [UInt8]) -> (Int, Status)
+    open func update(stringIn: String, byteArrayOut: inout [UInt8]) -> (Int, Status)
     {
         let dataOutAvailable = byteArrayOut.count
         var dataOutMoved = 0
-        update(stringIn, byteCountIn: stringIn.lengthOfBytes(using: String.Encoding.utf8), bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
+        update(bufferIn: stringIn, byteCountIn: stringIn.lengthOfBytes(using: String.Encoding.utf8), bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
         return (dataOutMoved, self.status)
     }
     /**
@@ -274,11 +269,11 @@ open class StreamCryptor
         - parameter byteArrayOut: the output bffer        
         - returns: a tuple containing the number of output bytes produced and the status (see Status)
     */
-    open func final(_ byteArrayOut: inout [UInt8]) -> (Int, Status)
+    open func final(byteArrayOut: inout [UInt8]) -> (Int, Status)
     {
         let dataOutAvailable = byteArrayOut.count
         var dataOutMoved = 0
-        final(&byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
+        final(bufferOut: &byteArrayOut, byteCapacityOut: dataOutAvailable, byteCountOut: &dataOutMoved)
         return (dataOutMoved, self.status)
     }
     
@@ -293,7 +288,7 @@ open class StreamCryptor
     public init(operation: Operation, algorithm: Algorithm, options: Options, keyBuffer: UnsafeRawPointer,
         keyByteCount: Int, ivBuffer: UnsafeRawPointer)
     {
-        guard algorithm.isValidKeySize(keyByteCount) else  { fatalError("FATAL_ERROR: Invalid key size.") }
+        guard algorithm.isValid(keySize: keyByteCount) else  { fatalError("FATAL_ERROR: Invalid key size.") }
 
         let rawStatus = CCCryptorCreate(operation.nativeValue(), algorithm.nativeValue(), CCOptions(options.rawValue), keyBuffer, keyByteCount, ivBuffer, context)
         if let status = Status.fromRaw(rawStatus)
@@ -314,12 +309,12 @@ open class StreamCryptor
         - parameter outByteCount: on successful completion, the number of bytes written to the output buffer
         - returns: 
     */
-    open func update(_ bufferIn: UnsafeRawPointer, byteCountIn: Int, bufferOut: UnsafeMutableRawPointer, byteCapacityOut : Int, byteCountOut : inout Int) -> Status
+    open func update(bufferIn: UnsafeRawPointer, byteCountIn: Int, bufferOut: UnsafeMutableRawPointer, byteCapacityOut: Int, byteCountOut: inout Int) -> Status
     {
         if(self.status == Status.success)
         {
             let rawStatus = CCCryptorUpdate(context.pointee, bufferIn, byteCountIn, bufferOut, byteCapacityOut, &byteCountOut)
-            if let status = Status.fromRaw(rawStatus)
+            if let status = Status.fromRaw(status: rawStatus)
             {
                 self.status =  status
 
@@ -345,12 +340,12 @@ open class StreamCryptor
         - parameter outByteCapacity: capacity of the output buffer in bytes
         - parameter outByteCount: on successful completion, the number of bytes written to the output buffer
     */
-    open func final(_ bufferOut: UnsafeMutableRawPointer, byteCapacityOut : Int, byteCountOut : inout Int) -> Status
+    open func final(bufferOut: UnsafeMutableRawPointer, byteCapacityOut: Int, byteCountOut: inout Int) -> Status
     {
         if(self.status == Status.success)
         {
             let rawStatus = CCCryptorFinal(context.pointee, bufferOut, byteCapacityOut, &byteCountOut)
-            if let status = Status.fromRaw(rawStatus)
+            if let status = Status.fromRaw(status:rawStatus)
             {
                 self.status =  status
             }
@@ -369,7 +364,7 @@ open class StreamCryptor
         - parameter inputByteCount: number of bytes that will be input.
         - parameter isFinal: true if buffer to be input will be the last input buffer, false otherwise.
     */
-    open func getOutputLength(_ inputByteCount : Int, isFinal : Bool = false) -> Int
+    open func getOutputLength(inputByteCount: Int, isFinal: Bool = false) -> Int
     {
         return CCCryptorGetOutputLength(context.pointee, inputByteCount, isFinal)
     }
@@ -377,7 +372,7 @@ open class StreamCryptor
     deinit
     {
         let rawStatus = CCCryptorRelease(context.pointee)
-        if let status = Status.fromRaw(rawStatus)
+        if let status = Status.fromRaw(status: rawStatus)
         {
             if(status != .success)
             {

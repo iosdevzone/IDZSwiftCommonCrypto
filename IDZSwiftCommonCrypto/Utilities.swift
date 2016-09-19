@@ -30,9 +30,9 @@ func convertHexDigit(c : UnicodeScalar) -> UInt8
 /// - parameter s: the hex string (must contain an even number of digits)
 /// - returns: a Swift array
 ///
-public func arrayFromHexString(s : String) -> [UInt8]
+public func arrayFrom(hexString : String) -> [UInt8]
 {
-    var g = s.unicodeScalars.makeIterator()
+    var g = hexString.unicodeScalars.makeIterator()
     var a : [UInt8] = []
     while let msn = g.next()
     {
@@ -54,9 +54,9 @@ public func arrayFromHexString(s : String) -> [UInt8]
 /// - parameter s: the string
 /// - returns: a Swift array
 ///
-public func arrayFromString(s : String) -> [UInt8]
+public func arrayFrom(string : String) -> [UInt8]
 {
-    let array = [UInt8](s.utf8)
+    let array = [UInt8](string.utf8)
     return array
 }
 
@@ -66,9 +66,9 @@ public func arrayFromString(s : String) -> [UInt8]
 /// - parameter s: the hex string (must contain an even number of digits)
 /// - returns: an NSData object
 ///
-public func dataFromHexString(s: String) -> Data
+public func dataFrom(hexString: String) -> Data
 {
-    let a = arrayFromHexString(s: s)
+    let a = arrayFrom(hexString: hexString)
     return Data(bytes: UnsafePointer<UInt8>(a), count:a.count)
 }
 
@@ -78,9 +78,9 @@ public func dataFromHexString(s: String) -> Data
 /// - parameter a: the Swift array
 /// - returns: an NSData object
 ///
-public func dataFromByteArray(a : [UInt8]) -> Data
+public func dataFrom(byteArray : [UInt8]) -> Data
 {
-    return Data(bytes: UnsafePointer<UInt8>(a), count:a.count)
+    return Data(bytes: UnsafePointer<UInt8>(byteArray), count:byteArray.count)
 }
 
 ///
@@ -90,22 +90,10 @@ public func dataFromByteArray(a : [UInt8]) -> Data
 /// - parameter uppercase: if true use uppercase for letter digits, lowercase otherwise
 /// - returns: a Swift string
 ///
-public func hexStringFromArray(a : [UInt8], uppercase : Bool = false) -> String
+public func hexString(fromArray : [UInt8], uppercase : Bool = false) -> String
 {
-    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", +)
+    return fromArray.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", +)
 }
-
-///
-/// Converts a Swift array to an `NSString` object.
-///
-/// - parameter a: the Swift array
-/// - parameter uppercase: if true use uppercase for letter digits, lowercase otherwise
-/// - returns: an `NSString` object
-///
-//public func hexNSStringFromArray(_ a : [UInt8], uppercase : Bool = false) -> NSString
-//{
-//    return a.map() { String(format:uppercase ? "%02X" : "%02x", $0) }.reduce("", +)
-//}
 
 ///
 /// Converts a Swift array to a Swift `String` containing a comma separated list of bytes.
@@ -114,9 +102,9 @@ public func hexStringFromArray(a : [UInt8], uppercase : Bool = false) -> String
 /// - parameter a: the Swift array
 /// - returns: a Swift string
 ///
-public func hexListFromArray(a: [UInt8]) -> String
+public func hexList(fromArray: [UInt8]) -> String
 {
-    return a.map() { String(format:"0x%02x, ", $0) }.reduce("", +)    
+    return fromArray.map() { String(format:"0x%02x, ", $0) }.reduce("", +)    
 }
 
 ///
@@ -126,10 +114,10 @@ public func hexListFromArray(a: [UInt8]) -> String
 /// - parameter blockSizeInBytes: the block size in bytes (cunningly enough!)
 /// - returns: a Swift string
 ///
-public func zeroPad(a: [UInt8], blockSize: Int) -> [UInt8] {
-    let pad = blockSize - (a.count % blockSize)
-    guard pad != 0 else { return a }
-    return a + Array<UInt8>(repeating: 0, count: pad)
+public func zeroPad(array: [UInt8], blockSize: Int) -> [UInt8] {
+    let pad = blockSize - (array.count % blockSize)
+    guard pad != 0 else { return array }
+    return array + Array<UInt8>(repeating: 0, count: pad)
 }
 
 ///
@@ -139,6 +127,6 @@ public func zeroPad(a: [UInt8], blockSize: Int) -> [UInt8] {
 /// - parameter blockSizeInBytes: the block size in bytes (cunningly enough!)
 /// - returns: a Swift string
 ///
-public func zeroPad(s: String, blockSize: Int) -> [UInt8] {
-    return zeroPad(a: Array<UInt8>(s.utf8), blockSize:blockSize)
+public func zeroPad(string: String, blockSize: Int) -> [UInt8] {
+    return zeroPad(array: Array<UInt8>(string.utf8), blockSize:blockSize)
 }

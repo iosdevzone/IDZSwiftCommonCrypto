@@ -25,10 +25,10 @@ open class Cryptor : StreamCryptor, Updateable
     */
     open func final() -> [UInt8]?
     {
-        let byteCount = Int(self.getOutputLength(0, isFinal: true))
+        let byteCount = Int(self.getOutputLength(inputByteCount: 0, isFinal: true))
         var dataOut = Array<UInt8>(repeating: 0, count: byteCount)
         var dataOutMoved = 0
-        (dataOutMoved, self.status) = final(&dataOut)
+        (dataOutMoved, self.status) = final(byteArrayOut: &dataOut)
         if(self.status != Status.success) {
             return nil
         }
@@ -47,10 +47,10 @@ open class Cryptor : StreamCryptor, Updateable
     */
     open func update(buffer: UnsafeRawPointer, byteCount: Int) -> Self?
     {
-        let outputLength = self.getOutputLength(byteCount, isFinal: false)
+        let outputLength = self.getOutputLength(inputByteCount: byteCount, isFinal: false)
         var dataOut = Array<UInt8>(repeating: 0, count: outputLength)
         var dataOutMoved = 0
-        update(buffer, byteCountIn: byteCount, bufferOut: &dataOut, byteCapacityOut: dataOut.count, byteCountOut: &dataOutMoved)
+        update(bufferIn: buffer, byteCountIn: byteCount, bufferOut: &dataOut, byteCapacityOut: dataOut.count, byteCountOut: &dataOutMoved)
         if(self.status != Status.success) {
             return nil
         }

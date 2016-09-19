@@ -58,7 +58,7 @@ open class HMAC : Updateable
             }
         }
         
-        static func fromNativeValue(_ nativeAlg : CCHmacAlgorithm) -> Algorithm?
+        static func fromNativeValue(nativeAlg : CCHmacAlgorithm) -> Algorithm?
         {
             return fromNative[nativeAlg]
         }
