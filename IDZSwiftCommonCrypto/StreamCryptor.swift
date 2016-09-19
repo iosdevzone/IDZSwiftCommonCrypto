@@ -196,7 +196,7 @@ open class StreamCryptor
             fatalError("FATAL_ERROR: Invalid key size")
         }
         
-        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(key, paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
+        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(array: key, blockSize: paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
     }
     /**
         Creates a new StreamCryptor
@@ -213,7 +213,7 @@ open class StreamCryptor
             fatalError("FATAL_ERROR: Invalid key size")
         }
         
-        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(key, paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
+        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(string: key, blockSize: paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
     }
     /**
         Add the contents of an Objective-C NSData buffer to the current encryption/decryption operation.
@@ -291,7 +291,7 @@ open class StreamCryptor
         guard algorithm.isValid(keySize: keyByteCount) else  { fatalError("FATAL_ERROR: Invalid key size.") }
 
         let rawStatus = CCCryptorCreate(operation.nativeValue(), algorithm.nativeValue(), CCOptions(options.rawValue), keyBuffer, keyByteCount, ivBuffer, context)
-        if let status = Status.fromRaw(rawStatus)
+        if let status = Status.fromRaw(status: rawStatus)
         {
             self.status = status
         }
@@ -387,6 +387,6 @@ open class StreamCryptor
         context.deallocate(capacity: 1)
     }
     
-    fileprivate var context = UnsafeMutablePointer<CCCryptorRef>.allocate(capacity: 1)
+    fileprivate var context = UnsafeMutablePointer<CCCryptorRef?>.allocate(capacity: 1)
     
 }
