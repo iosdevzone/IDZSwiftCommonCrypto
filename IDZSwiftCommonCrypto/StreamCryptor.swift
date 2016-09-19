@@ -297,7 +297,7 @@ open class StreamCryptor
         }
         else
         {
-            NSLog("FATAL_ERROR: CCCryptorCreate returned unexpected status (\(rawStatus)).")
+            print("FATAL_ERROR: CCCryptorCreate returned unexpected status (\(rawStatus)).")
             fatalError("CCCryptorCreate returned unexpected status.")
         }
     }
@@ -321,7 +321,7 @@ open class StreamCryptor
             }
             else
             {
-                NSLog("FATAL_ERROR: CCCryptorUpdate returned unexpected status (\(rawStatus)).")
+                print("FATAL_ERROR: CCCryptorUpdate returned unexpected status (\(rawStatus)).")
                 fatalError("CCCryptorUpdate returned unexpected status.")
             }
         }
@@ -351,7 +351,7 @@ open class StreamCryptor
             }
             else
             {
-                NSLog("FATAL_ERROR: CCCryptorFinal returned unexpected status (\(rawStatus)).")
+                print("FATAL_ERROR: CCCryptorFinal returned unexpected status (\(rawStatus)).")
                 fatalError("CCCryptorUpdate returned unexpected status.")
             }
         }
@@ -376,12 +376,12 @@ open class StreamCryptor
         {
             if(status != .success)
             {
-                NSLog("WARNING: CCCryptoRelease failed with status \(rawStatus).")
+                print("WARNING: CCCryptoRelease failed with status \(rawStatus).")
             }
         }
         else
         {
-            NSLog("FATAL_ERROR: CCCryptorUpdate returned unexpected status (\(rawStatus)).")
+            print("FATAL_ERROR: CCCryptorUpdate returned unexpected status (\(rawStatus)).")
             fatalError("CCCryptorUpdate returned unexpected status.")
         }
         context.deallocate(capacity: 1)

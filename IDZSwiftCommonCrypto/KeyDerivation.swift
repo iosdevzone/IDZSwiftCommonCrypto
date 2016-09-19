@@ -74,7 +74,7 @@ open class PBKDF
         let status : Int32 = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2), password, password.lengthOfBytes(using: String.Encoding.utf8), salt, salt.lengthOfBytes(using: String.Encoding.utf8), prf.nativeValue(), rounds, &derivedKey, derivedKey.count)
         if(status != Int32(kCCSuccess))
         {
-            NSLog("ERROR: CCKeyDerivationPBDK failed with stats \(status).")
+            print("ERROR: CCKeyDerivationPBDK failed with stats \(status).")
             fatalError("ERROR: CCKeyDerivationPBDK failed.")
         }
         return derivedKey
@@ -96,7 +96,7 @@ open class PBKDF
         let status : Int32 = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2), password, password.lengthOfBytes(using: String.Encoding.utf8), salt, salt.count, prf.nativeValue(), rounds, &derivedKey, derivedKey.count)
         if(status != Int32(kCCSuccess))
         {
-            NSLog("ERROR: CCKeyDerivationPBDK failed with stats \(status).")
+            print("ERROR: CCKeyDerivationPBDK failed with stats \(status).")
             fatalError("ERROR: CCKeyDerivationPBDK failed.")
         }
         return derivedKey
@@ -121,7 +121,7 @@ open class PBKDF
         let status : Int32 = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2), password, passwordLen, salt, saltLen, prf.nativeValue(), rounds, derivedKey, derivedKeyLen)
         if(status != Int32(kCCSuccess))
         {
-            NSLog("ERROR: CCKeyDerivationPBDK failed with stats \(status).")
+            print("ERROR: CCKeyDerivationPBDK failed with stats \(status).")
             fatalError("ERROR: CCKeyDerivationPBDK failed.")
         }
     }
