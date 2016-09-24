@@ -629,6 +629,105 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         let cipherText = cryptor.update(plainText)?.final()
         XCTAssertEqual(expectedCipherText, cipherText!)
     }
-    
-    
+	
+	
+	func testCryptorCorrectlyEncryptsJSONUTF8MessageInModeCFB() {
+		let key: [UInt8] = [0xb2, 0xdd, 0x82, 0x0c, 0x32, 0x2f, 0xcd, 0xac, 0x63, 0xbe, 0x56, 0x9b, 0x69, 0x07, 0xa8, 0xc6, 0x68, 0xa8, 0x8c, 0x76, 0xb3, 0x86, 0x1d, 0x5d, 0x7a, 0x0f, 0x4c, 0x29, 0x9e, 0x46, 0x15, 0x44]
+		let iv: [UInt8] = [0x38, 0xa6, 0x44, 0xdd, 0xe4, 0x22, 0x12, 0xeb, 0x50, 0x2e, 0x84, 0xb4, 0x09, 0xd5, 0x27, 0x7c]
+		let messageBytes: [UInt8] = zeroPad("{\"type\": 1,\"owner\":{\"firstName\":\"Michał\",\"lastName\": \"Dąbrowski\"},\"isValid\": true}", Cryptor.Algorithm.AES.blockSize())
+		
+		let cipherText = Cryptor(operation: .Encrypt, algorithm: .AES, mode: .CFB, padding: .NoPadding, key: key, iv: iv).update(messageBytes)?.final()
+		XCTAssertNotNil(cipherText)
+		let cipherString = hexStringFromArray(cipherText!)
+		
+		XCTAssertEqual(cipherString, "048293a942e3cc54a4f1d4fe54b3137402ab116cd1f9240d133b37167f5f5338d57c452459d7cc8a3fda478b22b1256fed657c7ca883a558e36546f291dfd42f55ce1f56b036cdf368ca8b203f2f29c8da29f5079e692cc8c8d284aaa4b31167")
+	}
+	
+	func testCryptorCorrectlyDecryptsJSONUTF8MessageInModeCFB() {
+		let key: [UInt8] = [0xb2, 0xdd, 0x82, 0x0c, 0x32, 0x2f, 0xcd, 0xac, 0x63, 0xbe, 0x56, 0x9b, 0x69, 0x07, 0xa8, 0xc6, 0x68, 0xa8, 0x8c, 0x76, 0xb3, 0x86, 0x1d, 0x5d, 0x7a, 0x0f, 0x4c, 0x29, 0x9e, 0x46, 0x15, 0x44]
+		let iv: [UInt8] = [0x38, 0xa6, 0x44, 0xdd, 0xe4, 0x22, 0x12, 0xeb, 0x50, 0x2e, 0x84, 0xb4, 0x09, 0xd5, 0x27, 0x7c]
+		let messagePayload = arrayFromHexString("048293a942e3cc54a4f1d4fe54b3137402ab116cd1f9240d133b37167f5f5338d57c452459d7cc8a3fda478b22b1256fed657c7ca883a558e36546f291dfd42f55ce1f56b036cdf368ca8b203f2f29c8da29f5079e692cc8c8d284aaa4b31167")
+		let encryptedJSON: [String: AnyObject] = [
+			"type": 1,
+			"owner": [
+				"firstName": "Michał",
+				"lastName": "Dąbrowski"
+			],
+			"isValid": true
+		]
+		
+		var decryptedData = Cryptor(operation: .Decrypt, algorithm: .AES, mode: .CFB, padding: .NoPadding, key: key, iv: iv).update(messagePayload)!.final()!
+		decryptedData = removeTrailingZeroPadding(decryptedData)
+		let stringData = NSData(bytes: decryptedData, length: decryptedData.count)
+		
+		do {
+			let decryptedJSON = try NSJSONSerialization.JSONObjectWithData(stringData, options: [NSJSONReadingOptions.AllowFragments])
+			XCTAssertTrue(decryptedJSON is NSDictionary)
+			XCTAssertEqual(decryptedJSON as? NSDictionary, encryptedJSON)
+			
+		} catch {
+			XCTFail()
+		}
+	}
+	
+	func testCryptorCorrectlyEncryptsAndDecryptsStringMessageInModeCFB() {
+		let keyString: String = "a9628a8b1d54eef2c9d9b4bd431708765dbb1c9ec913f675138455f450c3f99a"
+		let invalidKeyString: String = "a9628a8b1d54eef2c9d9b4bd431708865dbb1c9ec913f675138455f450c3f99a"
+		let ivString: String = "6694f70dd552e02f1edfa9b77a00faf9"
+		let secretMessage: String = "This is a message that will be encrypted"
+		let secretMessagePayload = zeroPad(secretMessage, Cryptor.Algorithm.AES.blockSize())
+		let key = arrayFromHexString(keyString)
+		let invalidKey = arrayFromHexString(invalidKeyString)
+		let iv = arrayFromHexString(ivString)
+		
+		let cipherText: [UInt8]! = Cryptor(operation: .Encrypt, algorithm: .AES, mode: .CFB, padding: .NoPadding, key: key, iv: iv).update(secretMessagePayload)?.final()
+		XCTAssertNotNil(cipherText)
+		let cipherString = hexStringFromArray(cipherText)
+		
+		
+		XCTAssertEqual(cipherString, "dbf971a44030c146e2ebf35fe4464aecb93cf3ace0e7694e40ff69e6fc6b84b5b7271d8f0e7a2530c0d8921c66079651")
+		
+		let outDataArray: [UInt8]! = Cryptor(operation: .Decrypt, algorithm: .AES, mode: .CFB, padding: .NoPadding, key: key, iv: iv).update(cipherText)?.final()
+		XCTAssertNotNil(outDataArray)
+		XCTAssertEqual(outDataArray, secretMessagePayload)
+		
+		let outDataArrayDecryptedWithInvalidKey = Cryptor(operation: .Decrypt, algorithm: .AES, mode: .CFB, padding: .NoPadding, key: invalidKey, iv: iv).update(cipherText)!.final()!
+		XCTAssertNotEqual(outDataArrayDecryptedWithInvalidKey, secretMessagePayload)
+	}
+	
+	func testCryptorCorrectlyEncryptsAndDecryptsStringMessageInModeCBC() {
+		let key = arrayFromHexString("a9628a8b1d54eef2c9d9b4bd431708765dbb1c9ec913f675138455f450c3f99a")
+		let invalidKey = arrayFromHexString("a9628a8b1d54eef2c9d9b4bd431708865dbb1c9ec913f675138455f450c3f99a")
+		let iv = arrayFromHexString("ffdcf7408390cea2986267368cf386d7")
+		let secretMessage: String = "This is a message that will be encrypted"
+		let secretMessagePayload = zeroPad(secretMessage, Cryptor.Algorithm.AES.blockSize())
+		
+		let cipherText: [UInt8]! = Cryptor(operation: .Encrypt, algorithm: .AES, mode: .CBC , padding: .NoPadding, key: key, iv: iv).update(secretMessagePayload)?.final()
+		XCTAssertNotNil(cipherText)
+		let cipherString = hexStringFromArray(cipherText)
+		
+		XCTAssertEqual(cipherString, "b94f8a088cbd9433d3ba111d85bd268b4a47c29fafd4e29e0a9a5fddb7f7d3aca4a15b818b71f6cb9c40599b7cd4d2b0")
+		
+		let outDataArray: [UInt8]! = Cryptor(operation: .Decrypt, algorithm: .AES, mode: .CBC, padding: .NoPadding, key: key, iv: iv).update(cipherText)?.final()
+		XCTAssertNotNil(outDataArray)
+		XCTAssertEqual(outDataArray, secretMessagePayload)
+		
+		let outDataArrayWithoutPadding = removeTrailingZeroPadding(outDataArray)
+		let outString = String(data: NSData(bytes: outDataArrayWithoutPadding, length: outDataArrayWithoutPadding.count), encoding: NSUTF8StringEncoding)
+		XCTAssertEqual(outString, secretMessage)
+		
+		let outDataArrayDecryptedWithInvalidKey = Cryptor(operation: .Decrypt, algorithm: .AES, mode: .CBC, padding: .NoPadding, key: invalidKey, iv: iv).update(cipherText)!.final()!
+		XCTAssertNotEqual(outDataArrayDecryptedWithInvalidKey, secretMessagePayload)
+	}
+	
+	func testCryptorEncryptsCorrectlyInECBMode() {
+		let key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+		let plainText = arrayFromHexString("6bc1bee22e409f96e93d7e11739317")
+
+		let cryptor = Cryptor(operation: .Encrypt, algorithm: .AES, mode: .ECB, padding: .NoPadding, key: key, iv: [])
+		let cipherText = cryptor.update(plainText)?.final()
+		XCTAssert(cipherText == nil, "Expected nil cipherText")
+		XCTAssertEqual(cryptor.status, Status.AlignmentError, "Expected AlignmentError")
+
+	}
 }
