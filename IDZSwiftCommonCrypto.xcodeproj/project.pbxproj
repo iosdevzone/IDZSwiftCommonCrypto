@@ -543,9 +543,11 @@
 				TargetAttributes = {
 					0CCB89AA19CE05F800068ED6 = {
 						CreatedOnToolsVersion = 6.0.1;
+						LastSwiftMigration = 0800;
 					};
 					0CCB89B519CE05F800068ED6 = {
 						CreatedOnToolsVersion = 6.0.1;
+						LastSwiftMigration = 0800;
 					};
 					308499A61BA77BC20025B41D = {
 						CreatedOnToolsVersion = 7.0;
@@ -1017,6 +1019,7 @@
 				PRODUCT_NAME = IDZSwiftCommonCrypto;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}";
+				SWIFT_VERSION = 2.3;
 				SYMROOT = "build/$(PLATFORM_NAME)";
 			};
 			name = Debug;
@@ -1035,6 +1038,7 @@
 				PRODUCT_NAME = IDZSwiftCommonCrypto;
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}";
+				SWIFT_VERSION = 2.3;
 				SYMROOT = "build/$(PLATFORM_NAME)";
 			};
 			name = Release;
@@ -1057,6 +1061,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/CommonCrypto";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -1073,6 +1078,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.iosdeveloperzone.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/CommonCrypto";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
