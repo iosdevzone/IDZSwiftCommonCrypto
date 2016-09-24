@@ -142,3 +142,16 @@ public func zeroPad(a: [UInt8], _ blockSize: Int) -> [UInt8] {
 public func zeroPad(s: String, _ blockSize: Int) -> [UInt8] {
     return zeroPad(Array<UInt8>(s.utf8), blockSize)
 }
+
+
+///
+/// Removes trailing zero padding. Removes each zero ( ie == 0x00 ) byte from the end of the array
+///
+///- parameter a:	the Swift array
+///- returns: a Swift array (shorter or equal)
+///
+public func removeTrailingZeroPadding(a: [UInt8]) -> [UInt8] {
+	var a = a
+	while a.last == 0x00 { a.removeLast() }
+	return a
+}
