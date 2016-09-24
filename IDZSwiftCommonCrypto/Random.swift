@@ -15,7 +15,7 @@ public typealias RNGStatus = Status
 ///
 /// Generates buffers of random bytes.
 ///
-public class Random
+open class Random
 {
     /**
     Wraps native CCRandomeGenerateBytes call.
@@ -26,7 +26,7 @@ public class Random
     - return: .Success or .RNGFailure as appropriate.
     
      */
-    public class func generateBytes(bytes : UnsafeMutablePointer<Void>, byteCount : Int ) -> RNGStatus
+    open class func generateBytes(bytes: UnsafeMutableRawPointer, byteCount: Int ) -> RNGStatus
     {
         let statusCode = CCRandomGenerateBytes(bytes, byteCount)
         guard let status = Status(rawValue: statusCode) else {
@@ -41,14 +41,14 @@ public class Random
     - return: an array of random bytes
     - throws: an `RNGStatus` on failure
     */
-    public class func generateBytes(byteCount : Int ) throws -> [UInt8]
+    open class func generateBytes(byteCount: Int ) throws -> [UInt8]
     {
-        guard byteCount > 0 else { throw RNGStatus.ParamError }
+        guard byteCount > 0 else { throw RNGStatus.paramError }
         
-        var bytes : [UInt8] = Array(count:byteCount, repeatedValue:UInt8(0))
-        let status = generateBytes(&bytes, byteCount: byteCount)
+        var bytes : [UInt8] = Array(repeating: UInt8(0), count: byteCount)
+        let status = generateBytes(bytes: &bytes, byteCount: byteCount)
         
-        guard status == .Success else { throw status }
+        guard status == .success else { throw status }
         return bytes
     }
     
@@ -60,14 +60,14 @@ public class Random
     - parameter bytesCount: number of random bytes to generate
     - return: an array of random bytes
      */
-    public class func generateBytesThrow(byteCount : Int ) throws -> [UInt8]
+    open class func generateBytesThrow(byteCount: Int ) throws -> [UInt8]
     {
         if(byteCount <= 0)
         {
             fatalError("generateBytes: byteCount must be positve and non-zero")
         }
-        var bytes : [UInt8] = Array(count:byteCount, repeatedValue:UInt8(0))
-        let status = generateBytes(&bytes, byteCount: byteCount)
+        var bytes : [UInt8] = Array(repeating: UInt8(0), count: byteCount)
+        let status = generateBytes(bytes: &bytes, byteCount: byteCount)
         throw status
         //return bytes
     }

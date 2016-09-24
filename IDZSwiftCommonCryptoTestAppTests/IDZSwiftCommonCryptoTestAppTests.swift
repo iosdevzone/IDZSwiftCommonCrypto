@@ -22,28 +22,16 @@ class IDZSwiftCommonCryptoTestAppTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
     // MARK: - Crypto Demo
     func test_StreamCryptor_AES_ECB() {
-        let key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
-        let plainText = arrayFromHexString("6bc1bee22e409f96e93d7e117393172a")
-        let expectedCipherText = arrayFromHexString("3ad77bb40d7a3660a89ecaf32466ef97")
+        let key = arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
+        let plainText = arrayFrom(hexString: "6bc1bee22e409f96e93d7e117393172a")
+        let expectedCipherText = arrayFrom(hexString: "3ad77bb40d7a3660a89ecaf32466ef97")
         
-        let aesEncrypt = StreamCryptor(operation:.Encrypt, algorithm:.AES, options:.ECBMode, key:key, iv:Array<UInt8>())
+        let aesEncrypt = StreamCryptor(operation:.encrypt, algorithm:.aes, options:.ECBMode, key:key, iv:Array<UInt8>())
         var cipherText : [UInt8] = []
-        var dataOut = Array<UInt8>(count:plainText.count, repeatedValue:UInt8(0))
-        let (byteCount, status) = aesEncrypt.update(plainText, byteArrayOut: &dataOut)
+        var dataOut = Array<UInt8>(repeating:UInt8(0), count:plainText.count)
+        let (byteCount, _) = aesEncrypt.update(byteArrayIn: plainText, byteArrayOut: &dataOut)
     
         
         cipherText += dataOut[0..<Int(byteCount)]
