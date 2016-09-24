@@ -8,6 +8,7 @@ RSRC_DIR=$(PG)/Resources
 
 XC=xcodebuild 
 XCPP=xcpretty
+CS_FLAGS=CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
 $(PG): README.md
 	playground README.md -p ios 
@@ -16,10 +17,10 @@ $(PG): README.md
 	git config --global push.default simple
 	git diff-files --exit-code; if [[ "$?" == "1" ]]; then git commit -a -m "Playground update from Travis [ci skip]"; git push; fi
 all: 
-	$(XC) build -target "IDZSwiftCommonCrypto (iOS)" | xcpretty
-	$(XC) build -target "IDZSwiftCommonCrypto (OSX)" | xcpretty
-	$(XC) build -target "IDZSwiftCommonCrypto (tvOS)" | xcpretty
-	$(XC) build -target "IDZSwiftCommonCrypto (watchOS)" | xcpretty
+	$(XC) build -target "IDZSwiftCommonCrypto (iOS)" $(CS_FLAGS) | xcpretty
+	$(XC) build -target "IDZSwiftCommonCrypto (OSX)" $(CS_FLAGS) | xcpretty
+	$(XC) build -target "IDZSwiftCommonCrypto (tvOS)" $(CS_FLAGS) | xcpretty
+	$(XC) build -target "IDZSwiftCommonCrypto (watchOS)" $(CS_FLAGS) | xcpretty
 	$(XC) test -scheme "IDZSwiftCommonCrypto (iOS)" -destination 'platform=iOS Simulator,name=iPhone 6' | xcpretty
 	$(XC) test -scheme "IDZSwiftCommonCrypto (OSX)" | xcpretty
 	$(XC) test -scheme "IDZSwiftCommonCrypto (tvOS)" -destination 'platform=tvOS Simulator,name=Apple TV 1080p'| xcpretty
