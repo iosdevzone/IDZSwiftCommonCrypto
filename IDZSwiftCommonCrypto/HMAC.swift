@@ -12,7 +12,7 @@ import CommonCrypto
 ///
 /// Calculates a cryptographic Hash-Based Message Authentication Code (HMAC).
 ///
-public class HMAC : Updateable
+open class HMAC : Updateable
 {
     ///
     /// Enumerates available algorithms.
@@ -20,39 +20,39 @@ public class HMAC : Updateable
     public enum Algorithm
     {
         /// Message Digest 5
-        case MD5,
+        case md5,
         /// Secure Hash Algorithm 1
-            SHA1,
+            sha1,
         /// Secure Hash Algorithm 2 224-bit
-            SHA224,
+            sha224,
         /// Secure Hash Algorithm 2 256-bit
-            SHA256,
+            sha256,
         /// Secure Hash Algorithm 2 384-bit
-            SHA384,
+            sha384,
         /// Secure Hash Algorithm 2 512-bit
-            SHA512
+            sha512
         
         static let fromNative : [CCHmacAlgorithm: Algorithm] = [
-            CCHmacAlgorithm(kCCHmacAlgSHA1):.SHA1,
-            CCHmacAlgorithm(kCCHmacAlgSHA1):.MD5,
-            CCHmacAlgorithm(kCCHmacAlgSHA256):.SHA256,
-            CCHmacAlgorithm(kCCHmacAlgSHA384):.SHA384,
-            CCHmacAlgorithm(kCCHmacAlgSHA512):.SHA512,
-            CCHmacAlgorithm(kCCHmacAlgSHA224):.SHA224 ]
+            CCHmacAlgorithm(kCCHmacAlgSHA1):.sha1,
+            CCHmacAlgorithm(kCCHmacAlgSHA1):.md5,
+            CCHmacAlgorithm(kCCHmacAlgSHA256):.sha256,
+            CCHmacAlgorithm(kCCHmacAlgSHA384):.sha384,
+            CCHmacAlgorithm(kCCHmacAlgSHA512):.sha512,
+            CCHmacAlgorithm(kCCHmacAlgSHA224):.sha224 ]
         
         func nativeValue() -> CCHmacAlgorithm {
             switch self {
-            case .SHA1:
+            case .sha1:
                 return CCHmacAlgorithm(kCCHmacAlgSHA1)
-            case .MD5:
+            case .md5:
                 return CCHmacAlgorithm(kCCHmacAlgMD5)
-            case .SHA224:
+            case .sha224:
                 return CCHmacAlgorithm(kCCHmacAlgSHA224)
-            case .SHA256:
+            case .sha256:
                 return CCHmacAlgorithm(kCCHmacAlgSHA256)
-            case .SHA384:
+            case .sha384:
                 return CCHmacAlgorithm(kCCHmacAlgSHA384)
-            case .SHA512:
+            case .sha512:
                 return CCHmacAlgorithm(kCCHmacAlgSHA512)
                 
             }
@@ -68,17 +68,17 @@ public class HMAC : Updateable
         ///
         public func digestLength() -> Int {
             switch self {
-            case .SHA1:
+            case .sha1:
                 return Int(CC_SHA1_DIGEST_LENGTH)
-            case .MD5:
+            case .md5:
                 return Int(CC_MD5_DIGEST_LENGTH)
-            case .SHA224:
+            case .sha224:
                 return Int(CC_SHA224_DIGEST_LENGTH)
-            case .SHA256:
+            case .sha256:
                 return Int(CC_SHA256_DIGEST_LENGTH)
-            case .SHA384:
+            case .sha384:
                 return Int(CC_SHA384_DIGEST_LENGTH)
-            case .SHA512:
+            case .sha512:
                 return Int(CC_SHA512_DIGEST_LENGTH)
             }
         }
@@ -87,12 +87,12 @@ public class HMAC : Updateable
     typealias Context = UnsafeMutablePointer<CCHmacContext>
     
     /// Status of the calculation
-    public var status : Status = .Success
+    open var status : Status = .success
     
-    let context = Context.alloc(1)
-    var algorithm : Algorithm
+    let context = Context.allocate(capacity: 1)
+    var algorithm: Algorithm
     
-    init(algorithm : Algorithm, keyBuffer: UnsafePointer<Void>, keyByteCount: Int)
+    init(algorithm: Algorithm, keyBuffer: UnsafeRawPointer, keyByteCount: Int)
     {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), keyBuffer, size_t(keyByteCount))
@@ -104,10 +104,10 @@ public class HMAC : Updateable
     /// - parameter algorithm: selects the algorithm
     /// - parameter key: specifies the key
     ///
-    public init(algorithm : Algorithm, key : NSData)
+    public init(algorithm: Algorithm, key: Data)
     {
         self.algorithm = algorithm
-        CCHmacInit(context, algorithm.nativeValue(), key.bytes, size_t(key.length))
+        CCHmacInit(context, algorithm.nativeValue(), (key as NSData).bytes, size_t(key.count))
     }
     
     ///
@@ -116,7 +116,7 @@ public class HMAC : Updateable
     /// - parameter algorithm: selects the algorithm
     /// - parameter key: specifies the key
     ///
-    public init(algorithm : Algorithm, key : [UInt8])
+    public init(algorithm: Algorithm, key: [UInt8])
     {
         self.algorithm = algorithm
         CCHmacInit(context, algorithm.nativeValue(), key, size_t(key.count))
@@ -129,14 +129,14 @@ public class HMAC : Updateable
     /// - parameter algorithm: selects the algorithm
     /// - parameter key: specifies the key
     ///
-    public init(algorithm : Algorithm, key : String)
+    public init(algorithm: Algorithm, key: String)
     {
         self.algorithm = algorithm
-        CCHmacInit(context, algorithm.nativeValue(), key, size_t(key.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
+        CCHmacInit(context, algorithm.nativeValue(), key, size_t(key.lengthOfBytes(using: String.Encoding.utf8)))
     }
     
     deinit {
-        context.dealloc(1)
+        context.deallocate(capacity: 1)
     }
  
     ///
@@ -144,7 +144,7 @@ public class HMAC : Updateable
     ///
     /// - returns: the calculated HMAC
     ///
-    public func update(buffer : UnsafePointer<Void>, _ byteCount : size_t) -> Self?
+    open func update(buffer: UnsafeRawPointer, byteCount: size_t) -> Self?
     {
         CCHmacUpdate(context, buffer, byteCount)
         return self 
@@ -155,9 +155,9 @@ public class HMAC : Updateable
     ///
     /// - returns: the calculated HMAC
     ///
-    public func final() -> [UInt8]
+    open func final() -> [UInt8]
     {
-        var hmac = Array<UInt8>(count:algorithm.digestLength(), repeatedValue:0)
+        var hmac = Array<UInt8>(repeating: 0, count: algorithm.digestLength())
         CCHmacFinal(context, &hmac)
         return hmac
     }

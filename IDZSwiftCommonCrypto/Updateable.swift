@@ -19,7 +19,7 @@ public protocol Updateable {
     /// - parameter buffer: pointer to the data buffer 
     /// - parameter byteCount: length of the buffer in bytes
     /// - returns: self if no error for optional chaining, null otherwise
-    func update(buffer : UnsafePointer<Void>, _ byteCount : size_t) -> Self?
+    @discardableResult func update(buffer: UnsafeRawPointer, byteCount: size_t) -> Self?
 }
 
 ///
@@ -31,20 +31,20 @@ extension Updateable {
     ///
     /// - parameters data: the data buffer
     ///
-    public func update(data: NSData) -> Self?
+    public func update(data: Data) -> Self?
     {
-        update(data.bytes, size_t(data.length))
-        return self.status == Status.Success ? self : nil
+        update(buffer: (data as NSData).bytes, byteCount:size_t(data.count))
+        return self.status == Status.success ? self : nil
     }
     ///
     /// Updates the current calculation with data contained in a Swift array.
     ///
     /// - parameters byteArray: the Swift array
     ///
-    public func update(byteArray : [UInt8]) -> Self?
+    public func update(byteArray: [UInt8]) -> Self?
     {
-        update(byteArray, size_t(byteArray.count))
-        return self.status == Status.Success ? self : nil
+        update(buffer: byteArray, byteCount: size_t(byteArray.count))
+        return self.status == Status.success ? self : nil
     }
     ///
     /// Updates the current calculation with data contained in a Swift string.
@@ -54,7 +54,7 @@ extension Updateable {
     ///
     public func update(string: String) -> Self?
     {
-        update(string, size_t(string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
-        return self.status == Status.Success ? self : nil
+        update(buffer: string, byteCount: size_t(string.lengthOfBytes(using: String.Encoding.utf8)))
+        return self.status == Status.success ? self : nil
     }
 }
