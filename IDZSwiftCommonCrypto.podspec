@@ -9,8 +9,8 @@ Pod::Spec.new do |s|
   s.author             = { "iOSDevZone" => "idz@iosdeveloperzone.com" }
   s.social_media_url   = "http://twitter.com/iOSDevZone"
  
-  s.osx.deployment_target = '10.10'
-  s.ios.deployment_target = '8.0'
+  s.osx.deployment_target = '10.11'
+  s.ios.deployment_target = '9.3'
   s.tvos.deployment_target = '9.0'
   s.watchos.deployment_target = '2.0'
 
@@ -24,13 +24,15 @@ Pod::Spec.new do |s|
   echo 'Running prepare_command'
   pwd
   echo Running GenerateCommonCryptoModule
-  swift ./GenerateCommonCryptoModule.swift macosx .
-  swift ./GenerateCommonCryptoModule.swift iphonesimulator .
-  swift ./GenerateCommonCryptoModule.swift iphoneos .
-  swift ./GenerateCommonCryptoModule.swift appletvsimulator .
-  swift ./GenerateCommonCryptoModule.swift appletvos .
-  swift ./GenerateCommonCryptoModule.swift watchsimulator .
-  swift ./GenerateCommonCryptoModule.swift watchos .
+  TC="--toolchain com.apple.dt.toolchain.Swift_2_3"
+  SWIFT="xcrun $TC swift"
+  $SWIFT ./GenerateCommonCryptoModule.swift macosx .
+  $SWIFT ./GenerateCommonCryptoModule.swift iphonesimulator .
+  $SWIFT ./GenerateCommonCryptoModule.swift iphoneos .
+  $SWIFT ./GenerateCommonCryptoModule.swift appletvsimulator .
+  $SWIFT ./GenerateCommonCryptoModule.swift appletvos .
+  $SWIFT ./GenerateCommonCryptoModule.swift watchsimulator .
+  $SWIFT ./GenerateCommonCryptoModule.swift watchos .
 
 CMD
 
