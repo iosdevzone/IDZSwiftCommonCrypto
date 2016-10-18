@@ -24,7 +24,10 @@ Pod::Spec.new do |s|
   echo 'Running prepare_command'
   pwd
   echo Running GenerateCommonCryptoModule
-  TC="--toolchain com.apple.dt.toolchain.Swift_2_3"
+  # This was needed to ensure the correct Swift interpreter was 
+  # used in Xcode 8. Leaving it here, commented out, in case similar 
+  # issues occur when migrating to Swift 4.0.
+  #TC="--toolchain com.apple.dt.toolchain.Swift_2_3"
   SWIFT="xcrun $TC swift"
   $SWIFT ./GenerateCommonCryptoModule.swift macosx .
   $SWIFT ./GenerateCommonCryptoModule.swift iphonesimulator .
