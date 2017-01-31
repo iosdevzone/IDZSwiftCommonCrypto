@@ -166,13 +166,13 @@ var encryptedFileOutputStream = NSOutputStream(toFileAtPath: encryptedFilePath, 
 var encryptedFileInputStream = NSInputStream(fileAtPath: encryptedFilePath)
 var decryptedFileOutputStream = NSOutputStream(toFileAtPath: decryptedFilePath, append:false)
 
-var sc = StreamCryptor(operation:.Encrypt, algorithm:.AES, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
+var sc = StreamCryptor(operation:.encrypt, algorithm:.aes, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
 crypt(sc, imageInputStream, encryptedFileOutputStream, 1024)
 
 // Uncomment this line to verify that the file is encrypted
 //var encryptedImage = UIImage(contentsOfFile:encryptedFile)
 
-sc = StreamCryptor(operation:.Decrypt, algorithm:.AES, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
+sc = StreamCryptor(operation:.decrypt, algorithm:.aes, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
 crypt(sc, encryptedFileInputStream, decryptedFileOutputStream, 1024)
 
 var image = UIImage(named:"Riscal.jpg")
