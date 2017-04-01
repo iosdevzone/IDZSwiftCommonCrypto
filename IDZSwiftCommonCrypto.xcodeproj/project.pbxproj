@@ -687,7 +687,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "if [ ! -e \"$PROJECT_DIR/Frameworks/$PLATFORM_NAME\" ] ; then\n  echo Generating \"$PROJECT_DIR/Frameworks/$(PLATFORM_NAME)/CommonCrypto.framework\"\n  xcrun -sdk macosx swift ./GenerateCommonCryptoModule.swift \"$PLATFORM_NAME\" \"$PROJECT_DIR\"\nelse\n  echo Directory exists, skipping generation of \"$PROJECT_DIR/Frameworks/$(PLATFORM_NAME)/CommonCrypto.framework\"\nfi";
+			shellScript = "if [ ! -e \"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\" ] ; then\n  echo Generating \"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\"\n  xcrun -sdk macosx swift ./GenerateCommonCryptoModule.swift \"${PLATFORM_NAME}\" \"${PROJECT_DIR}\"\nelse\n  echo Directory exists, skipping generation of \"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\"\nfi";
 		};
 		309B668F1C3E045D00CF76D5 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
