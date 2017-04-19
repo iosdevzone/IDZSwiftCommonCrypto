@@ -48,7 +48,8 @@ CMD
   s.xcconfig = { 
   "SWIFT_VERSION" => "3.0",
   "SWIFT_INCLUDE_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
-  "FRAMEWORK_SEARCH_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)"
+  "FRAMEWORK_SEARCH_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
+  "APPLICATION_EXTENSION_API_ONLY" => "YES"
   }
 
 end
