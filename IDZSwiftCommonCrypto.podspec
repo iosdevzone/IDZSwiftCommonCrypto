@@ -45,7 +45,7 @@ CMD
   s.preserve_paths = "Frameworks"
 
   # Make sure we can find the dummy frameworks
-  s.xcconfig = { 
+  s.pod_target_xcconfig = {
   "SWIFT_VERSION" => "3.0",
   "SWIFT_INCLUDE_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
   "FRAMEWORK_SEARCH_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
