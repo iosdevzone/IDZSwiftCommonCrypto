@@ -54,11 +54,11 @@ let digests1 = md5s1.final()
 
 If you only have a single buffer you can simply write
 ```swift
-  var digests3 = Digest(algorithm: .MD5).update(b)?.final() // digest is of type [UInt8]?
+  var digests3 = Digest(algorithm: .md5).update(b)?.final() // digest is of type [UInt8]?
 ```
 or 
 ```swift
-  var digests4 = Digest(algorithm: .MD5).update(s)?.final() // digest is of type [UInt8]?
+  var digests4 = Digest(algorithm: .md5).update(s)?.final() // digest is of type [UInt8]?
 ```
 
 ### Supported Algorithms
