@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Mode Enum Reference</title>
+    <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../../js/jquery.min.js" defer></script>
+    <script src="../../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Enum/Mode" class="dashAnchor"></a>
+    <a title="Mode Enum Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../../index.html">IDZSwiftCommonCrypto Docs</a> (90% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../../index.html">IDZSwiftCommonCrypto Reference</a>
+        <img id="carat" src="../../img/carat.png" />
+        Mode Enum Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Classes/Cryptor.html">Cryptor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Digest.html">Digest</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Digest/Algorithm.html">– Algorithm</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/HMAC.html">HMAC</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/HMAC/Algorithm.html">– Algorithm</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/PBKDF.html">PBKDF</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/PBKDF/PseudoRandomAlgorithm.html">– PseudoRandomAlgorithm</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Random.html">Random</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/StreamCryptor.html">StreamCryptor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/StreamCryptor/Operation.html">– Operation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/StreamCryptor/ValidKeySize.html">– ValidKeySize</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/StreamCryptor/Mode.html">– Mode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/StreamCryptor/Padding.html">– Padding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/StreamCryptor/Algorithm.html">– Algorithm</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/StreamCryptor/Options.html">– Options</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Enums/Status.html">Status</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Extensions/Data.html">Data</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Functions.html#/s:F20IDZSwiftCommonCrypto9arrayFromFT9hexStringSS_GSaVs5UInt8_">arrayFrom(hexString:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Functions.html#/s:F20IDZSwiftCommonCrypto9arrayFromFT6stringSS_GSaVs5UInt8_">arrayFrom(string:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Functions.html#/s:F20IDZSwiftCommonCrypto8dataFromFT9byteArrayGSaVs5UInt8__V10Foundation4Data">dataFrom(byteArray:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Functions.html#/s:F20IDZSwiftCommonCrypto8dataFromFT9hexStringSS_V10Foundation4Data">dataFrom(hexString:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Functions.html#/s:F20IDZSwiftCommonCrypto7hexListFT9fromArrayGSaVs5UInt8__SS">hexList(fromArray:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Functions.html#/s:F20IDZSwiftCommonCrypto9hexStringFT9fromArrayGSaVs5UInt8_9uppercaseSb_SS">hexString(fromArray:uppercase:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Functions.html#/s:F20IDZSwiftCommonCrypto25removeTrailingZeroPaddingFT5arrayGSaVs5UInt8__GSaS0__">removeTrailingZeroPadding(array:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Functions.html#/s:F20IDZSwiftCommonCrypto7zeroPadFT5arrayGSaVs5UInt8_9blockSizeSi_GSaS0__">zeroPad(array:blockSize:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Functions.html#/s:F20IDZSwiftCommonCrypto7zeroPadFT6stringSS9blockSizeSi_GSaVs5UInt8_">zeroPad(string:blockSize:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Protocols/CryptoDigest.html">CryptoDigest</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/Updateable.html">Updateable</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Mode</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                </div>
+              </div>
+            <p>Enumerates encryption mode</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3ECBFMS1_S1_"></a>
+                    <a name="//apple_ref/swift/Element/ECB" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3ECBFMS1_S1_">ECB</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3CBCFMS1_S1_"></a>
+                    <a name="//apple_ref/swift/Element/CBC" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3CBCFMS1_S1_">CBC</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3CFBFMS1_S1_"></a>
+                    <a name="//apple_ref/swift/Element/CFB" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3CFBFMS1_S1_">CFB</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3CTRFMS1_S1_"></a>
+                    <a name="//apple_ref/swift/Element/CTR" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3CTRFMS1_S1_">CTR</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode2F8FMS1_S1_"></a>
+                    <a name="//apple_ref/swift/Element/F8" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode2F8FMS1_S1_">F8</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3LRWFMS1_S1_"></a>
+                    <a name="//apple_ref/swift/Element/LRW" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3LRWFMS1_S1_">LRW</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3OFBFMS1_S1_"></a>
+                    <a name="//apple_ref/swift/Element/OFB" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3OFBFMS1_S1_">OFB</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3XTSFMS1_S1_"></a>
+                    <a name="//apple_ref/swift/Element/XTS" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3XTSFMS1_S1_">XTS</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3RC4FMS1_S1_"></a>
+                    <a name="//apple_ref/swift/Element/RC4" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode3RC4FMS1_S1_">RC4</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode4CFB8FMS1_S1_"></a>
+                    <a name="//apple_ref/swift/Element/CFB8" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FOC20IDZSwiftCommonCrypto13StreamCryptor4Mode4CFB8FMS1_S1_">CFB8</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Mode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://github.com/iosdevzone/IDZSwiftCommonCrypto" target="_blank" rel="external">iOSDevZone</a>. All rights reserved. (Last updated: 2017-06-20)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

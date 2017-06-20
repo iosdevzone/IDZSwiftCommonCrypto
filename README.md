@@ -64,14 +64,14 @@ or
 ### Supported Algorithms
 The `Digest` class supports the following algorithms:
 
-* `.MD2` 
-* `.MD4` 
-* `.MD5` 
-* `.SHA1` 
-* `.SHA224` 
-* `.SHA256`
-* `.SHA384`
-* `.SHA512`
+* `.md2` 
+* `.md4` 
+* `.md5` 
+* `.sha1` 
+* `.sha224` 
+* `.sha256`
+* `.sha384`
+* `.sha512`
 
 Using `HMAC`
 ------------
@@ -79,27 +79,27 @@ Using `HMAC`
 Calculating a keyed-Hash Message Authentication Code (HMAC) is very similar to calculating a message digest, except that the initialization routine now takes a key as well as an algorithm parameter.
 
 ```swift
-var keys5 = arrayFromHexString("0102030405060708090a0b0c0d0e0f10111213141516171819")
+var keys5 = arrayFrom(hexString: "0102030405060708090a0b0c0d0e0f10111213141516171819")
 var datas5 : [UInt8] = Array(count:50, repeatedValue:0xcd)
-var expecteds5 = arrayFromHexString("4c9007f4026250c6bc8414f9bf50c86c2d7235da")
-var hmacs5 = HMAC(algorithm:.SHA1, key:keys5).update(datas5)?.final()
+var expecteds5 = arrayFrom(hexString: "4c9007f4026250c6bc8414f9bf50c86c2d7235da")
+var hmacs5 = HMAC(algorithm:.sha1, key:keys5).update(datas5)?.final()
 
 // RFC2202 says this should be 4c9007f4026250c6bc8414f9bf50c86c2d7235da
-let expectedRFC2202 = arrayFromHexString("4c9007f4026250c6bc8414f9bf50c86c2d7235da")
+let expectedRFC2202 = arrayFrom(hexString: "4c9007f4026250c6bc8414f9bf50c86c2d7235da")
 assert(hmacs5! == expectedRFC2202)
 ```
 ### Supported Algorithms
-* SHA1
-* MD5
-* SHA224
-* SHA256
-* SHA384
-* SHA512
+* `.md5`
+* `.sha1`
+* `.sha224`
+* `.sha256`
+* `.sha384`
+* `.sha512`
 
 ## Using `Cryptor`
 
 ```swift
-var key = arrayFromHexString("2b7e151628aed2a6abf7158809cf4f3c")
+var key = arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
 var plainText = "The quick brown fox jumps over the lazy dog. The fox has more or less had it at this point."
 
 var cryptor = Cryptor(operation:.encrypt, algorithm:.aes, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
@@ -187,14 +187,14 @@ The following example derives a 20-byte key:
 ```swift
 let keys6 = PBKDF.deriveKey("password", salt: "salt", prf: .SHA1, rounds: 1, derivedKeyLength: 20)
 // RFC 6070 - Should derive 0c60c80f961f0e71f3a9b524af6012062fe037a6
-let expectedRFC6070 = arrayFromHexString("0c60c80f961f0e71f3a9b524af6012062fe037a6")
+let expectedRFC6070 = arrayFrom(hexString: "0c60c80f961f0e71f3a9b524af6012062fe037a6")
 assert(keys6 == expectedRFC6070)
 ```
 ### Supported Pseudo-Random Functions
-* `.SHA1`
-* `.SHA224` 
-* `.SHA256` 
-* `.SHA384` 
-* `.SHA512`
+* `.sha1`
+* `.sha224` 
+* `.sha256` 
+* `.sha384` 
+* `.sha512`
 
 

@@ -1,0 +1,103 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 42,
+      "symbol": "StreamCryptor.ValidKeySize",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 43,
+      "symbol": "StreamCryptor.ValidKeySize.fixed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 44,
+      "symbol": "StreamCryptor.ValidKeySize.discrete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 45,
+      "symbol": "StreamCryptor.ValidKeySize.range",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 84,
+      "symbol": "StreamCryptor.Mode.ECB",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 85,
+      "symbol": "StreamCryptor.Mode.CBC",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 86,
+      "symbol": "StreamCryptor.Mode.CFB",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 87,
+      "symbol": "StreamCryptor.Mode.CTR",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 88,
+      "symbol": "StreamCryptor.Mode.F8",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 89,
+      "symbol": "StreamCryptor.Mode.LRW",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 90,
+      "symbol": "StreamCryptor.Mode.OFB",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 91,
+      "symbol": "StreamCryptor.Mode.XTS",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 92,
+      "symbol": "StreamCryptor.Mode.RC4",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto/IDZSwiftCommonCrypto/StreamCryptor.swift",
+      "line": 93,
+      "symbol": "StreamCryptor.Mode.CFB8",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/danny/Documents/GitHub/IDZSwiftCommonCrypto"
+}
