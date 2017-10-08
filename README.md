@@ -22,7 +22,7 @@ Which version you use depends on which version of Xcode and Swift you are curren
 * 0.8.0 -- Xcode 7.3.1, Swift 2.2, with additional APIs for `CCMode`
 * 0.8.3 -- Xcode 8.0, Swift 2.3
 * 0.9.x -- Xcode 8.0, Swift 3.0
-
+* 0.10.x -- Xcode 9.0, Swift 4.0
 
 Using `Digest`
 --------------
