@@ -103,7 +103,7 @@ if !mkdir(path: moduleDirectory) {
     reportError(message: "Failed to create module directory \(moduleDirectory)")
 }
 
-let headerDir = "\(sdkPath)/usr/include/CommonCrypto/"
+let headerDir = "\(sdkPath)/usr/include/CommonCrypto"
 let headerFile1 = "\(headerDir)/CommonCrypto.h"
 let headerFile2 = "\(headerDir)/CommonRandom.h"
 
