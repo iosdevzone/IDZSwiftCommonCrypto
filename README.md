@@ -6,6 +6,8 @@ A Swift wrapper for Apple's `CommonCrypto` library.
 
 IDZSwiftCommonCrypto works with both CocoaPods and Cathage. For more details on how to install it into your projects see [INSTALL.md](INSTALL.md)
 
+**If you are using CococaPods and you must use `pod cache clean IDZSwiftCommonCrypto --all` anytime you upgrade Xcode. This is needed to avoid stale module maps being used from the CocoaPods cache. Removing your Podfile.lock and Pods directory is not sufficient.**
+
 IDZSwiftCommonCrypto provides the following classes:
 
 * `Digest` for calculating message digests,
