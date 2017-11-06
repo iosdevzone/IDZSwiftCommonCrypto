@@ -9,6 +9,31 @@
 import Foundation
 
 ///
+/// Replaces Swift's native `fatalError` function to allow redirection
+/// For more details about how this all works see:
+///   https://marcosantadev.com/test-swift-fatalerror/
+///
+func fatalError(_ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) -> Never {
+    FatalErrorUtil.fatalErrorClosure(message(), file, line)
+}
+///
+/// Allows redirection of `fatalError` for Unit Testing or for
+/// library users that want to handle such errors in another way.
+///
+struct FatalErrorUtil {
+    
+    static var fatalErrorClosure: (String, StaticString, UInt) -> Never = defaultFatalErrorClosure
+    private static let defaultFatalErrorClosure = { Swift.fatalError($0, file: $1, line: $2) }
+    static func replaceFatalError(closure: @escaping (String, StaticString, UInt) -> Never) {
+        fatalErrorClosure = closure
+    }
+    static func restoreFatalError() {
+        fatalErrorClosure = defaultFatalErrorClosure
+    }
+    
+}
+
+///
 /// Converts a single hexadecimal digit encoded as a Unicode Scalar to it's corresponding value.
 ///
 /// - parameter c: A Unicode scalar in the set 0..9a..fA..F

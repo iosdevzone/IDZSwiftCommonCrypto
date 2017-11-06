@@ -94,18 +94,31 @@ open class StreamCryptor
 		
 		func nativeValue() -> CCMode {
 			switch self {
+            // Electronic Code Book
 			case .ECB : return CCMode(kCCModeECB)
+            // Cipher Block Chaining
 			case .CBC : return CCMode(kCCModeCBC)
+            // Cipher Feedback
 			case .CFB : return CCMode(kCCModeCFB)
+            // Counter
 			case .CTR : return CCMode(kCCModeCTR)
 			case .F8 : return CCMode(kCCModeF8)// Unimplemented for now (not included)
 			case .LRW : return CCMode(kCCModeLRW)// Unimplemented for now (not included)
+            // Output Feedback
 			case .OFB : return CCMode(kCCModeOFB)
 			case .XTS : return CCMode(kCCModeXTS)
 			case .RC4 : return CCMode(kCCModeRC4)
 			case .CFB8 : return CCMode(kCCModeCFB8)
 			}
 		}
+        
+        func requiresInitializationVector() -> Bool {
+            switch self {
+            case .ECB: return false
+            case .CBC, .CFB, .CTR, .OFB: return true
+            default: return false
+            }
+        }
 	}
 	
 	/**
@@ -248,6 +261,10 @@ open class StreamCryptor
         guard let paddedKeySize = algorithm.padded(keySize:key.count) else {
             fatalError("FATAL_ERROR: Invalid key size")
         }
+        let blockSize = algorithm.blockSize()
+        guard options.contains(.ECBMode) || iv.count == blockSize else {
+            fatalError("FATAL_ERROR: Invalid IV size.")
+        }
         
         self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(array: key, blockSize: paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
     }
@@ -264,6 +281,10 @@ open class StreamCryptor
         let keySize = key.utf8.count
         guard let paddedKeySize = algorithm.padded(keySize: keySize) else {
             fatalError("FATAL_ERROR: Invalid key size")
+        }
+        let blockSize = algorithm.blockSize()
+        guard options.contains(.ECBMode) || iv.utf8.count == blockSize else {
+            fatalError("FATAL_ERROR: Invalid IV size.")
         }
         
         self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(string: key, blockSize: paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
@@ -282,8 +303,11 @@ open class StreamCryptor
 	public convenience init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding, key: [UInt8], iv : [UInt8]) {
         
         guard algorithm.isValid(keySize: key.count) else  { fatalError("FATAL_ERROR: Invalid key size.") }
+        let blockSize = algorithm.blockSize()
+        guard !mode.requiresInitializationVector() || iv.count == blockSize else {
+            fatalError("FATAL_ERROR: Invalid IV size.")
+        }
 
-		
 		self.init(operation: operation, algorithm: algorithm, mode: mode, padding: padding, keyBuffer: key, keyByteCount: key.count, ivBuffer: iv)
 	}
 	/**
@@ -302,6 +326,10 @@ open class StreamCryptor
         guard let paddedKeySize = algorithm.padded(keySize: keySize) else {
 			fatalError("FATAL_ERROR: Invalid key size")
 		}
+        let blockSize = algorithm.blockSize()
+        guard !mode.requiresInitializationVector() || iv.utf8.count == blockSize else {
+            fatalError("FATAL_ERROR: Invalid IV size.")
+        }
 		
         self.init(operation:operation, algorithm:algorithm, mode: mode, padding: padding, keyBuffer:zeroPad(string: key, blockSize: paddedKeySize), keyByteCount: paddedKeySize, ivBuffer: iv)
 	}

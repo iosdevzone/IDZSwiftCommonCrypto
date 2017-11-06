@@ -11,6 +11,8 @@ import XCTest
 @testable import IDZSwiftCommonCrypto
 import CommonCrypto
 
+
+
 class IDZSwiftCommonCryptoTests: XCTestCase {
     
     override func setUp() {
@@ -27,6 +29,26 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     var aesKey1Bytes = arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
     var aesPlaintext1Bytes = arrayFrom(hexString: "6bc1bee22e409f96e93d7e117393172a")
     var aesCipherText1Bytes = arrayFrom(hexString: "3ad77bb40d7a3660a89ecaf32466ef97")
+    
+    func test_fatalError_keySize() {
+        let tooLongKey = arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c2b7e151628aed2a6abf7158809cf4f3c2b7e151628aed2a6abf7158809cf4f3c")
+        expectFatalError(expectedMessage: "FATAL_ERROR: Invalid key size") {
+            _ = Cryptor(operation:.encrypt,
+                        algorithm:.aes, options:.ECBMode,
+                        key:tooLongKey, iv:Array<UInt8>())
+            
+        }
+    }
+    
+    func test_fatalError_AES_CBC_ivSize() {
+        let key =   arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
+        let iv =    arrayFrom(hexString: "0000000000000000000000000000000000")
+        let plainText = arrayFrom(hexString: "6bc1bee22e409f96e93d7e117393172a")
+        let expectedCipherText = arrayFrom(hexString: "3ad77bb40d7a3660a89ecaf32466ef97")
+        expectFatalError(expectedMessage: "FATAL_ERROR: Invalid IV size.") {
+            let cipherText = Cryptor(operation:.encrypt, algorithm:.aes, options:.None, key:key, iv:iv).update(byteArray: plainText)?.final()
+        }
+    }
     
     func test_Cryptor_AES_ECB() {
         let aesEncrypt = Cryptor(operation:.encrypt, algorithm:.aes, options:.ECBMode,
@@ -728,4 +750,34 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
 
 	}
 
+}
+
+// MARK: - fatalError testing
+// See: https://marcosantadev.com/test-swift-fatalerror/
+extension XCTestCase {
+    func expectFatalError(expectedMessage: String, testcase: @escaping () -> Void) {
+        
+        let expectation = self.expectation(description: "expectingFatalError")
+        var assertionMessage: String? = nil
+        
+        FatalErrorUtil.replaceFatalError { message, _, _ in
+            assertionMessage = message
+            expectation.fulfill()
+            self.unreachable()
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async(execute: testcase)
+        
+        waitForExpectations(timeout: 2) { _ in
+            XCTAssertEqual(assertionMessage, expectedMessage)
+            
+            FatalErrorUtil.restoreFatalError()
+        }
+    }
+    
+    private func unreachable() -> Never {
+        repeat {
+            RunLoop.current.run()
+        } while (true)
+    }
 }
