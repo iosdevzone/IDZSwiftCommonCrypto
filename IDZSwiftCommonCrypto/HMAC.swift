@@ -136,7 +136,7 @@ open class HMAC : Updateable
     }
     
     deinit {
-        context.deallocate(capacity: 1)
+        context.deallocate()
     }
  
     ///

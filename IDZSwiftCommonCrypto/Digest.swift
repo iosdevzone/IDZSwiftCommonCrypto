@@ -144,7 +144,7 @@ class DigestEngineCC<C> : DigestEngine {
     
     deinit
     {
-        context.deallocate(capacity: 1)
+        context.deallocate()
     }
     
     func update(buffer: Buffer, byteCount: CC_LONG)

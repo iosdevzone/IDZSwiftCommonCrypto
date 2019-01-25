@@ -121,7 +121,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0C3079D619DD47900018E538 /* GenerateCommonCryptoModule */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = GenerateCommonCryptoModule; sourceTree = "<group>"; };
 		0C67310119D1EB80009828B8 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		0C9F5B2D19D2948F00E0B5FF /* Cryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cryptor.swift; sourceTree = "<group>"; };
 		0CCB89AB19CE05F800068ED6 /* IDZSwiftCommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IDZSwiftCommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,7 +148,6 @@
 		308499BE1BA77BC20025B41D /* IDZSwiftCommonCryptoTestAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDZSwiftCommonCryptoTestAppTests.swift; sourceTree = "<group>"; };
 		308499C01BA77BC20025B41D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		308499DA1BA78C600025B41D /* CommonCryptoAPITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonCryptoAPITests.m; sourceTree = "<group>"; };
-		309B668D1C3DF32B00CF76D5 /* GenerateCommonCryptoModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateCommonCryptoModule.swift; sourceTree = "<group>"; };
 		309B66961C3F04F500CF76D5 /* IDZSwiftCommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IDZSwiftCommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		309B669F1C3F04F500CF76D5 /* IDZSwiftCommonCryptoTests (OSX).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IDZSwiftCommonCryptoTests (OSX).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		309B66C01C3F13B100CF76D5 /* IDZSwiftCommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IDZSwiftCommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,8 +228,6 @@
 		0CCB89A119CE05F800068ED6 = {
 			isa = PBXGroup;
 			children = (
-				309B668D1C3DF32B00CF76D5 /* GenerateCommonCryptoModule.swift */,
-				0C3079D619DD47900018E538 /* GenerateCommonCryptoModule */,
 				0CCB89AD19CE05F800068ED6 /* IDZSwiftCommonCrypto */,
 				0CCB89B719CE05F800068ED6 /* IDZSwiftCommonCryptoTests */,
 				308499A81BA77BC20025B41D /* IDZSwiftCommonCryptoTestApp */,
@@ -365,7 +361,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0CCB89BE19CE05F800068ED6 /* Build configuration list for PBXNativeTarget "IDZSwiftCommonCrypto (iOS)" */;
 			buildPhases = (
-				303E19651BAA7E1E00044959 /* ShellScript */,
 				0CCB89A619CE05F800068ED6 /* Sources */,
 				0CCB89A719CE05F800068ED6 /* Frameworks */,
 				0CCB89A819CE05F800068ED6 /* Headers */,
@@ -440,7 +435,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 309B66A71C3F04F500CF76D5 /* Build configuration list for PBXNativeTarget "IDZSwiftCommonCrypto (OSX)" */;
 			buildPhases = (
-				309B66AD1C3F051800CF76D5 /* ShellScript */,
 				309B66911C3F04F500CF76D5 /* Sources */,
 				309B66921C3F04F500CF76D5 /* Frameworks */,
 				309B66931C3F04F500CF76D5 /* Headers */,
@@ -478,7 +472,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 309B66D11C3F13B200CF76D5 /* Build configuration list for PBXNativeTarget "IDZSwiftCommonCrypto (tvOS)" */;
 			buildPhases = (
-				309B66E31C3F14C600CF76D5 /* ShellScript */,
 				309B66BB1C3F13B100CF76D5 /* Sources */,
 				309B66BC1C3F13B100CF76D5 /* Frameworks */,
 				309B66BD1C3F13B100CF76D5 /* Headers */,
@@ -515,7 +508,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 309B66EE1C3F196500CF76D5 /* Build configuration list for PBXNativeTarget "IDZSwiftCommonCrypto (watchOS)" */;
 			buildPhases = (
-				309B66F11C3F197A00CF76D5 /* ShellScript */,
 				309B66E41C3F196500CF76D5 /* Sources */,
 				309B66E51C3F196500CF76D5 /* Frameworks */,
 				309B66E61C3F196500CF76D5 /* Headers */,
@@ -538,7 +530,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = iOSDeveloperZone.com;
 				TargetAttributes = {
 					0CCB89AA19CE05F800068ED6 = {
@@ -560,11 +552,11 @@
 					};
 					309B66951C3F04F500CF76D5 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 					};
 					309B669E1C3F04F500CF76D5 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 					};
 					309B66BF1C3F13B100CF76D5 = {
 						CreatedOnToolsVersion = 7.2;
@@ -676,19 +668,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		303E19651BAA7E1E00044959 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "if [ ! -e \"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\" ] ; then\n  echo Generating \"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\"\n  xcrun -sdk macosx swift ./GenerateCommonCryptoModule.swift \"${PLATFORM_NAME}\" \"${PROJECT_DIR}\"\nelse\n  echo Directory exists, skipping generation of \"${PROJECT_DIR}/Frameworks/${PLATFORM_NAME}/CommonCrypto.framework\"\nfi";
-		};
 		309B668F1C3E045D00CF76D5 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -703,19 +682,6 @@
 			shellPath = /bin/sh;
 			shellScript = "echo FRAMEWORK_SEARCH_PATHS is $FRAMEWORK_SEARCH_PATHS";
 		};
-		309B66AD1C3F051800CF76D5 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo Checking for $PROJECT_DIR/CommonCrypto\necho SDKROOT is $SDKROOT\necho PLATFORM_NAME is $PLATFORM_NAME\necho FRAMEWORK_SEARCH_PATHS is $FRAMEWORK_SEARCH_PATHS\n\n#if [ ! -e $PROJECT_DIR/CommonCrypto ] ; then\n#echo Generating $PROJECT_DIR/CommonCrypto\nSWIFT_SDK=`xcrun --show-sdk-path -sdk macosx`\necho SWIFT_SDK is $SWIFT_SDK\nswift -sdk \"$SWIFT_SDK\" ./GenerateCommonCryptoModule.swift \"$PLATFORM_NAME\" \"$PROJECT_DIR\"\n#else\n#echo Directory exists, skipping generation of $PROJECT_DIR/CommonCrypto\n#fi";
-		};
 		309B66AE1C3F06A400CF76D5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -728,32 +694,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "echo FRAMEWORK_SEARCH_PATHS is $FRAMEWORK_SEARCH_PATHS";
-		};
-		309B66E31C3F14C600CF76D5 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo Checking for $PROJECT_DIR/CommonCrypto\necho SDKROOT is $SDKROOT\necho PLATFORM_NAME is $PLATFORM_NAME\necho FRAMEWORK_SEARCH_PATHS is $FRAMEWORK_SEARCH_PATHS\n\n#if [ ! -e $PROJECT_DIR/CommonCrypto ] ; then\n#echo Generating $PROJECT_DIR/CommonCrypto\nSWIFT_SDK=`xcrun --show-sdk-path -sdk macosx`\necho SWIFT_SDK is $SWIFT_SDK\nxcrun -sdk macosx swift  ./GenerateCommonCryptoModule.swift \"$PLATFORM_NAME\" \"$PROJECT_DIR\"\n#else\n#echo Directory exists, skipping generation of $PROJECT_DIR/CommonCrypto\n#fi";
-		};
-		309B66F11C3F197A00CF76D5 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo Checking for $PROJECT_DIR/CommonCrypto\necho SDKROOT is $SDKROOT\necho PLATFORM_NAME is $PLATFORM_NAME\necho FRAMEWORK_SEARCH_PATHS is $FRAMEWORK_SEARCH_PATHS\n\n#if [ ! -e $PROJECT_DIR/CommonCrypto ] ; then\n#echo Generating $PROJECT_DIR/CommonCrypto\nSWIFT_SDK=`xcrun --show-sdk-path -sdk macosx`\necho SWIFT_SDK is $SWIFT_SDK\nxcrun -sdk macosx swift  ./GenerateCommonCryptoModule.swift \"$PLATFORM_NAME\" \"$PROJECT_DIR\"\n#else\n#echo Directory exists, skipping generation of $PROJECT_DIR/CommonCrypto\n#fi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -932,12 +872,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -950,7 +892,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/$(PLATFORM_NAME)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
@@ -993,12 +935,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1011,7 +955,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/$(PLATFORM_NAME)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = NO;
@@ -1040,6 +984,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = IDZSwiftCommonCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1061,6 +1006,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = IDZSwiftCommonCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1187,6 +1133,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "";
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = IDZSwiftCommonCrypto/Info.plist;
@@ -1197,7 +1144,8 @@
 				PRODUCT_NAME = IDZSwiftCommonCrypto;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1212,6 +1160,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "";
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = IDZSwiftCommonCrypto/Info.plist;
@@ -1222,7 +1171,8 @@
 				PRODUCT_NAME = IDZSwiftCommonCrypto;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1239,7 +1189,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.iosdeveloperzone.IDZSwiftCommonCrypto--OSX-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1257,7 +1208,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.iosdeveloperzone.IDZSwiftCommonCrypto--OSX-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1270,6 +1222,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = IDZSwiftCommonCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1294,6 +1247,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = IDZSwiftCommonCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1349,6 +1303,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = IDZSwiftCommonCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1374,6 +1329,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = IDZSwiftCommonCrypto/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

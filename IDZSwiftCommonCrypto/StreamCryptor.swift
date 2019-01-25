@@ -500,7 +500,7 @@ open class StreamCryptor
             print("FATAL_ERROR: CCCryptorUpdate returned unexpected status (\(rawStatus)).")
             fatalError("CCCryptorUpdate returned unexpected status.")
         }
-        context.deallocate(capacity: 1)
+        context.deallocate()
     }
     
     fileprivate var context = UnsafeMutablePointer<CCCryptorRef?>.allocate(capacity: 1)
