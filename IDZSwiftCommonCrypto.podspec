@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "IDZSwiftCommonCrypto"
-  s.version      = "0.11.0"
+  s.version      = "0.11.1"
   s.summary      = "A wrapper for Apple's Common Crypto library written in Swift."
 
   s.homepage     = "https://github.com/iosdevzone/IDZSwiftCommonCrypto"
@@ -15,29 +15,6 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '5.1'
 
   s.source       = { :git => "https://github.com/iosdevzone/IDZSwiftCommonCrypto.git", :tag => s.version.to_s }
-
-  #
-  # Create the dummy CommonCrypto.framework structures
-  #
-  s.prepare_command = <<-CMD
-  touch prepare_command.txt
-  echo 'Running prepare_command'
-  pwd
-  echo Running GenerateCommonCryptoModule
-  # This was needed to ensure the correct Swift interpreter was 
-  # used in Xcode 8. Leaving it here, commented out, in case similar 
-  # issues occur when migrating to Swift 4.0.
-  #TC="--toolchain com.apple.dt.toolchain.Swift_2_3"
-  SWIFT="xcrun $TC swift"
-  $SWIFT ./GenerateCommonCryptoModule.swift macosx .
-  $SWIFT ./GenerateCommonCryptoModule.swift iphonesimulator .
-  $SWIFT ./GenerateCommonCryptoModule.swift iphoneos .
-  $SWIFT ./GenerateCommonCryptoModule.swift appletvsimulator .
-  $SWIFT ./GenerateCommonCryptoModule.swift appletvos .
-  $SWIFT ./GenerateCommonCryptoModule.swift watchsimulator .
-  $SWIFT ./GenerateCommonCryptoModule.swift watchos .
-
-CMD
 
   s.source_files  = "IDZSwiftCommonCrypto"
 
