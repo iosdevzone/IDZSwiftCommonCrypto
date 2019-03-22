@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "IDZSwiftCommonCrypto"
-  s.version      = "0.10.0"
+  s.version      = "0.11.0"
   s.summary      = "A wrapper for Apple's Common Crypto library written in Swift."
 
   s.homepage     = "https://github.com/iosdevzone/IDZSwiftCommonCrypto"
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.11'
   s.ios.deployment_target = '9.0'
   s.tvos.deployment_target = '9.0'
-  s.watchos.deployment_target = '2.0'
+  s.watchos.deployment_target = '5.1'
 
   s.source       = { :git => "https://github.com/iosdevzone/IDZSwiftCommonCrypto.git", :tag => s.version.to_s }
 
@@ -46,7 +46,7 @@ CMD
 
   # Make sure we can find the dummy frameworks
   s.pod_target_xcconfig = {
-  "SWIFT_VERSION" => "3.0",
+  "SWIFT_VERSION" => "4.2",
   "SWIFT_INCLUDE_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
   "FRAMEWORK_SEARCH_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
   "APPLICATION_EXTENSION_API_ONLY" => "YES"

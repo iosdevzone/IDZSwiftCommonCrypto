@@ -36,8 +36,12 @@ for (password, salt, rounds, dkLen, expected) in tests
 {
     let key0 = PBKDF.deriveKey(password: password, salt: salt, prf: .sha1, rounds: uint(rounds), derivedKeyLength: UInt(dkLen))
     let keyString0 = hexString(fromArray: key0)
+    expected
+    keyString0
     let key1 = PBKDF.deriveKey(password: password, salt: arrayFrom(string: salt), prf: .sha1, rounds: uint(rounds), derivedKeyLength: UInt(dkLen))
     let keyString1 = hexString(fromArray: key1)
+    expected
+    keyString1
 }
 
 // MARK: - Random Demo
@@ -123,7 +127,7 @@ test_Cryptor_AES_ECB_2()
 func test_Cryptor_AES_ECB_Short() {
     let key = arrayFrom(hexString:"2b7e151628aed2a6abf7158809cf4f3c")
     let plainText = arrayFrom(hexString: "6bc1bee22e409f96e93d7e11739317")
-    let expectedCipherText = arrayFrom(hexString: "3ad77bb40d7a3660a89ecaf32466ef97")
+    //let expectedCipherText = arrayFrom(hexString: "3ad77bb40d7a3660a89ecaf32466ef97")
     
     let cryptor = Cryptor(operation:.encrypt, algorithm:.aes, options:.ECBMode, key:key, iv:Array<UInt8>())
     let cipherText = cryptor.update(byteArray: plainText)?.final()

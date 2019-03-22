@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode8
+osx_image: xcode10.1
 install:
 - npm install -g playground
 
@@ -8,11 +8,13 @@ env:
     secure: a2fi02GPkxw27jVjW47EkvB/BW/SOIxlmLQJaiZ3xqbKe4udUxKE0ZigD0nVJDmxpiVHv5/Uc9ZQDPtKvvmU9kakusxjBVqMy+IxCYsH4+aDaATdaY9WHvVbARXJGjE/KmKnTfos/P8G8XqXahNKznql/gF2wZNoQIQD49JNk8s=
 
 before_install:
-- bundle install
+- echo Slather disabled -- see .travis.yml
+- echo WARNING not executing gem i bundler -v 1.17.3
+- echo WARNING not execution bundle install
 
 script:
 - echo Available SDKs
 - xcodebuild -showsdks
 - make all
 
-after_success: bundle exec slather coverage --input-format profdata IDZSwiftCommonCrypto.xcodeproj
+after_success: echo WARNING not executing bundle exec slather coverage --input-format profdata IDZSwiftCommonCrypto.xcodeproj
