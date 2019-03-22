@@ -21,9 +21,9 @@ all:
 	$(XC) build -target "IDZSwiftCommonCrypto (OSX)" $(CS_FLAGS) | xcpretty
 	$(XC) build -target "IDZSwiftCommonCrypto (tvOS)" $(CS_FLAGS) | xcpretty
 	$(XC) build -target "IDZSwiftCommonCrypto (watchOS)" $(CS_FLAGS) | xcpretty
-	$(XC) test -scheme "IDZSwiftCommonCrypto (iOS)" -destination 'platform=iOS Simulator,name=iPhone 6' | xcpretty
+	$(XC) test -scheme "IDZSwiftCommonCrypto (iOS)" -destination 'platform=iOS Simulator,name=iPhone 5' | xcpretty
 	$(XC) test -scheme "IDZSwiftCommonCrypto (OSX)" | xcpretty
-	$(XC) test -scheme "IDZSwiftCommonCrypto (tvOS)" -destination 'platform=tvOS Simulator,name=Apple TV 1080p'| xcpretty
+	$(XC) test -scheme "IDZSwiftCommonCrypto (tvOS)" -destination 'platform=tvOS Simulator,name=Apple TV'| xcpretty
 
 #
 # Build

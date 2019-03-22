@@ -29,6 +29,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "309B66E81C3F196500CF76D5"
+            BuildableName = "IDZSwiftCommonCrypto.framework"
+            BlueprintName = "IDZSwiftCommonCrypto (watchOS)"
+            ReferencedContainer = "container:IDZSwiftCommonCrypto.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
