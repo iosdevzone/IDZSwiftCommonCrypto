@@ -18,14 +18,10 @@ Pod::Spec.new do |s|
 
   s.source_files  = "IDZSwiftCommonCrypto"
 
-  # Stop CocoaPods from deleting dummy frameworks
-  s.preserve_paths = "Frameworks"
 
   # Make sure we can find the dummy frameworks
   s.pod_target_xcconfig = {
   "SWIFT_VERSION" => "4.2",
-  "SWIFT_INCLUDE_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
-  "FRAMEWORK_SEARCH_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
   "APPLICATION_EXTENSION_API_ONLY" => "YES"
   }
 
