@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "IDZSwiftCommonCrypto"
-  s.version      = "0.11.1"
+  s.version      = "0.12.0"
   s.summary      = "A wrapper for Apple's Common Crypto library written in Swift."
 
   s.homepage     = "https://github.com/iosdevzone/IDZSwiftCommonCrypto"
@@ -18,15 +18,11 @@ Pod::Spec.new do |s|
 
   s.source_files  = "IDZSwiftCommonCrypto"
 
-  # Stop CocoaPods from deleting dummy frameworks
-  s.preserve_paths = "Frameworks"
+  # New way to specify Swift version 
+  s.swift_version = '5.0'
 
-  # Make sure we can find the dummy frameworks
   s.pod_target_xcconfig = {
-  "SWIFT_VERSION" => "4.2",
-  "SWIFT_INCLUDE_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
-  "FRAMEWORK_SEARCH_PATHS" => "${PODS_ROOT}/IDZSwiftCommonCrypto/Frameworks/$(PLATFORM_NAME)",
-  "APPLICATION_EXTENSION_API_ONLY" => "YES"
+    "APPLICATION_EXTENSION_API_ONLY" => "YES"
   }
 
 end
