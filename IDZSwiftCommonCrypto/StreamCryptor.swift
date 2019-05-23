@@ -106,6 +106,15 @@ open class StreamCryptor
 			case .CFB8 : return CCMode(kCCModeCFB8)
 			}
 		}
+        
+        func requiresInitializationVector() -> Bool {
+            switch self {
+            case .ECB:
+                return false;
+            default:
+                return true;
+            }
+        }
 	}
 	
 	/**
@@ -246,7 +255,10 @@ open class StreamCryptor
     public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: [UInt8], iv : [UInt8])
     {
         guard let paddedKeySize = algorithm.padded(keySize:key.count) else {
-            fatalError("FATAL_ERROR: Invalid key size")
+            fatalError("FATAL_ERROR: Invalid key size.")
+        }
+        guard options.contains(.ECBMode) || algorithm.blockSize() == iv.count else {
+            fatalError("FATAL_ERROR: Invalid initialization vector size.")
         }
         
         self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(array: key, blockSize: paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
@@ -266,6 +278,7 @@ open class StreamCryptor
             fatalError("FATAL_ERROR: Invalid key size")
         }
         
+        
         self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(string: key, blockSize: paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
     }
 	/**
@@ -282,7 +295,9 @@ open class StreamCryptor
 	public convenience init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding, key: [UInt8], iv : [UInt8]) {
         
         guard algorithm.isValid(keySize: key.count) else  { fatalError("FATAL_ERROR: Invalid key size.") }
-
+        guard !mode.requiresInitializationVector() || algorithm.blockSize() == iv.count else {
+            fatalError("FATAL_ERROR: Invalid initialization vector size.")
+        }
 		
 		self.init(operation: operation, algorithm: algorithm, mode: mode, padding: padding, keyBuffer: key, keyByteCount: key.count, ivBuffer: iv)
 	}

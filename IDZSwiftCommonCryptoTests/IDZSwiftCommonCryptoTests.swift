@@ -37,6 +37,21 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         XCTAssert(aesCipherText1Bytes.count == Int(c) , "Counts are as expected")
         XCTAssertEqual(dataOut, aesCipherText1Bytes, "Obtained expected cipher text")
     }
+    
+    var aesKey1String =        "2b7e151628aed2a6"
+    var aesPlaintext1String =  "6bc1bee22e409f96"
+    var aesCipherText1String = arrayFrom(hexString: "4d11a82e6d587e8642a30a5e74b21b8c")
+    
+    func test_Cryptor_AES_ECB_String_Ctor_Original() {
+        let aesEncrypt = Cryptor(operation:.encrypt, algorithm:.aes, options:.ECBMode,
+                                 key:aesKey1String, iv:"")
+        var dataOut = Array<UInt8>(repeating: UInt8(0), count: aesCipherText1Bytes.count)
+        let (c, status) = aesEncrypt.update(stringIn: aesPlaintext1String, byteArrayOut: &dataOut)
+        XCTAssert(status == .success);
+        XCTAssert(aesCipherText1Bytes.count == Int(c) , "Counts are as expected")
+        XCTAssertEqual(dataOut, aesCipherText1String, "Obtained expected cipher text")
+    }
+    
     /**
     Tests two blocks of ECB mode AES. Demonstrates weakness in ECB; repeated plaintext block
     results in repeated ciphertext block.
@@ -81,6 +96,58 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     
         let decryptedText = Cryptor(operation:.decrypt, algorithm:.aes, options:.None, key:key, iv:iv).update(byteArray: cipherText!)?.final()
         XCTAssertEqual(decryptedText!, plainText, "Recovered plaintext.")
+    }
+    /**
+     Single block CBC mode. String key and iv.
+     */
+    func test_Cryptor_AES_CBC_String_Ctor_Original() {
+        let key =   "2b7e151628aed2a6"
+        let iv =    "0000000000000000"
+        let plainText = "6bc1bee22e409f96"
+        let expectedCipherText = arrayFrom(hexString: "116c3ed99cefde3dd8a5f66c190e28e6")
+        
+        let cipherText = Cryptor(operation:.encrypt, algorithm:.aes, options:.None, key:key, iv:iv).update(string: plainText)?.final()
+        let cipherHexString = hexString(fromArray: cipherText!)
+        
+        XCTAssert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
+        XCTAssert(expectedCipherText == cipherText!, "Obtained expected cipher text")
+        
+        print(hexString(fromArray: cipherText!))
+        
+        let decryptedText = Cryptor(operation:.decrypt, algorithm:.aes, options:.None, key:key, iv:iv).update(byteArray: cipherText!)?.final()
+        XCTAssertEqual(String(bytes: decryptedText!, encoding: .utf8), plainText, "Recovered plaintext.")
+    }
+    /**
+     Single block CBC mode using newer Cryptor constructor. Results should be identical to ECB mode.
+     */
+    func test_Cryptor_AES_CBC_2() {
+        let key =   arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
+        let iv =    arrayFrom(hexString: "00000000000000000000000000000000")
+        let plainText = arrayFrom(hexString: "6bc1bee22e409f96e93d7e117393172a")
+        let expectedCipherText = arrayFrom(hexString: "3ad77bb40d7a3660a89ecaf32466ef97")
+        
+        
+        let cipherText = Cryptor(operation: .encrypt, algorithm: .aes, mode: .CBC, padding: .NoPadding,  key:key, iv:iv).update(byteArray: plainText)?.final()
+        
+        XCTAssert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
+        XCTAssert(expectedCipherText == cipherText!, "Obtained expected cipher text")
+        
+        print(hexString(fromArray: cipherText!))
+        
+        let decryptedText = Cryptor(operation: .decrypt, algorithm: .aes, mode: .CBC, padding: .NoPadding,  key:key, iv:iv).update(byteArray: cipherText!)?.final()
+        XCTAssertEqual(decryptedText!, plainText, "Recovered plaintext.")
+    }
+    /**
+        Tests that `fatalError` is called for incorrect initialization vector length in older constructor.
+     */
+    func test_Cryptor_AES_CBC_2_IV_Fatal_Error() {
+        let key =   arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
+        let iv =    arrayFrom(hexString: "0000000000000000000000000000")
+        let plainText = arrayFrom(hexString: "6bc1bee22e409f96e93d7e117393172a")
+        
+        expectFatalError(expectedMessage: "FATAL_ERROR: Invalid initialization vector size.") {
+            let _ = Cryptor(operation: .encrypt, algorithm: .aes, mode: .CBC, padding: .NoPadding,  key:key, iv:iv).update(byteArray: plainText)?.final()
+        }
     }
     
 
@@ -728,4 +795,34 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
 
 	}
 
+}
+
+// MARK: - fatalError testing
+// See: https://marcosantadev.com/test-swift-fatalerror/
+extension XCTestCase {
+    func expectFatalError(expectedMessage: String, testcase: @escaping () -> Void) {
+        
+        let expectation = self.expectation(description: "expectingFatalError")
+        var assertionMessage: String? = nil
+        
+        FatalErrorUtil.replaceFatalError { message, _, _ in
+            assertionMessage = message
+            expectation.fulfill()
+            self.unreachable()
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async(execute: testcase)
+        
+        waitForExpectations(timeout: 2) { _ in
+            XCTAssertEqual(assertionMessage, expectedMessage)
+            
+            FatalErrorUtil.restoreFatalError()
+        }
+    }
+    
+    private func unreachable() -> Never {
+        repeat {
+            RunLoop.current.run()
+        } while (true)
+    }
 }
