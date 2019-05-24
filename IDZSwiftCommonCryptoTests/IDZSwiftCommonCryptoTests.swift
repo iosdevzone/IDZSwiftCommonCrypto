@@ -81,13 +81,15 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
     /**
     Single block CBC mode. Results should be identical to ECB mode.
     */
-    func test_Cryptor_AES_CBC_1() {
+    func test_Cryptor_AES_CBC_Array_Ctor_Original() {
         let key =   arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
         let iv =    arrayFrom(hexString: "00000000000000000000000000000000")
         let plainText = arrayFrom(hexString: "6bc1bee22e409f96e93d7e117393172a")
         let expectedCipherText = arrayFrom(hexString: "3ad77bb40d7a3660a89ecaf32466ef97")
     
-        let cipherText = Cryptor(operation:.encrypt, algorithm:.aes, options:.None, key:key, iv:iv).update(byteArray: plainText)?.final()
+        let cipherText = Cryptor(operation:.encrypt, algorithm:.aes, options:.None, key:key, iv:iv)
+            .update(byteArray: plainText)?
+            .final()
     
         XCTAssert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
         XCTAssert(expectedCipherText == cipherText!, "Obtained expected cipher text")
@@ -97,30 +99,11 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         let decryptedText = Cryptor(operation:.decrypt, algorithm:.aes, options:.None, key:key, iv:iv).update(byteArray: cipherText!)?.final()
         XCTAssertEqual(decryptedText!, plainText, "Recovered plaintext.")
     }
-    /**
-     Single block CBC mode. String key and iv.
-     */
-    func test_Cryptor_AES_CBC_String_Ctor_Original() {
-        let key =   "2b7e151628aed2a6"
-        let iv =    "0000000000000000"
-        let plainText = "6bc1bee22e409f96"
-        let expectedCipherText = arrayFrom(hexString: "116c3ed99cefde3dd8a5f66c190e28e6")
-        
-        let cipherText = Cryptor(operation:.encrypt, algorithm:.aes, options:.None, key:key, iv:iv).update(string: plainText)?.final()
-        let cipherHexString = hexString(fromArray: cipherText!)
-        
-        XCTAssert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
-        XCTAssert(expectedCipherText == cipherText!, "Obtained expected cipher text")
-        
-        print(hexString(fromArray: cipherText!))
-        
-        let decryptedText = Cryptor(operation:.decrypt, algorithm:.aes, options:.None, key:key, iv:iv).update(byteArray: cipherText!)?.final()
-        XCTAssertEqual(String(bytes: decryptedText!, encoding: .utf8), plainText, "Recovered plaintext.")
-    }
+
     /**
      Single block CBC mode using newer Cryptor constructor. Results should be identical to ECB mode.
      */
-    func test_Cryptor_AES_CBC_2() {
+    func test_Cryptor_AES_CBC_Array_Ctor_New() {
         let key =   arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
         let iv =    arrayFrom(hexString: "00000000000000000000000000000000")
         let plainText = arrayFrom(hexString: "6bc1bee22e409f96e93d7e117393172a")
@@ -137,16 +120,88 @@ class IDZSwiftCommonCryptoTests: XCTestCase {
         let decryptedText = Cryptor(operation: .decrypt, algorithm: .aes, mode: .CBC, padding: .NoPadding,  key:key, iv:iv).update(byteArray: cipherText!)?.final()
         XCTAssertEqual(decryptedText!, plainText, "Recovered plaintext.")
     }
+    
+    /**
+     Single block CBC mode. String key and iv.
+     */
+    func test_Cryptor_AES_CBC_String_Ctor_Original() {
+        let key =   "2b7e151628aed2a6"
+        let iv =    "0000000000000000"
+        let plainText = "6bc1bee22e409f96"
+        let expectedCipherText = arrayFrom(hexString: "116c3ed99cefde3dd8a5f66c190e28e6")
+        
+        let cipherText = Cryptor(operation:.encrypt, algorithm:.aes, options:.None, key:key, iv:iv)
+            .update(string: plainText)?
+            .final()
+        
+        XCTAssert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
+        XCTAssert(expectedCipherText == cipherText!, "Obtained expected cipher text")
+        
+        let decryptedArray = Cryptor(operation:.decrypt, algorithm:.aes, options:.None, key:key, iv:iv)
+            .update(byteArray: cipherText!)?
+            .final()
+        let decryptedText = String(bytes: decryptedArray!, encoding: .utf8)
+        
+        XCTAssertEqual(decryptedText, plainText, "Recovered plaintext.")
+    }
+    func test_Cryptor_AES_CBC_String_Ctor_New() {
+        let key =       "2b7e151628aed2a6"
+        let iv =        "0000000000000000"
+        let plainText = "6bc1bee22e409f96"
+        let expectedCipherText = arrayFrom(hexString: "116c3ed99cefde3dd8a5f66c190e28e6")
+        
+        let cipherText = Cryptor(operation: .encrypt, algorithm: .aes, mode: .CBC, padding: .NoPadding,  key:key, iv:iv)
+            .update(string: plainText)?
+            .final()
+        
+        XCTAssert(expectedCipherText.count == cipherText!.count , "Counts are as expected")
+        XCTAssert(expectedCipherText == cipherText!, "Obtained expected cipher text")
+        
+        print(hexString(fromArray: cipherText!))
+        
+        let decryptedText = Cryptor(operation:.decrypt, algorithm:.aes, options:.None, key:key, iv:iv).update(byteArray: cipherText!)?.final()
+        XCTAssertEqual(String(bytes: decryptedText!, encoding: .utf8), plainText, "Recovered plaintext.")
+    }
     /**
         Tests that `fatalError` is called for incorrect initialization vector length in older constructor.
      */
-    func test_Cryptor_AES_CBC_2_IV_Fatal_Error() {
+    func test_Cryptor_AES_CBC_Array_Ctor_Original_IV_Fatal_Error() {
         let key =   arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
         let iv =    arrayFrom(hexString: "0000000000000000000000000000")
-        let plainText = arrayFrom(hexString: "6bc1bee22e409f96e93d7e117393172a")
+        expectFatalError(expectedMessage: "FATAL_ERROR: Invalid initialization vector size.") {
+            let _ = Cryptor(operation:.encrypt, algorithm:.aes, options:.None, key:key, iv:iv)
+        }
+    }
+    /**
+     Tests that `fatalError` is called for incorrect initialization vector length in newer constructor.
+     */
+    func test_Cryptor_AES_CBC_Array_Ctor_New_IV_Fatal_Error() {
+        let key =   arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
+        let iv =    arrayFrom(hexString: "0000000000000000000000000000")
         
         expectFatalError(expectedMessage: "FATAL_ERROR: Invalid initialization vector size.") {
-            let _ = Cryptor(operation: .encrypt, algorithm: .aes, mode: .CBC, padding: .NoPadding,  key:key, iv:iv).update(byteArray: plainText)?.final()
+            let _ = Cryptor(operation: .encrypt, algorithm: .aes, mode: .CBC, padding: .NoPadding,  key:key, iv:iv)
+        }
+    }
+    /**
+     Tests that `fatalError` is called for incorrect initialization vector length in older constructor.
+     */
+    func test_Cryptor_AES_CBC_String_Ctor_Original_IV_Fatal_Error() {
+        let key =       "2b7e151628aed2a6"
+        let iv =        "00000000000000"
+        expectFatalError(expectedMessage: "FATAL_ERROR: Invalid initialization vector size.") {
+            let _ = Cryptor(operation:.encrypt, algorithm:.aes, options:.None, key:key, iv:iv)
+        }
+    }
+    /**
+     Tests that `fatalError` is called for incorrect initialization vector length in newer constructor.
+     */
+    func test_Cryptor_AES_CBC_String_Ctor_New_IV_Fatal_Error() {
+        let key =       "2b7e151628aed2a6"
+        let iv =        "000000000000"
+        
+        expectFatalError(expectedMessage: "FATAL_ERROR: Invalid initialization vector size.") {
+            let _ = Cryptor(operation: .encrypt, algorithm: .aes, mode: .CBC, padding: .NoPadding,  key:key, iv:iv)
         }
     }
     
