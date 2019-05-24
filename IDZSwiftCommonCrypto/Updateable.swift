@@ -57,4 +57,36 @@ extension Updateable {
         update(buffer: string, byteCount: size_t(string.lengthOfBytes(using: String.Encoding.utf8)))
         return self.status == Status.success ? self : nil
     }
+    
+    ///
+    /// Updates the current calculation with data contained in an `NSData` object.
+    ///
+    /// - parameters data: the data buffer
+    ///
+    public func update(_ data: Data) -> Self?
+    {
+        update(buffer: (data as NSData).bytes, byteCount:size_t(data.count))
+        return self.status == Status.success ? self : nil
+    }
+    ///
+    /// Updates the current calculation with data contained in a Swift array.
+    ///
+    /// - parameters byteArray: the Swift array
+    ///
+    public func update(_ byteArray: [UInt8]) -> Self?
+    {
+        update(buffer: byteArray, byteCount: size_t(byteArray.count))
+        return self.status == Status.success ? self : nil
+    }
+    ///
+    /// Updates the current calculation with data contained in a Swift string.
+    /// The corresponding data will be generated using UTF8 encoding.
+    ///
+    /// - parameters string: the Swift string
+    ///
+    public func update(_ string: String) -> Self?
+    {
+        update(buffer: string, byteCount: size_t(string.lengthOfBytes(using: String.Encoding.utf8)))
+        return self.status == Status.success ? self : nil
+    }
 }

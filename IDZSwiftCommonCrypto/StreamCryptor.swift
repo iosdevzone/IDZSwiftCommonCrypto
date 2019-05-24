@@ -245,7 +245,12 @@ open class StreamCryptor
 
     //MARK: - High-level interface
     /**
-        Creates a new StreamCryptor
+        Creates a new StreamCryptor.
+     
+        If they `key` is too short it will be zero padded to the next valid key length.
+     
+        For all but Electronic Code Book mode an initialization vector of the correct length
+        must be supplied.
     
         - parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
         - parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
@@ -262,7 +267,12 @@ open class StreamCryptor
                   ivBuffer:iv, ivByteCount: iv.count)
     }
     /**
-        Creates a new StreamCryptor
+        Creates a new StreamCryptor.
+     
+         If they `key` is too short it will be zero padded to the next valid key length.
+     
+         For all but Electronic Code Book mode an initialization vector of the correct length
+         must be supplied.
         
         - parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
         - parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
@@ -280,6 +290,11 @@ open class StreamCryptor
     }
 	/**
 	Creates a new StreamCryptor
+     
+     If they `key` is too short it will be zero padded to the next valid key length.
+     
+     For all but Electronic Code Book mode an initialization vector of the correct length
+     must be supplied.
 	
 	- parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
 	- parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)
@@ -290,6 +305,7 @@ open class StreamCryptor
 	
 	*/
 	public convenience init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding, key: [UInt8], iv : [UInt8]) {
+        
         guard let paddedKeySize = algorithm.padded(keySize:key.count) else {
             fatalError("FATAL_ERROR: Invalid key size.")
         }
@@ -299,6 +315,11 @@ open class StreamCryptor
 	}
 	/**
 	Creates a new StreamCryptor
+     
+     If they `key` is too short it will be zero padded to the next valid key length.
+     
+     For all but Electronic Code Book mode an initialization vector of the correct length
+     must be supplied.
 	
 	- parameter operation: the operation to perform see Operation (Encrypt, Decrypt)
 	- parameter algorithm: the algorithm to use see Algorithm (AES, DES, TripleDES, CAST, RC2, Blowfish)

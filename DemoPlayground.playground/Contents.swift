@@ -26,6 +26,9 @@ var hmac = HMAC(algorithm:.sha1, key:key).update(byteArray: data)?.final()
 var sha1String = hexString(fromArray: hmac!)
 sha1String
 
+let result = HMAC(algorithm: .sha256, key: "R11ScShruvOGBkwMhxCPJEmWLKnwpeLf").update(string: "1538831506GET/v2/user")?
+    .final()
+hexString(fromArray: result!)
 
 // MARK: - Key Digest Demo
 // Data from RFC 6070

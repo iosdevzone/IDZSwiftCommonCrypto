@@ -27,7 +27,7 @@ import IDZSwiftCommonCrypto
 */
 let  s = "The quick brown fox jumps over the lazy dog."
 var md5s2 : Digest = Digest(algorithm:.md5)
-md5s2.update(string: s)
+md5s2.update(s)
 let digests2 = md5s2.final()
 
 // According to Wikipedia this should be
@@ -44,20 +44,20 @@ let b : [UInt8] =
 0x6b,0x20,0x62,0x72,0x6f,0x77,0x6e,0x20,
 0x66,0x6f,0x78,0x2e]
 var md5s1 : Digest = Digest(algorithm:.md5)
-md5s1.update(byteArray: b)
+md5s1.update(b)
 let digests1 = md5s1.final()
 /*: Convert this content to Playground Markup
 
  If you only have a single buffer you can simply write
 
 */
-var digests3 = Digest(algorithm: .md5).update(byteArray: b)?.final() // digest is of type [UInt8]?
+var digests3 = Digest(algorithm: .md5).update(b)?.final() // digest is of type [UInt8]?
 /*: 
 
  or
 
 */
-var digests4 = Digest(algorithm: .md5).update(string: s)?.final() // digest is of type [UInt8]?
+var digests4 = Digest(algorithm: .md5).update(s)?.final() // digest is of type [UInt8]?
 /*: 
  
  ### Supported Algorithms
@@ -81,7 +81,7 @@ var digests4 = Digest(algorithm: .md5).update(string: s)?.final() // digest is o
 var keys5 = arrayFrom(hexString: "0102030405060708090a0b0c0d0e0f10111213141516171819")
 var datas5 : [UInt8] = Array(repeating:0xcd, count:50)
 var expecteds5 = arrayFrom(hexString: "4c9007f4026250c6bc8414f9bf50c86c2d7235da")
-var hmacs5 = HMAC(algorithm:.sha1, key:keys5).update(byteArray: datas5)?.final()
+var hmacs5 = HMAC(algorithm:.sha1, key:keys5).update(datas5)?.final()
 
 // RFC2202 says this should be 4c9007f4026250c6bc8414f9bf50c86c2d7235da
 let expectedRFC2202 = arrayFrom(hexString: "4c9007f4026250c6bc8414f9bf50c86c2d7235da")
@@ -98,18 +98,27 @@ assert(hmacs5! == expectedRFC2202)
  
  ## Using `Cryptor`
 
-*/
+`Cryptor` provides a simple interface similar to `Digest` and `HMAC` that is suitable for encrypting or decrypting small amounts of data.
+ 
+ * Note: If the `key` supplied to `Cryptor` is too short it will be zero-padded to the next valid key length (if one exists) otherwise `fatalError` will be called.
+     Except when using Electronic Code Book Mode an initialization vector `iv` must be supplied. It should be the same length as the block size of the algorithm.
+ 
+ 
+ */
+let algorithm = Cryptor.Algorithm.aes
+var iv = try! Random.generateBytes(byteCount: algorithm.blockSize())
 var key = arrayFrom(hexString: "2b7e151628aed2a6abf7158809cf4f3c")
 var plainText = "The quick brown fox jumps over the lazy dog. The fox has more or less had it at this point."
 
-var cryptor = Cryptor(operation:.encrypt, algorithm:.aes, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
-var cipherText = cryptor.update(string: plainText)?.final()
+var cryptor = Cryptor(operation:.encrypt, algorithm:algorithm, options:.PKCS7Padding, key:key, iv:iv)
+var cipherText = cryptor.update(plainText)?.final()
 
-cryptor = Cryptor(operation:.decrypt, algorithm:.aes, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
-var decryptedPlainText = cryptor.update(byteArray: cipherText!)?.final()
-var decryptedString = decryptedPlainText!.reduce("") { $0 + String(UnicodeScalar($1)) }
+cryptor = Cryptor(operation:.decrypt, algorithm:algorithm, options:.PKCS7Padding, key:key, iv:iv)
+var decryptedPlainText = cryptor.update(cipherText!)?.final()
+var decryptedString = String(bytes: decryptedPlainText!, encoding: .utf8)
 decryptedString
 assert(decryptedString == plainText)
+
 /*:
  
  ### Supported Algorithms
@@ -166,13 +175,15 @@ var encryptedFileOutputStream = OutputStream(toFileAtPath: encryptedFilePath, ap
 var encryptedFileInputStream = InputStream(fileAtPath: encryptedFilePath)
 var decryptedFileOutputStream = OutputStream(toFileAtPath: decryptedFilePath, append:false)
 
-var sc = StreamCryptor(operation:.encrypt, algorithm:.aes, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
+// Generate a new, random initialization vector
+iv = try! Random.generateBytes(byteCount: algorithm.blockSize())
+var sc = StreamCryptor(operation:.encrypt, algorithm:algorithm, options:.PKCS7Padding, key:key, iv:iv)
 crypt(sc: sc, inputStream: imageInputStream!, outputStream: encryptedFileOutputStream!, bufferSize: 1024)
 
 // Uncomment this line to verify that the file is encrypted
 //var encryptedImage = UIImage(contentsOfFile:encryptedFile)
 
-sc = StreamCryptor(operation:.decrypt, algorithm:.aes, options:.PKCS7Padding, key:key, iv:Array<UInt8>())
+sc = StreamCryptor(operation:.decrypt, algorithm:algorithm, options:.PKCS7Padding, key:key, iv:iv)
 crypt(sc: sc, inputStream: encryptedFileInputStream!, outputStream: decryptedFileOutputStream!, bufferSize: 1024)
 
 var image = NSImage(named:"Riscal.jpg")
