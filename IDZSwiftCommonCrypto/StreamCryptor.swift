@@ -106,6 +106,15 @@ open class StreamCryptor
 			case .CFB8 : return CCMode(kCCModeCFB8)
 			}
 		}
+        
+        func requiresInitializationVector() -> Bool {
+            switch self {
+            case .ECB:
+                return false;
+            default:
+                return true;
+            }
+        }
 	}
 	
 	/**
@@ -246,10 +255,11 @@ open class StreamCryptor
     public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: [UInt8], iv : [UInt8])
     {
         guard let paddedKeySize = algorithm.padded(keySize:key.count) else {
-            fatalError("FATAL_ERROR: Invalid key size")
+            fatalError("FATAL_ERROR: Invalid key size.")
         }
-        
-        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(array: key, blockSize: paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
+        self.init(operation:operation, algorithm:algorithm, options:options,
+                  keyBuffer:zeroPad(array: key, blockSize: paddedKeySize), keyByteCount:paddedKeySize,
+                  ivBuffer:iv, ivByteCount: iv.count)
     }
     /**
         Creates a new StreamCryptor
@@ -261,12 +271,12 @@ open class StreamCryptor
     */
     public convenience init(operation: Operation, algorithm: Algorithm, options: Options, key: String, iv : String)
     {
-        let keySize = key.utf8.count
-        guard let paddedKeySize = algorithm.padded(keySize: keySize) else {
+        guard let paddedKeySize = algorithm.padded(keySize: key.utf8.count) else {
             fatalError("FATAL_ERROR: Invalid key size")
         }
-        
-        self.init(operation:operation, algorithm:algorithm, options:options, keyBuffer:zeroPad(string: key, blockSize: paddedKeySize), keyByteCount:paddedKeySize, ivBuffer:iv)
+        self.init(operation:operation, algorithm:algorithm, options:options,
+                  keyBuffer:zeroPad(string: key, blockSize: paddedKeySize), keyByteCount:paddedKeySize,
+                  ivBuffer:iv, ivByteCount: iv.utf8.count)
     }
 	/**
 	Creates a new StreamCryptor
@@ -280,11 +290,12 @@ open class StreamCryptor
 	
 	*/
 	public convenience init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding, key: [UInt8], iv : [UInt8]) {
-        
-        guard algorithm.isValid(keySize: key.count) else  { fatalError("FATAL_ERROR: Invalid key size.") }
-
-		
-		self.init(operation: operation, algorithm: algorithm, mode: mode, padding: padding, keyBuffer: key, keyByteCount: key.count, ivBuffer: iv)
+        guard let paddedKeySize = algorithm.padded(keySize:key.count) else {
+            fatalError("FATAL_ERROR: Invalid key size.")
+        }
+		self.init(operation: operation, algorithm: algorithm, mode: mode, padding: padding,
+                  keyBuffer: zeroPad(array: key, blockSize: paddedKeySize), keyByteCount: paddedKeySize,
+                  ivBuffer: iv, ivByteCount: iv.count)
 	}
 	/**
 	Creates a new StreamCryptor
@@ -298,12 +309,12 @@ open class StreamCryptor
 	
 	*/
 	public convenience init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding, key: String, iv: String) {
-		let keySize = key.utf8.count
-        guard let paddedKeySize = algorithm.padded(keySize: keySize) else {
+        guard let paddedKeySize = algorithm.padded(keySize: key.utf8.count) else {
 			fatalError("FATAL_ERROR: Invalid key size")
 		}
-		
-        self.init(operation:operation, algorithm:algorithm, mode: mode, padding: padding, keyBuffer:zeroPad(string: key, blockSize: paddedKeySize), keyByteCount: paddedKeySize, ivBuffer: iv)
+        self.init(operation:operation, algorithm:algorithm, mode: mode, padding: padding,
+                  keyBuffer:zeroPad(string: key, blockSize: paddedKeySize), keyByteCount: paddedKeySize,
+                  ivBuffer: iv, ivByteCount: iv.utf8.count)
 	}
     /**
         Add the contents of an Objective-C NSData buffer to the current encryption/decryption operation.
@@ -375,10 +386,14 @@ open class StreamCryptor
         - parameter keyByteCount: number of bytes in the key
         - parameter ivBuffer: initialization vector buffer
     */
-    public init(operation: Operation, algorithm: Algorithm, options: Options, keyBuffer: UnsafeRawPointer,
-        keyByteCount: Int, ivBuffer: UnsafeRawPointer)
+    public init(operation: Operation, algorithm: Algorithm, options: Options,
+                keyBuffer: UnsafeRawPointer, keyByteCount: Int,
+                ivBuffer: UnsafeRawPointer, ivByteCount: Int)
     {
         guard algorithm.isValid(keySize: keyByteCount) else  { fatalError("FATAL_ERROR: Invalid key size.") }
+        guard options.contains(.ECBMode) || algorithm.blockSize() == ivByteCount else {
+            fatalError("FATAL_ERROR: Invalid initialization vector size.")
+        }
 
         let rawStatus = CCCryptorCreate(operation.nativeValue(), algorithm.nativeValue(), CCOptions(options.rawValue), keyBuffer, keyByteCount, ivBuffer, context)
         if let status = Status.fromRaw(status: rawStatus)
@@ -401,9 +416,14 @@ open class StreamCryptor
 	- parameter ivBuffer: initialization vector buffer
 	
 	*/
-	public init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding, keyBuffer: UnsafeRawPointer, keyByteCount: Int, ivBuffer: UnsafeRawPointer) {
+	public init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding,
+                keyBuffer: UnsafeRawPointer, keyByteCount: Int,
+                ivBuffer: UnsafeRawPointer, ivByteCount: Int) {
 		
         guard algorithm.isValid(keySize: keyByteCount) else  { fatalError("FATAL_ERROR: Invalid key size.") }
+        guard !mode.requiresInitializationVector() || algorithm.blockSize() == ivByteCount else {
+            fatalError("FATAL_ERROR: Invalid initialization vector size.")
+        }
 		
 		let rawStatus = CCCryptorCreateWithMode(operation.nativeValue(), mode.nativeValue(), algorithm.nativeValue(), padding.nativeValue(), ivBuffer, keyBuffer, keyByteCount, nil, 0, 0, 0, context)
 		if let status = Status.fromRaw(status: rawStatus)
