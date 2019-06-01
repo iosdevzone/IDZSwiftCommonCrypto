@@ -435,9 +435,13 @@ open class StreamCryptor
 	- parameter keyBuffer: pointer to key buffer
 	- parameter keyByteCount: number of bytes in the key
 	- parameter ivBuffer: initialization vector buffer
+    - parameter ivByteCount: the length of the initialization vector `ivBuffer` in bytes
 	
 	*/
-	public init(operation: Operation, algorithm: Algorithm, mode: Mode, padding: Padding,
+	public init(operation: Operation,
+                algorithm: Algorithm,
+                mode: Mode,
+                padding: Padding,
                 keyBuffer: UnsafeRawPointer, keyByteCount: Int,
                 ivBuffer: UnsafeRawPointer, ivByteCount: Int) {
 		
