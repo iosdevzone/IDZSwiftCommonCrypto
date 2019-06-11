@@ -10,6 +10,7 @@
 import Foundation
 import CommonCrypto
 
+/// An alias for `Status`
 public typealias RNGStatus = Status
 
 ///

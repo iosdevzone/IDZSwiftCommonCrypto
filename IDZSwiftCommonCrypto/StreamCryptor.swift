@@ -39,9 +39,16 @@ open class StreamCryptor
         }
     }
     
+    ///
+    /// Values used to specify the valid key sizes for an algorithm.
+    /// Key sizes are specified in bytes.
+    ///
     public enum ValidKeySize {
+        /// Use when there is a single valid key size.
         case fixed(Int)
+        /// Used when there is a discrete set of values. This pre-dates Swift Set.
         case discrete([Int])
+        /// Used when a continuous range of key sizes are valid.
         case range(Int,Int)
         
         /**
@@ -72,8 +79,6 @@ open class StreamCryptor
                 }
             }
         }
-        
-        
     }
 	
 	///
@@ -81,15 +86,25 @@ open class StreamCryptor
 	///
 	public enum Mode
 	{
+        /// Electronic Code Book
 		case ECB
+        /// Cipher Block Chaining
 		case CBC
+        /// Cipher FeeBack
 		case CFB
+        /// Counter
 		case CTR
+        /// Unimplemented for now (not included)
 		case F8	//		= 5, // Unimplemented for now (not included)
+        /// Unimplemented for now (not included)
 		case LRW//		= 6, // Unimplemented for now (not included)
+        /// Output FeedBack
 		case OFB
+        /// Xor-encode-xor Tweaked with ciphertext Stealing
 		case XTS
+        /// RC4 streaming
 		case RC4
+        /// Cipher FeebBack with 8-bit shifts
 		case CFB8
 		
 		func nativeValue() -> CCMode {
@@ -179,7 +194,7 @@ open class StreamCryptor
             }
         }
         
-        /// Determines the valid key size for this algorithm
+        /// Determines the valid key size, in bytes, for this algorithm
         func validKeySize() -> ValidKeySize {
             switch self {
             case .aes : return .discrete([kCCKeySizeAES128, kCCKeySizeAES192, kCCKeySizeAES256])

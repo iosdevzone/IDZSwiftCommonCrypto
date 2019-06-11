@@ -13,7 +13,7 @@
     <a title="IDZSwiftCommonCrypto  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">IDZSwiftCommonCrypto Docs</a> (90% documented)</p>
+        <p><a href="index.html">IDZSwiftCommonCrypto Docs</a> (100% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -77,7 +77,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Enums.html">Enums</a>
+            <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/Status.html">Status</a>
@@ -99,31 +99,31 @@
             <a href="Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto9arrayFromFT9hexStringSS_GSaVs5UInt8_">arrayFrom(hexString:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto9arrayFrom9hexStringSays5UInt8VGSS_tF">arrayFrom(hexString:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto9arrayFromFT6stringSS_GSaVs5UInt8_">arrayFrom(string:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto9arrayFrom6stringSays5UInt8VGSS_tF">arrayFrom(string:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto8dataFromFT9byteArrayGSaVs5UInt8__V10Foundation4Data">dataFrom(byteArray:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto8dataFrom9byteArray10Foundation4DataVSays5UInt8VG_tF">dataFrom(byteArray:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto8dataFromFT9hexStringSS_V10Foundation4Data">dataFrom(hexString:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto8dataFrom9hexString10Foundation4DataVSS_tF">dataFrom(hexString:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto7hexListFT9fromArrayGSaVs5UInt8__SS">hexList(fromArray:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto7hexList9fromArraySSSays5UInt8VG_tF">hexList(fromArray:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto9hexStringFT9fromArrayGSaVs5UInt8_9uppercaseSb_SS">hexString(fromArray:uppercase:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto9hexString9fromArray9uppercaseSSSays5UInt8VG_SbtF">hexString(fromArray:uppercase:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto25removeTrailingZeroPaddingFT5arrayGSaVs5UInt8__GSaS0__">removeTrailingZeroPadding(array:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto25removeTrailingZeroPadding5arraySays5UInt8VGAF_tF">removeTrailingZeroPadding(array:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto7zeroPadFT5arrayGSaVs5UInt8_9blockSizeSi_GSaS0__">zeroPad(array:blockSize:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto7zeroPad5array9blockSizeSays5UInt8VGAG_SitF">zeroPad(array:blockSize:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto7zeroPadFT6stringSS9blockSizeSi_GSaVs5UInt8_">zeroPad(string:blockSize:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto7zeroPad6string9blockSizeSays5UInt8VGSS_SitF">zeroPad(string:blockSize:)</a>
               </li>
             </ul>
           </li>
@@ -135,6 +135,14 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/Updateable.html">Updateable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:20IDZSwiftCommonCrypto9RNGStatusa">RNGStatus</a>
               </li>
             </ul>
           </li>
@@ -152,14 +160,16 @@
 
 <p>IDZSwiftCommonCrypto works with both CocoaPods and Cathage. For more details on how to install it into your projects see <a href="INSTALL.md">INSTALL.md</a></p>
 
+<p><strong>If you are using CococaPods you must use <code>pod cache clean IDZSwiftCommonCrypto --all</code> after you upgrade Xcode. This is needed to avoid stale module maps being used from the CocoaPods cache. Removing your Podfile.lock and Pods directory is not sufficient.</strong></p>
+
 <p>IDZSwiftCommonCrypto provides the following classes:</p>
 
 <ul>
-<li><code>Digest</code> for calculating message digests,</li>
-<li><code>HMAC</code> for calculating Hash-based Message Authentication Codes,</li>
-<li><code>Cryptor</code> for encrypting and decrypting bounded buffers,</li>
-<li><code>StreamCryptor</code> for encrypting and decrypting streaming information, and</li>
-<li><code>PBKDF</code> for deriving key material from a password or passphrase.</li>
+<li><code><a href="Classes/Digest.html">Digest</a></code> for calculating message digests,</li>
+<li><code><a href="Classes/HMAC.html">HMAC</a></code> for calculating Hash-based Message Authentication Codes,</li>
+<li><code><a href="Classes/Cryptor.html">Cryptor</a></code> for encrypting and decrypting bounded buffers,</li>
+<li><code><a href="Classes/StreamCryptor.html">StreamCryptor</a></code> for encrypting and decrypting streaming information, and</li>
+<li><code><a href="Classes/PBKDF.html">PBKDF</a></code> for deriving key material from a password or passphrase.</li>
 </ul>
 <h2 id='which-release-to-use' class='heading'>Which Release to Use</h2>
 
@@ -170,10 +180,13 @@
 <li>0.8.0 &ndash; Xcode 7.3.1, Swift 2.2, with additional APIs for <code>CCMode</code></li>
 <li>0.8.3 &ndash; Xcode 8.0, Swift 2.3</li>
 <li>0.9.x &ndash; Xcode 8.0, Swift 3.0</li>
+<li>0.10.x &ndash; Xcode 9.0, Swift 4.0</li>
+<li>0.11.x &ndash; Xcode 10.0, Swift 4.2</li>
+<li>0.12.x &ndash; Xcode 10.2, Swift 5.0</li>
 </ul>
-<h2 id='using-code-digest-code' class='heading'>Using <code>Digest</code></h2>
+<h2 id='using-code-digest-code' class='heading'>Using <code><a href="Classes/Digest.html">Digest</a></code></h2>
 
-<p>To calculate a message digest you create an instance of <code>Digest</code>, call <code>update</code> one or more times with the data over which the digest is being calculated and finally call <code>final</code> to obtain the digest itself.</p>
+<p>To calculate a message digest you create an instance of <code><a href="Classes/Digest.html">Digest</a></code>, call <code>update</code> one or more times with the data over which the digest is being calculated and finally call <code>final</code> to obtain the digest itself.</p>
 
 <p>The <code>update</code> method can take a <code>String</code></p>
 <pre class="highlight swift"><code><span class="k">let</span>  <span class="nv">s</span> <span class="o">=</span> <span class="s">"The quick brown fox jumps over the lazy dog."</span>
@@ -198,15 +211,15 @@
 </code></pre>
 
 <p>If you only have a single buffer you can simply write</p>
-<pre class="highlight swift"><code>  <span class="k">var</span> <span class="nv">digests3</span> <span class="o">=</span> <span class="kt">Digest</span><span class="p">(</span><span class="nv">algorithm</span><span class="p">:</span> <span class="o">.</span><span class="kt">MD5</span><span class="p">)</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="n">b</span><span class="p">)?</span><span class="o">.</span><span class="nf">final</span><span class="p">()</span> <span class="c1">// digest is of type [UInt8]?</span>
+<pre class="highlight swift"><code>  <span class="k">var</span> <span class="nv">digests3</span> <span class="o">=</span> <span class="kt">Digest</span><span class="p">(</span><span class="nv">algorithm</span><span class="p">:</span> <span class="o">.</span><span class="n">md5</span><span class="p">)</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="n">b</span><span class="p">)?</span><span class="o">.</span><span class="nf">final</span><span class="p">()</span> <span class="c1">// digest is of type [UInt8]?</span>
 </code></pre>
 
 <p>or </p>
-<pre class="highlight swift"><code>  <span class="k">var</span> <span class="nv">digests4</span> <span class="o">=</span> <span class="kt">Digest</span><span class="p">(</span><span class="nv">algorithm</span><span class="p">:</span> <span class="o">.</span><span class="kt">MD5</span><span class="p">)</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="n">s</span><span class="p">)?</span><span class="o">.</span><span class="nf">final</span><span class="p">()</span> <span class="c1">// digest is of type [UInt8]?</span>
+<pre class="highlight swift"><code>  <span class="k">var</span> <span class="nv">digests4</span> <span class="o">=</span> <span class="kt">Digest</span><span class="p">(</span><span class="nv">algorithm</span><span class="p">:</span> <span class="o">.</span><span class="n">md5</span><span class="p">)</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="n">s</span><span class="p">)?</span><span class="o">.</span><span class="nf">final</span><span class="p">()</span> <span class="c1">// digest is of type [UInt8]?</span>
 </code></pre>
 <h3 id='supported-algorithms' class='heading'>Supported Algorithms</h3>
 
-<p>The <code>Digest</code> class supports the following algorithms:</p>
+<p>The <code><a href="Classes/Digest.html">Digest</a></code> class supports the following algorithms:</p>
 
 <ul>
 <li><code>.md2</code></li>
@@ -218,7 +231,7 @@
 <li><code>.sha384</code></li>
 <li><code>.sha512</code></li>
 </ul>
-<h2 id='using-code-hmac-code' class='heading'>Using <code>HMAC</code></h2>
+<h2 id='using-code-hmac-code' class='heading'>Using <code><a href="Classes/HMAC.html">HMAC</a></code></h2>
 
 <p>Calculating a keyed-Hash Message Authentication Code (HMAC) is very similar to calculating a message digest, except that the initialization routine now takes a key as well as an algorithm parameter.</p>
 <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">keys5</span> <span class="o">=</span> <span class="nf">arrayFrom</span><span class="p">(</span><span class="nv">hexString</span><span class="p">:</span> <span class="s">"0102030405060708090a0b0c0d0e0f10111213141516171819"</span><span class="p">)</span>
@@ -240,7 +253,7 @@
 <li><code>.sha384</code></li>
 <li><code>.sha512</code></li>
 </ul>
-<h2 id='using-code-cryptor-code' class='heading'>Using <code>Cryptor</code></h2>
+<h2 id='using-code-cryptor-code' class='heading'>Using <code><a href="Classes/Cryptor.html">Cryptor</a></code></h2>
 <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">key</span> <span class="o">=</span> <span class="nf">arrayFrom</span><span class="p">(</span><span class="nv">hexString</span><span class="p">:</span> <span class="s">"2b7e151628aed2a6abf7158809cf4f3c"</span><span class="p">)</span>
 <span class="k">var</span> <span class="nv">plainText</span> <span class="o">=</span> <span class="s">"The quick brown fox jumps over the lazy dog. The fox has more or less had it at this point."</span>
 
@@ -263,11 +276,11 @@
 <li><code>.RC2</code></li>
 <li><code>.Blowfish</code></li>
 </ul>
-<h2 id='using-code-streamcryptor-code' class='heading'>Using <code>StreamCryptor</code></h2>
+<h2 id='using-code-streamcryptor-code' class='heading'>Using <code><a href="Classes/StreamCryptor.html">StreamCryptor</a></code></h2>
 
-<p>To encrypt a large file or a network stream use <code>StreamCryptor</code>. The <code>StreamCryptor</code> class does not accumulate the encrypted or decrypted data, instead each call to <code>update</code> produces an output buffer. </p>
+<p>To encrypt a large file or a network stream use <code><a href="Classes/StreamCryptor.html">StreamCryptor</a></code>. The <code><a href="Classes/StreamCryptor.html">StreamCryptor</a></code> class does not accumulate the encrypted or decrypted data, instead each call to <code>update</code> produces an output buffer. </p>
 
-<p>The example below shows how to use <code>StreamCryptor</code> to encrypt and decrypt an image file.</p>
+<p>The example below shows how to use <code><a href="Classes/StreamCryptor.html">StreamCryptor</a></code> to encrypt and decrypt an image file.</p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">crypt</span><span class="p">(</span><span class="nv">sc</span> <span class="p">:</span> <span class="kt">StreamCryptor</span><span class="p">,</span>  <span class="nv">inputStream</span><span class="p">:</span> <span class="kt">NSInputStream</span><span class="p">,</span> <span class="nv">outputStream</span><span class="p">:</span> <span class="kt">NSOutputStream</span><span class="p">,</span> <span class="nv">bufferSize</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">var</span> <span class="nv">inputBuffer</span> <span class="o">=</span> <span class="kt">Array</span><span class="o">&lt;</span><span class="kt">UInt8</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span><span class="mi">1024</span><span class="p">,</span> <span class="nv">repeatedValue</span><span class="p">:</span><span class="mi">0</span><span class="p">)</span>
@@ -320,9 +333,9 @@
 <span class="k">var</span> <span class="nv">image</span> <span class="o">=</span> <span class="kt">UIImage</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span><span class="s">"Riscal.jpg"</span><span class="p">)</span>
 <span class="k">var</span> <span class="nv">decryptedImage</span> <span class="o">=</span> <span class="kt">UIImage</span><span class="p">(</span><span class="nv">contentsOfFile</span><span class="p">:</span><span class="n">decryptedFilePath</span><span class="p">)</span>
 </code></pre>
-<h2 id='using-code-pbkdf-code' class='heading'>Using <code>PBKDF</code></h2>
+<h2 id='using-code-pbkdf-code' class='heading'>Using <code><a href="Classes/PBKDF.html">PBKDF</a></code></h2>
 
-<p>The <code>PBKDF</code> class provides a method of deriving keys from a user password. 
+<p>The <code><a href="Classes/PBKDF.html">PBKDF</a></code> class provides a method of deriving keys from a user password. 
 The following example derives a 20-byte key:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">keys6</span> <span class="o">=</span> <span class="kt">PBKDF</span><span class="o">.</span><span class="nf">deriveKey</span><span class="p">(</span><span class="s">"password"</span><span class="p">,</span> <span class="nv">salt</span><span class="p">:</span> <span class="s">"salt"</span><span class="p">,</span> <span class="nv">prf</span><span class="p">:</span> <span class="o">.</span><span class="kt">SHA1</span><span class="p">,</span> <span class="nv">rounds</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">derivedKeyLength</span><span class="p">:</span> <span class="mi">20</span><span class="p">)</span>
 <span class="c1">// RFC 6070 - Should derive 0c60c80f961f0e71f3a9b524af6012062fe037a6</span>
@@ -342,8 +355,8 @@ The following example derives a 20-byte key:</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/iosdevzone/IDZSwiftCommonCrypto" target="_blank" rel="external">iOSDevZone</a>. All rights reserved. (Last updated: 2017-06-20)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://github.com/iosdevzone/IDZSwiftCommonCrypto" target="_blank" rel="external">iOSDevZone</a>. All rights reserved. (Last updated: 2019-06-10)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
