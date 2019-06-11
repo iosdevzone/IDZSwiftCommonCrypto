@@ -10,10 +10,11 @@
     
   </head>
   <body>
+    <a name="//apple_ref/swift/Section/Classes" class="dashAnchor"></a>
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">IDZSwiftCommonCrypto Docs</a> (90% documented)</p>
+        <p><a href="index.html">IDZSwiftCommonCrypto Docs</a> (100% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -77,7 +78,7 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Enums.html">Enums</a>
+            <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Enums/Status.html">Status</a>
@@ -99,31 +100,31 @@
             <a href="Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto9arrayFromFT9hexStringSS_GSaVs5UInt8_">arrayFrom(hexString:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto9arrayFrom9hexStringSays5UInt8VGSS_tF">arrayFrom(hexString:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto9arrayFromFT6stringSS_GSaVs5UInt8_">arrayFrom(string:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto9arrayFrom6stringSays5UInt8VGSS_tF">arrayFrom(string:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto8dataFromFT9byteArrayGSaVs5UInt8__V10Foundation4Data">dataFrom(byteArray:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto8dataFrom9byteArray10Foundation4DataVSays5UInt8VG_tF">dataFrom(byteArray:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto8dataFromFT9hexStringSS_V10Foundation4Data">dataFrom(hexString:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto8dataFrom9hexString10Foundation4DataVSS_tF">dataFrom(hexString:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto7hexListFT9fromArrayGSaVs5UInt8__SS">hexList(fromArray:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto7hexList9fromArraySSSays5UInt8VG_tF">hexList(fromArray:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto9hexStringFT9fromArrayGSaVs5UInt8_9uppercaseSb_SS">hexString(fromArray:uppercase:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto9hexString9fromArray9uppercaseSSSays5UInt8VG_SbtF">hexString(fromArray:uppercase:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto25removeTrailingZeroPaddingFT5arrayGSaVs5UInt8__GSaS0__">removeTrailingZeroPadding(array:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto25removeTrailingZeroPadding5arraySays5UInt8VGAF_tF">removeTrailingZeroPadding(array:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto7zeroPadFT5arrayGSaVs5UInt8_9blockSizeSi_GSaS0__">zeroPad(array:blockSize:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto7zeroPad5array9blockSizeSays5UInt8VGAG_SitF">zeroPad(array:blockSize:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:F20IDZSwiftCommonCrypto7zeroPadFT6stringSS9blockSizeSi_GSaVs5UInt8_">zeroPad(string:blockSize:)</a>
+                <a href="Functions.html#/s:20IDZSwiftCommonCrypto7zeroPad6string9blockSizeSays5UInt8VGSS_SitF">zeroPad(string:blockSize:)</a>
               </li>
             </ul>
           </li>
@@ -135,6 +136,14 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/Updateable.html">Updateable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:20IDZSwiftCommonCrypto9RNGStatusa">RNGStatus</a>
               </li>
             </ul>
           </li>
@@ -153,9 +162,123 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:C20IDZSwiftCommonCrypto5PBKDF"></a>
+                    <a name="/s:20IDZSwiftCommonCrypto7CryptorC"></a>
+                    <a name="//apple_ref/swift/Class/Cryptor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:20IDZSwiftCommonCrypto7CryptorC">Cryptor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Encrypts or decrypts, accumulating result.</p>
+
+<p>Useful for small in-memory buffers.</p>
+
+<p>For large files or network streams use StreamCryptor.</p>
+
+                        <a href="Classes/Cryptor.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Cryptor</span> <span class="p">:</span> <span class="kt"><a href="Classes/StreamCryptor.html">StreamCryptor</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/Updateable.html">Updateable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Public%20Interface"></a>
+                <a name="//apple_ref/swift/Section/Public Interface" class="dashAnchor"></a>
+                <a href="#/Public%20Interface">
+                  <h3 class="section-name">Public Interface</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:20IDZSwiftCommonCrypto6DigestC"></a>
+                    <a name="//apple_ref/swift/Class/Digest" class="dashAnchor"></a>
+                    <a class="token" href="#/s:20IDZSwiftCommonCrypto6DigestC">Digest</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Public API for message digests.</p>
+
+<p>Usage is straightforward</p>
+<pre class="highlight swift"><code>  <span class="k">let</span>  <span class="nv">s</span> <span class="o">=</span> <span class="s">"The quick brown fox jumps over the lazy dog."</span>
+  <span class="k">var</span> <span class="nv">md5</span> <span class="p">:</span> <span class="kt">Digest</span> <span class="o">=</span> <span class="kt">Digest</span><span class="p">(</span><span class="nv">algorithm</span><span class="p">:</span><span class="o">.</span><span class="kt">MD5</span><span class="p">)</span>
+  <span class="n">md5</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+  <span class="k">let</span> <span class="nv">digest</span> <span class="o">=</span> <span class="n">md5</span><span class="o">.</span><span class="nf">final</span><span class="p">()</span>
+</code></pre>
+
+                        <a href="Classes/Digest.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Digest</span> <span class="p">:</span> <span class="kt"><a href="Protocols/Updateable.html">Updateable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:20IDZSwiftCommonCrypto4HMACC"></a>
+                    <a name="//apple_ref/swift/Class/HMAC" class="dashAnchor"></a>
+                    <a class="token" href="#/s:20IDZSwiftCommonCrypto4HMACC">HMAC</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Calculates a cryptographic Hash-Based Message Authentication Code (HMAC).</p>
+
+                        <a href="Classes/HMAC.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">HMAC</span> <span class="p">:</span> <span class="kt"><a href="Protocols/Updateable.html">Updateable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:20IDZSwiftCommonCrypto5PBKDFC"></a>
                     <a name="//apple_ref/swift/Class/PBKDF" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C20IDZSwiftCommonCrypto5PBKDF">PBKDF</a>
+                    <a class="token" href="#/s:20IDZSwiftCommonCrypto5PBKDFC">PBKDF</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -171,7 +294,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">PBKDF</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">PBKDF</span></code></pre>
 
                         </div>
                       </div>
@@ -185,9 +308,41 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:C20IDZSwiftCommonCrypto13StreamCryptor"></a>
+                    <a name="/s:20IDZSwiftCommonCrypto6RandomC"></a>
+                    <a name="//apple_ref/swift/Class/Random" class="dashAnchor"></a>
+                    <a class="token" href="#/s:20IDZSwiftCommonCrypto6RandomC">Random</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Generates buffers of random bytes.</p>
+
+                        <a href="Classes/Random.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Random</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:20IDZSwiftCommonCrypto13StreamCryptorC"></a>
                     <a name="//apple_ref/swift/Class/StreamCryptor" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C20IDZSwiftCommonCrypto13StreamCryptor">StreamCryptor</a>
+                    <a class="token" href="#/s:20IDZSwiftCommonCrypto13StreamCryptorC">StreamCryptor</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -212,153 +367,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">StreamCryptor</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:C20IDZSwiftCommonCrypto6Random"></a>
-                    <a name="//apple_ref/swift/Class/Random" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C20IDZSwiftCommonCrypto6Random">Random</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Generates buffers of random bytes.</p>
-
-                        <a href="Classes/Random.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">Random</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Public%20Interface"></a>
-                <a name="//apple_ref/swift/Section/Public Interface" class="dashAnchor"></a>
-                <a href="#/Public%20Interface">
-                  <h3 class="section-name">Public Interface</h3>
-                </a>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:C20IDZSwiftCommonCrypto6Digest"></a>
-                    <a name="//apple_ref/swift/Class/Digest" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C20IDZSwiftCommonCrypto6Digest">Digest</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Public API for message digests.</p>
-
-<p>Usage is straightforward</p>
-<pre class="highlight plaintext"><code>  let  s = "The quick brown fox jumps over the lazy dog."
-  var md5 : Digest = Digest(algorithm:.MD5)
-  md5.update(s)
-  let digest = md5.final()
-</code></pre>
-
-                        <a href="Classes/Digest.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">Digest</span> <span class="p">:</span> <span class="kt"><a href="Protocols/Updateable.html">Updateable</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:C20IDZSwiftCommonCrypto4HMAC"></a>
-                    <a name="//apple_ref/swift/Class/HMAC" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C20IDZSwiftCommonCrypto4HMAC">HMAC</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Calculates a cryptographic Hash-Based Message Authentication Code (HMAC).</p>
-
-                        <a href="Classes/HMAC.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">HMAC</span> <span class="p">:</span> <span class="kt"><a href="Protocols/Updateable.html">Updateable</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:C20IDZSwiftCommonCrypto7Cryptor"></a>
-                    <a name="//apple_ref/swift/Class/Cryptor" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C20IDZSwiftCommonCrypto7Cryptor">Cryptor</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Encrypts or decrypts, accumulating result.</p>
-
-<p>Useful for small in-memory buffers.</p>
-
-<p>For large files or network streams use StreamCryptor.</p>
-
-                        <a href="Classes/Cryptor.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">Cryptor</span> <span class="p">:</span> <span class="kt"><a href="Classes/StreamCryptor.html">StreamCryptor</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/Updateable.html">Updateable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">StreamCryptor</span></code></pre>
 
                         </div>
                       </div>
@@ -370,8 +379,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/iosdevzone/IDZSwiftCommonCrypto" target="_blank" rel="external">iOSDevZone</a>. All rights reserved. (Last updated: 2017-06-20)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2019 <a class="link" href="https://github.com/iosdevzone/IDZSwiftCommonCrypto" target="_blank" rel="external">iOSDevZone</a>. All rights reserved. (Last updated: 2019-06-10)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
