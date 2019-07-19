@@ -17,7 +17,7 @@ var md5String = hexString(fromArray: digest)
 
 s.MD5
 
-// MARK: - HMAC Demogit s
+// MARK: - HMAC Demo
 // Data from RFC 2202
 var key = arrayFrom(hexString: "0102030405060708090a0b0c0d0e0f10111213141516171819")
 var data : [UInt8] = Array(repeating:0xcd, count:50)

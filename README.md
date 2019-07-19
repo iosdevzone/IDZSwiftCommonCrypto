@@ -27,6 +27,7 @@ Which version you use depends on which version of Xcode and Swift you are curren
 * 0.10.x -- Xcode 9.0, Swift 4.0
 * 0.11.x -- Xcode 10.0, Swift 4.2
 * 0.12.x -- Xcode 10.2, Swift 5.0
+* 0.13.x -- Xcode 11.0, Swift 5.1, iOS 13.0
 
 Using `Digest`
 --------------

@@ -72,7 +72,7 @@ public enum Status : CCCryptorStatus, CustomStringConvertible, Error
     ///
     public static func fromRaw(status: CCCryptorStatus) -> Status?
     {
-        var from = [ kCCSuccess: success, kCCParamError: paramError,
+        let from = [ kCCSuccess: success, kCCParamError: paramError,
             kCCBufferTooSmall: bufferTooSmall, kCCMemoryFailure: memoryFailure,
             kCCAlignmentError: alignmentError, kCCDecodeError: decodeError, kCCUnimplemented: unimplemented,
             kCCOverflow: overflow, kCCRNGFailure: rngFailure]

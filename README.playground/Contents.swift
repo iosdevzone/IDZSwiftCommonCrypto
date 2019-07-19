@@ -20,6 +20,8 @@ import IDZSwiftCommonCrypto
  Using `Digest`
  --------------
  
+ * Note: The code below uses MD5 for demonstration purposes because it generates short digests, however, it is considered cryptographically broken and new code should use at least SHA256.
+ 
  To calculate a message digest you create an instance of `Digest`, call `update` one or more times with the data over which the digest is being calculated and finally call `final` to obtain the digest itself.
  
  The `update` method can take a `String`
@@ -63,11 +65,11 @@ var digests4 = Digest(algorithm: .md5).update(s)?.final() // digest is of type [
  ### Supported Algorithms
  The `Digest` class supports the following algorithms:
  
- * `.md2`
- * `.md4`
- * `.md5`
- * `.sha1`
- * `.sha224`
+ * `.md2` -- insecure and should not be used in new code.
+ * `.md4` -- insecure and should not be used in new code.
+ * `.md5` -- insecure and should not be used in new code.
+ * `.sha1` -- insecure and should not be used in new code.
+ * `.sha224` -- insecure and should not be used in new code.
  * `.sha256`
  * `.sha384`
  * `.sha512`
@@ -89,9 +91,9 @@ assert(hmacs5! == expectedRFC2202)
 /*: 
  
  ### Supported Algorithms
- * `.md5`
- * `.sha1`
- * `.sha224`
+ * `.md5` -- insecure and should not be used in new code.
+ * `.sha1` -- insecure and should not be used in new code.
+ * `.sha224` -- insecure and should not be used in new code.
  * `.sha256`
  * `.sha384`
  * `.sha512`
