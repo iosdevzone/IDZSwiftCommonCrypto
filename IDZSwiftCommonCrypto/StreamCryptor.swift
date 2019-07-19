@@ -84,44 +84,38 @@ open class StreamCryptor
 	///
 	/// Enumerates encryption mode
 	///
-	public enum Mode
-	{
+    public enum Mode
+    {
         /// Electronic Code Book
-		case ECB
+        case ECB
         /// Cipher Block Chaining
-		case CBC
+        case CBC
         /// Cipher FeeBack
-		case CFB
+        case CFB
         /// Counter
-		case CTR
-        /// Unimplemented for now (not included)
-		case F8	//		= 5, // Unimplemented for now (not included)
-        /// Unimplemented for now (not included)
-		case LRW//		= 6, // Unimplemented for now (not included)
+        case CTR
         /// Output FeedBack
-		case OFB
-        /// Xor-encode-xor Tweaked with ciphertext Stealing
-		case XTS
+        case OFB
         /// RC4 streaming
-		case RC4
+        case RC4
         /// Cipher FeebBack with 8-bit shifts
-		case CFB8
-		
-		func nativeValue() -> CCMode {
-			switch self {
-			case .ECB : return CCMode(kCCModeECB)
-			case .CBC : return CCMode(kCCModeCBC)
-			case .CFB : return CCMode(kCCModeCFB)
-			case .CTR : return CCMode(kCCModeCTR)
-			case .F8 : return CCMode(kCCModeF8)// Unimplemented for now (not included)
-			case .LRW : return CCMode(kCCModeLRW)// Unimplemented for now (not included)
-			case .OFB : return CCMode(kCCModeOFB)
-			case .XTS : return CCMode(kCCModeXTS)
-			case .RC4 : return CCMode(kCCModeRC4)
-			case .CFB8 : return CCMode(kCCModeCFB8)
-			}
-		}
+        case CFB8
         
+        
+        /// Obtain the native value for a Mode.
+        func nativeValue() -> CCMode {
+            switch self {
+            case .ECB : return CCMode(kCCModeECB)
+            case .CBC : return CCMode(kCCModeCBC)
+            case .CFB : return CCMode(kCCModeCFB)
+            case .CTR : return CCMode(kCCModeCTR)
+            case .OFB : return CCMode(kCCModeOFB)
+            case .RC4 : return CCMode(kCCModeRC4)
+            case .CFB8 : return CCMode(kCCModeCFB8)
+            }
+        }
+        
+        /// Returns true if this `Mode` requires an initialization vector.
         func requiresInitializationVector() -> Bool {
             switch self {
             case .ECB:
@@ -130,7 +124,7 @@ open class StreamCryptor
                 return true;
             }
         }
-	}
+    }
 	
 	/**
 	 Enumerated encryption paddings
