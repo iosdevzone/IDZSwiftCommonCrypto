@@ -137,23 +137,26 @@ assert(decryptedString == plainText)
  
  The example below shows how to use `StreamCryptor` to encrypt and decrypt an image file.
 */
-func crypt(sc : StreamCryptor,  inputStream: InputStream, outputStream: OutputStream, bufferSize: Int)
+func crypt(sc : StreamCryptor,  inputStream: InputStream, outputStream: OutputStream, bufferSize: Int) -> (bytesRead: Int, bytesWritten: Int)
 {
     var inputBuffer = Array<UInt8>(repeating:0, count:1024)
     var outputBuffer = Array<UInt8>(repeating:0, count:1024)
-    inputStream.open()
-    outputStream.open()
 
-    var cryptedBytes : Int = 0    
+
+    var cryptedBytes : Int = 0
+    var totalBytesWritten = 0
+    var totalBytesRead = 0
     while inputStream.hasBytesAvailable
     {
         let bytesRead = inputStream.read(&inputBuffer, maxLength: inputBuffer.count)
+        totalBytesRead += bytesRead
         let status = sc.update(bufferIn: inputBuffer, byteCountIn: bytesRead, bufferOut: &outputBuffer, byteCapacityOut: outputBuffer.count, byteCountOut: &cryptedBytes)
         assert(status == Status.success)
         if(cryptedBytes > 0)
         {
             let bytesWritten = outputStream.write(outputBuffer, maxLength: Int(cryptedBytes))
             assert(bytesWritten == Int(cryptedBytes))
+            totalBytesWritten += bytesWritten
         }
     }
     let status = sc.final(bufferOut: &outputBuffer, byteCapacityOut: outputBuffer.count, byteCountOut: &cryptedBytes)    
@@ -162,9 +165,9 @@ func crypt(sc : StreamCryptor,  inputStream: InputStream, outputStream: OutputSt
     {
         let bytesWritten = outputStream.write(outputBuffer, maxLength: Int(cryptedBytes))
         assert(bytesWritten == Int(cryptedBytes))
+        totalBytesWritten += bytesWritten
     }
-    inputStream.close()
-    outputStream.close()
+    return (totalBytesRead, totalBytesWritten)
 }
 
 let imagePath = Bundle.main.path(forResource: "Riscal", ofType:"jpg")!
@@ -172,24 +175,67 @@ let tmp = NSTemporaryDirectory() as NSString
 let encryptedFilePath = "\(tmp)/Riscal.xjpgx"
 var decryptedFilePath = "\(tmp)/RiscalDecrypted.jpg"
 
-var imageInputStream = InputStream(fileAtPath: imagePath)
-var encryptedFileOutputStream = OutputStream(toFileAtPath: encryptedFilePath, append:false)
-var encryptedFileInputStream = InputStream(fileAtPath: encryptedFilePath)
-var decryptedFileOutputStream = OutputStream(toFileAtPath: decryptedFilePath, append:false)
+// Prepare the input and output streams for the encryption operation
+guard let imageInputStream = InputStream(fileAtPath: imagePath) else {
+    fatalError("Failed to initialize the image input stream.")
+}
+imageInputStream.open()
+guard let  encryptedFileOutputStream = OutputStream(toFileAtPath: encryptedFilePath, append:false) else
+{
+    fatalError("Failed to open output stream.")
+}
+encryptedFileOutputStream.open()
 
 // Generate a new, random initialization vector
-iv = try! Random.generateBytes(byteCount: algorithm.blockSize())
-var sc = StreamCryptor(operation:.encrypt, algorithm:algorithm, options:.PKCS7Padding, key:key, iv:iv)
-crypt(sc: sc, inputStream: imageInputStream!, outputStream: encryptedFileOutputStream!, bufferSize: 1024)
+let initializationVector = try! Random.generateBytes(byteCount: algorithm.blockSize())
+
+// A common way to communicate the initialization vector is to write it at the beginning of the encrypted data.
+let bytesWritten = encryptedFileOutputStream.write(initializationVector, maxLength: initializationVector.count)
+
+// Now write the encrypted data
+var sc = StreamCryptor(operation:.encrypt, algorithm:algorithm, options:.PKCS7Padding, key:key, iv:initializationVector)
+guard  bytesWritten == initializationVector.count else
+{
+    fatalError("Failed to write initialization vector to encrypted output file.")
+}
+let outputResult = crypt(sc: sc, inputStream: imageInputStream, outputStream: encryptedFileOutputStream, bufferSize: 1024)
+encryptedFileOutputStream.close()
+outputResult
 
 // Uncomment this line to verify that the file is encrypted
-//var encryptedImage = UIImage(contentsOfFile:encryptedFile)
+//var encryptedImage = NSImage(contentsOfFile:encryptedFile)
 
-sc = StreamCryptor(operation:.decrypt, algorithm:algorithm, options:.PKCS7Padding, key:key, iv:iv)
-crypt(sc: sc, inputStream: encryptedFileInputStream!, outputStream: decryptedFileOutputStream!, bufferSize: 1024)
+// Prepare the input and output streams for the decryption operation
+guard let encryptedFileInputStream = InputStream(fileAtPath: encryptedFilePath) else
+{
+    fatalError("Failed to open the encrypted file for input.")
+}
+encryptedFileInputStream.open()
+guard let decryptedFileOutputStream = OutputStream(toFileAtPath: decryptedFilePath, append:false) else {
+    fatalError("Failed to open the file for the decrypted output file.")
+}
+decryptedFileOutputStream.open()
+
+// Read back the initialization vector.
+var readbackInitializationVector = Array<UInt8>(repeating: 0, count: algorithm.blockSize())
+let bytesRead = encryptedFileInputStream.read(&readbackInitializationVector, maxLength: readbackInitializationVector.count)
+
+// Uncomment this to verify that we did indeed read back the initialization vector.
+//assert(readbackInitializationVector == initializationVector)
+
+// Now use the read back initialization vector (along with the key) to
+sc = StreamCryptor(operation:.decrypt, algorithm:algorithm, options:.PKCS7Padding, key:key, iv:readbackInitializationVector)
+let inputResult = crypt(sc: sc, inputStream: encryptedFileInputStream, outputStream: decryptedFileOutputStream, bufferSize: 1024)
+
+// Uncomment this to verify that decrypt operation consumed all the encrypted data
+// and produced the correct output of plaintext output.
+//assert(inputResult.bytesRead == outputResult.bytesWritten && inputResult.bytesWritten == outputResult.bytesRead)
 
 var image = NSImage(named:"Riscal.jpg")
 var decryptedImage = NSImage(contentsOfFile:decryptedFilePath)
+decryptedImage
+
+
 /*: 
  
  ## Using `PBKDF`
