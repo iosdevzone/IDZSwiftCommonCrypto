@@ -224,7 +224,7 @@ sc = StreamCryptor(operation:.decrypt, algorithm:algorithm, options:.PKCS7Paddin
 let inputResult = crypt(sc: sc, inputStream: encryptedFileInputStream, outputStream: decryptedFileOutputStream, bufferSize: 1024)
 
 // Uncomment this to verify that decrypt operation consumed all the encrypted data
-// and produced the correct output of plaintext output.
+// and produced the correct number of bytes of plaintext output.
 //assert(inputResult.bytesRead == outputResult.bytesWritten && inputResult.bytesWritten == outputResult.bytesRead)
 
 var image = NSImage(named:"Riscal.jpg")
