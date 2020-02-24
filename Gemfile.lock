@@ -17,7 +17,7 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.11.3)
     nanaimo (0.2.6)
-    nokogiri (1.10.1)
+    nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     slather (2.4.7)
       CFPropertyList (>= 2.2, < 4)
