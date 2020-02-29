@@ -13,9 +13,7 @@ let package = Package(
     targets: [
         .target(
             name: "IDZSwiftCommonCrypto",
-            dependencies: []),
-        .testTarget(
-            name: "IDZSwiftCommonCryptoTests",
-            dependencies: ["IDZSwiftCommonCrypto"]),
+            dependencies: [],
+            path: "IDZSwiftCommonCrypto"),
     ]
 )
