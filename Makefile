@@ -1,7 +1,7 @@
 REPO=IDZPodspecs
 NAME=IDZSwiftCommonCrypto
 
-IOS_VERSION=9.2
+IOS_VERSION=11
 
 PG=README.playground
 RSRC_DIR=$(PG)/Resources
