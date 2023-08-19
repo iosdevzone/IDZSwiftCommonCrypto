@@ -237,7 +237,7 @@ open class StreamCryptor
         }
         
         /// No options
-        public static let None = Options(rawValue: 0)
+        public static let None : Options = []
         /// Use padding. Needed unless the input is a integral number of blocks long.
         public static var PKCS7Padding =  Options(rawValue:kCCOptionPKCS7Padding)
         /// Electronic Code Book Mode. Don't use this.
