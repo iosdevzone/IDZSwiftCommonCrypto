@@ -39,6 +39,10 @@ clean:
 push_tags:
 	git push origin --tags
 
+# Lint the pod locally
+lint_lib:
+	pod lib lint --verbose ${NAME}.podspec --sources=https://github.com/iosdevzone/IDZPodspecs.git
+
 # Lint the podspec
 lint_pod:
 	pod spec lint --verbose ${NAME}.podspec --sources=https://github.com/iosdevzone/IDZPodspecs.git

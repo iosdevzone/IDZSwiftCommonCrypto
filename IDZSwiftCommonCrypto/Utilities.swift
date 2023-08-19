@@ -94,7 +94,7 @@ public func arrayFrom(string : String) -> [UInt8]
 public func dataFrom(hexString: String) -> Data
 {
     let a = arrayFrom(hexString: hexString)
-    return Data(bytes: UnsafePointer<UInt8>(a), count:a.count)
+    return Data(a)
 }
 
 ///
@@ -105,7 +105,7 @@ public func dataFrom(hexString: String) -> Data
 ///
 public func dataFrom(byteArray : [UInt8]) -> Data
 {
-    return Data(bytes: UnsafePointer<UInt8>(byteArray), count:byteArray.count)
+    return Data(byteArray)
 }
 
 ///
