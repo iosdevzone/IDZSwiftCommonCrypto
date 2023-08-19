@@ -1,3 +1,4 @@
+.DS_Store
 prepate_command.txt
 CommonCrypto
 # Xcode
@@ -19,6 +20,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+.build
+.swiftpm
 
 # CocoaPods
 #
