@@ -22,18 +22,22 @@ final class AESEncryptedFileTests: XCTestCase {
         print("test encryption file path = \(cipherFilePath)")
         
         let encryptedFile = AESEncryptedFile(cipherFilePath, password: password)
+        let blockSize = Cryptor.Algorithm.aes.blockSize()
         let outputStream = try encryptedFile.openOutputStream()
-        let utf8ByteCount = plainText.utf8.count
+        let plainTextBytes = Array(plainText.utf8)
+        let expectedEncryptedSize = plainTextBytes.count + blockSize
         
         outputStream.writeUtf8(plainTextA)
         outputStream.writeUtf8(plainTextB)
         outputStream.close()
+
+        let writtenData = NSData(contentsOfFile: cipherFilePath.path)!
+        var writtenDataBytes = Array<UInt8>(repeating: 0, count: writtenData.length)
         
-        let attr = try FileManager.default.attributesOfItem(atPath: cipherFilePath.path)
-        let writtenFileSize = attr[FileAttributeKey.size] as! Int
-        
+        writtenData.getBytes(&writtenDataBytes, length: writtenData.length)
         XCTAssertEqual(outputStream.status, .commonCrypto(.success))
-        XCTAssertTrue(writtenFileSize >= utf8ByteCount)
+        XCTAssertTrue(writtenDataBytes.count >= expectedEncryptedSize)
+        XCTAssertNotEqual(writtenDataBytes, plainTextBytes)
         
         let inputStream = try encryptedFile.openInputStream()
         let readText = inputStream.readAllText()

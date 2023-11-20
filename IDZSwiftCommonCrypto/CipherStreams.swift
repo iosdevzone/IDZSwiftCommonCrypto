@@ -8,6 +8,10 @@
 
 import Foundation
 
+let CIPHER_STREAM_DEFAULT_BLOCK_SIZE: Int = 1024
+let CIPHER_STREAM_MAX_BLOCK_SIZE: Int = CIPHER_STREAM_DEFAULT_BLOCK_SIZE * 16
+let CIPHER_STREAM_ERROR_RESULT: Int = -1
+
 public protocol StreamLike {
     func close() -> Void
 }
@@ -32,14 +36,15 @@ extension OutputStream : OutputStreamLike {
 
 public extension InputStreamLike {
     
-    func readText(buffer: Array<UInt8>?, encoding: String.Encoding = .utf8, bufferLength: Int = 1024) -> String? {
-        var buf = buffer ?? Array<UInt8>(repeating: 0, count: bufferLength)
+    func readText(buffer: Array<UInt8>?, encoding: String.Encoding = .utf8, bufferLength: Int? = nil) -> String? {
+        let len = bufferLength ?? CIPHER_STREAM_DEFAULT_BLOCK_SIZE
+        var buf = buffer ?? Array<UInt8>(repeating: 0, count: len)
         let readCount = self.read(&buf, maxLength: buf.count)
         return readCount > 0 ? String(bytes: buf[0..<readCount], encoding: encoding) : nil
     }
     
     func readAllText(encoding: String.Encoding = .utf8) -> String {
-        let buffer = Array<UInt8>(repeating: 0, count: 1024)
+        let buffer = Array<UInt8>(repeating: 0, count: CIPHER_STREAM_DEFAULT_BLOCK_SIZE)
         var result = ""
         
         while let parsed = self.readText(buffer: buffer) {

@@ -20,10 +20,11 @@ public class CipherOutputStream : OutputStreamLike {
     public var hasCipherUpdateFailure: Bool { self.status != .commonCrypto(.success) }
     
     // NOTE: given stream is expected to have already been opened
-    public init(_ cryptor: StreamCryptor, forStream stream: OutputStreamLike, initialCapacity: Int = 1024) {
+    public init(_ cryptor: StreamCryptor, forStream stream: OutputStreamLike, initialCapacity: Int? = nil) {
         self.cryptor = cryptor
         self.stream = stream
-        self.innerBuffer = Array<UInt8>(repeating: 0, count: initialCapacity)
+        let capacity = initialCapacity ?? CIPHER_STREAM_DEFAULT_BLOCK_SIZE
+        self.innerBuffer = Array<UInt8>(repeating: 0, count: capacity)
     }
     
     public func close() {
@@ -39,11 +40,12 @@ public class CipherOutputStream : OutputStreamLike {
     @discardableResult
     public func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
         if len <= 0 || self.closed || self.hasCipherUpdateFailure {
-            return 0
+            return CIPHER_STREAM_ERROR_RESULT
         }
 
-        if len > self.innerBuffer.count {
-            self.innerBuffer = Array<UInt8>(repeating: 0, count: len)
+        if len > self.innerBuffer.count && len < CIPHER_STREAM_MAX_BLOCK_SIZE {
+            let newSize = len + (len % CIPHER_STREAM_DEFAULT_BLOCK_SIZE)
+            self.innerBuffer = Array<UInt8>(repeating: 0, count: newSize)
         }
         
         var outerByteCount = 0
@@ -59,7 +61,7 @@ public class CipherOutputStream : OutputStreamLike {
         self.updateStatus(.commonCrypto(updateResult))
         
         if self.hasCipherUpdateFailure {
-            return 0
+            return CIPHER_STREAM_ERROR_RESULT
         }
     
         if outerByteCount <= 0 {
@@ -70,10 +72,9 @@ public class CipherOutputStream : OutputStreamLike {
         
         if innerByteCount != outerByteCount {
             self.updateStatus(.innerTransferError)
-            return 0
+            return CIPHER_STREAM_ERROR_RESULT
         }
-        
-//        print("write \(outerByteCount) bytes")
+
         return outerByteCount
     }
     
@@ -102,14 +103,14 @@ public class CipherOutputStream : OutputStreamLike {
         self.updateStatus(.commonCrypto(finalResult))
         
         if self.hasCipherUpdateFailure {
-            return 0
+            return CIPHER_STREAM_ERROR_RESULT
         }
         
         let outerByteCount = self.stream.write(&self.innerBuffer, maxLength: innerByteCount)
-//        print("write \(outerByteCount) final bytes")
         
         if outerByteCount != innerByteCount {
             self.updateStatus(.finalTransferError)
+            return CIPHER_STREAM_ERROR_RESULT
         }
         
         return outerByteCount

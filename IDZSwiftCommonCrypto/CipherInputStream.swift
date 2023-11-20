@@ -21,10 +21,11 @@ public class CipherInputStream : InputStreamLike {
     public var hasBytesAvailable: Bool { self.stream.hasBytesAvailable }
     
     // NOTE: given stream is expected to have already been opened
-    public init(_ cryptor: StreamCryptor, forStream stream: InputStreamLike, initialCapacity: Int = 1024) {
+    public init(_ cryptor: StreamCryptor, forStream stream: InputStreamLike, initialCapacity: Int? = nil) {
         self.cryptor = cryptor
         self.stream = stream
-        self.innerBuffer = Array<UInt8>(repeating: 0, count: initialCapacity)
+        let capacity = initialCapacity ?? CIPHER_STREAM_DEFAULT_BLOCK_SIZE
+        self.innerBuffer = Array<UInt8>(repeating: 0, count: capacity)
     }
     
     public func close() {
@@ -38,11 +39,12 @@ public class CipherInputStream : InputStreamLike {
 
     public func read(_ buffer: UnsafeMutablePointer<UInt8>, maxLength len: Int) -> Int {
         if len <= 0 || self.closed || self.hasCipherUpdateFailure {
-            return 0
+            return CIPHER_STREAM_ERROR_RESULT
         }
         
-        if len > self.innerBuffer.count {
-            self.innerBuffer = Array<UInt8>(repeating: 0, count: len)
+        if len > self.innerBuffer.count && len < CIPHER_STREAM_MAX_BLOCK_SIZE {
+            let newSize = len + (len % CIPHER_STREAM_DEFAULT_BLOCK_SIZE)
+            self.innerBuffer = Array<UInt8>(repeating: 0, count: newSize)
         }
         
         let innerByteCount = self.stream.read(&self.innerBuffer, maxLength: len)
@@ -64,10 +66,9 @@ public class CipherInputStream : InputStreamLike {
         self.updateStatus(.commonCrypto(updateResult))
         
         if self.hasCipherUpdateFailure {
-            return 0
+            return CIPHER_STREAM_ERROR_RESULT
         }
 
-//        print("read \(outerByteCount) bytes")
         return outerByteCount
     }
     
@@ -88,10 +89,13 @@ public class CipherInputStream : InputStreamLike {
             byteCapacityOut: len,
             byteCountOut: &outputByteCount
         )
-        
-//        print("read \(outputByteCount) final bytes")
+
         self.updateStatus(.commonCrypto(finalResult))
         self.close()
+        
+        if self.hasCipherUpdateFailure {
+            return CIPHER_STREAM_ERROR_RESULT
+        }
         
         return outputByteCount
     }
