@@ -42,7 +42,7 @@ public class CipherOutputStream : OutputStreamLike {
             return 0
         }
 
-        if len > self.innerBuffer.capacity {
+        if len > self.innerBuffer.count {
             self.innerBuffer = Array<UInt8>(repeating: 0, count: len)
         }
         
@@ -52,7 +52,7 @@ public class CipherOutputStream : OutputStreamLike {
             bufferIn: buffer,
             byteCountIn: len,
             bufferOut: &self.innerBuffer,
-            byteCapacityOut: self.innerBuffer.capacity,
+            byteCapacityOut: self.innerBuffer.count,
             byteCountOut: &outerByteCount
         )
         
@@ -95,7 +95,7 @@ public class CipherOutputStream : OutputStreamLike {
         
         let finalResult = self.cryptor.final(
             bufferOut: &self.innerBuffer,
-            byteCapacityOut: self.innerBuffer.capacity,
+            byteCapacityOut: self.innerBuffer.count,
             byteCountOut: &innerByteCount
         )
         

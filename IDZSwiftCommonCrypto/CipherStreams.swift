@@ -34,7 +34,7 @@ public extension InputStreamLike {
     
     func readText(buffer: Array<UInt8>?, encoding: String.Encoding = .utf8, bufferLength: Int = 1024) -> String? {
         var buf = buffer ?? Array<UInt8>(repeating: 0, count: bufferLength)
-        let readCount = self.read(&buf, maxLength: buf.capacity)
+        let readCount = self.read(&buf, maxLength: buf.count)
         return readCount > 0 ? String(bytes: buf[0..<readCount], encoding: encoding) : nil
     }
     
@@ -47,35 +47,6 @@ public extension InputStreamLike {
         }
         
         return result
-    }
-    
-    @discardableResult
-    func pipeTo(_ output: OutputStreamLike) -> Int {
-        
-        let bufferSize = 8192
-        var buffer = [UInt8](repeating: 0, count: bufferSize)
-        var transferred: Int = 0
-        var read: Int = 1
-        var written: Int = 0
-        
-        while read > 0 && self.hasBytesAvailable {
-            read = self.read(&buffer, maxLength: bufferSize)
-            
-            if read <= 0 {
-                break
-            }
-            
-            written = output.write(buffer, maxLength: read)
-            
-            if written != read {
-                print("InputStream pipeTo() write mismatch! read \(read) bytes, but wrote \(written)")
-                return transferred
-            }
-            
-            transferred += written
-        }
-        
-        return transferred
     }
 }
 

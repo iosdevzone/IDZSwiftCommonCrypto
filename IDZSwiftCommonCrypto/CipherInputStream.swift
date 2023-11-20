@@ -41,7 +41,7 @@ public class CipherInputStream : InputStreamLike {
             return 0
         }
         
-        if len > self.innerBuffer.capacity {
+        if len > self.innerBuffer.count {
             self.innerBuffer = Array<UInt8>(repeating: 0, count: len)
         }
         
