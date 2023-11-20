@@ -44,7 +44,7 @@ public class AESEncryptedFile {
         )
     }
     
-    public func openInputStream() throws -> CipherInputStream {
+    public func openInputStream(withCapacity: Int = 1024) throws -> CipherInputStream {
         guard let innerStream = InputStream(url: self.filePath) else {
             throw Error.createStreamFailure
         }
@@ -72,10 +72,14 @@ public class AESEncryptedFile {
             iv: iv
         )
         
-        return CipherInputStream(cryptor, forStream: innerStream)
+        return CipherInputStream(
+            cryptor,
+            forStream: innerStream,
+            initialCapacity: withCapacity
+        )
     }
     
-    public func openOutputStream() throws -> CipherOutputStream {
+    public func openOutputStream(withCapacity: Int = 1024) throws -> CipherOutputStream {
         guard let innerStream = OutputStream(url: self.filePath, append: false) else {
             throw Error.createStreamFailure
         }
@@ -103,6 +107,10 @@ public class AESEncryptedFile {
             throw Error.headerWriteFailure
         }
         
-        return CipherOutputStream(cryptor, forStream: innerStream)
+        return CipherOutputStream(
+            cryptor,
+            forStream: innerStream,
+            initialCapacity: withCapacity
+        )
     }
 }

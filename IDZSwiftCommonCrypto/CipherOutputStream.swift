@@ -11,7 +11,7 @@ import Foundation
 public class CipherOutputStream : OutputStreamLike {
     private var cryptor: StreamCryptor
     private var stream: OutputStreamLike
-    private var innerBuffer = Array<UInt8>(repeating: 0, count: 1024)
+    private var innerBuffer: Array<UInt8>
     private var _status: CipherStreamStatus = .commonCrypto(.success)
     private var _closed = false
     
@@ -20,9 +20,10 @@ public class CipherOutputStream : OutputStreamLike {
     public var hasCipherUpdateFailure: Bool { self.status != .commonCrypto(.success) }
     
     // NOTE: given stream is expected to have already been opened
-    init(_ cryptor: StreamCryptor, forStream stream: OutputStreamLike) {
+    init(_ cryptor: StreamCryptor, forStream stream: OutputStreamLike, initialCapacity: Int = 1024) {
         self.cryptor = cryptor
         self.stream = stream
+        self.innerBuffer = Array<UInt8>(repeating: 0, count: initialCapacity)
     }
     
     public func close() {
@@ -46,7 +47,6 @@ public class CipherOutputStream : OutputStreamLike {
         }
         
         var outerByteCount = 0
-        var innerByteCount = 0
         
         let updateResult = self.cryptor.update(
             bufferIn: buffer,
@@ -66,14 +66,14 @@ public class CipherOutputStream : OutputStreamLike {
             return 0
         }
 
-        innerByteCount = self.stream.write(self.innerBuffer, maxLength: outerByteCount)
+        let innerByteCount = self.stream.write(self.innerBuffer, maxLength: outerByteCount)
         
         if innerByteCount != outerByteCount {
             self.updateStatus(.innerTransferError)
             return 0
         }
         
-        print("write \(outerByteCount) bytes")
+//        print("write \(outerByteCount) bytes")
         return outerByteCount
     }
     
@@ -106,7 +106,7 @@ public class CipherOutputStream : OutputStreamLike {
         }
         
         let outerByteCount = self.stream.write(&self.innerBuffer, maxLength: innerByteCount)
-        print("write \(outerByteCount) final bytes")
+//        print("write \(outerByteCount) final bytes")
         
         if outerByteCount != innerByteCount {
             self.updateStatus(.finalTransferError)

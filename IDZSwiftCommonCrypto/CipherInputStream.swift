@@ -11,7 +11,7 @@ import Foundation
 public class CipherInputStream : InputStreamLike {    
     private var cryptor: StreamCryptor
     private var stream: InputStreamLike
-    private var innerBuffer = Array<UInt8>(repeating: 0, count: 1024)
+    private var innerBuffer: Array<UInt8>
     private var _status: CipherStreamStatus = .commonCrypto(.success)
     private var _closed = false
     
@@ -21,9 +21,10 @@ public class CipherInputStream : InputStreamLike {
     public var hasBytesAvailable: Bool { self.stream.hasBytesAvailable }
     
     // NOTE: given stream is expected to have already been opened
-    init(_ cryptor: StreamCryptor, forStream stream: InputStreamLike) {
+    init(_ cryptor: StreamCryptor, forStream stream: InputStreamLike, initialCapacity: Int = 1024) {
         self.cryptor = cryptor
         self.stream = stream
+        self.innerBuffer = Array<UInt8>(repeating: 0, count: initialCapacity)
     }
     
     public func close() {
