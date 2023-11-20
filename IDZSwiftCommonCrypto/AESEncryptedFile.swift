@@ -44,7 +44,7 @@ public class AESEncryptedFile {
         )
     }
     
-    public func openInputStream() throws -> InputStreamLike {
+    public func openInputStream() throws -> CipherInputStream {
         guard let innerStream = InputStream(url: self.filePath) else {
             throw Error.createStreamFailure
         }
@@ -75,7 +75,7 @@ public class AESEncryptedFile {
         return CipherInputStream(cryptor, forStream: innerStream)
     }
     
-    public func openOutputStream() throws -> OutputStreamLike {
+    public func openOutputStream() throws -> CipherOutputStream {
         guard let innerStream = OutputStream(url: self.filePath, append: false) else {
             throw Error.createStreamFailure
         }

@@ -11,7 +11,7 @@ import XCTest
 
 final class AESEncryptedFileTests: XCTestCase {
 
-    func testExample() throws {
+    func test_AESEncryptedFile_canReadBackTheFileItCreates() throws {
         let password = "supersecret"
         let plainTextA = "The quick brown fox"
         let plainTextB = " jumps over the lazy dog. Also this is a thing."
