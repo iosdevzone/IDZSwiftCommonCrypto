@@ -89,7 +89,7 @@ public class CipherOutputStream : OutputStreamLike {
     @discardableResult
     private func writeFinal() -> Int {
         if self.hasCipherUpdateFailure {
-            return 0
+            return CIPHER_STREAM_ERROR_RESULT
         }
         
         var innerByteCount = 0

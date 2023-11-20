@@ -58,9 +58,13 @@ public extension InputStreamLike {
 public extension OutputStreamLike {
     
     @discardableResult
-    func writeUtf8(_ text: String) -> Int {
-        let bytes = Array(text.utf8)
+    func writeBytes(_ bytes: Array<UInt8>) -> Int {
         return self.write(bytes, maxLength: bytes.count)
+    }
+    
+    @discardableResult
+    func writeUtf8(_ text: String) -> Int {
+        return self.writeBytes(Array(text.utf8))
     }
 }
 

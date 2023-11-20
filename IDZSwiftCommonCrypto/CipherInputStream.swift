@@ -74,7 +74,7 @@ public class CipherInputStream : InputStreamLike {
     
     private func updateStatus(_ status: CipherStreamStatus) {
         if status != .commonCrypto(.success) {
-            print("CipherOutputStream ERROR: \(status)")
+            print("CipherInputStream ERROR: \(status)")
         }
         
         _status = status
