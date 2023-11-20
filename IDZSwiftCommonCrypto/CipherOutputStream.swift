@@ -20,7 +20,7 @@ public class CipherOutputStream : OutputStreamLike {
     public var hasCipherUpdateFailure: Bool { self.status != .commonCrypto(.success) }
     
     // NOTE: given stream is expected to have already been opened
-    init(_ cryptor: StreamCryptor, forStream stream: OutputStreamLike, initialCapacity: Int = 1024) {
+    public init(_ cryptor: StreamCryptor, forStream stream: OutputStreamLike, initialCapacity: Int = 1024) {
         self.cryptor = cryptor
         self.stream = stream
         self.innerBuffer = Array<UInt8>(repeating: 0, count: initialCapacity)

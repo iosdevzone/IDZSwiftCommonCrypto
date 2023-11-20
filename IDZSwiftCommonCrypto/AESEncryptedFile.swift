@@ -20,16 +20,16 @@ public class AESEncryptedFile {
     // Not currently configurable since anything but PKCS7 will break with misalignment errors
     private let padding: Cryptor.Padding = .PKCS7Padding
     
-    convenience init(_ filePath: URL, password: String) {
+    public convenience init(_ filePath: URL, password: String) {
         self.init(filePath, password: password, salt: AESEncryptedFile.defaultSalt)
     }
     
-    convenience init(_ filePath: URL, password: String, salt: String) {
+    public convenience init(_ filePath: URL, password: String, salt: String) {
         let key = AESEncryptedFile.deriveKey(password, salt: salt)
         self.init(filePath, key: key)
     }
     
-    init(_ filePath: URL, key: Array<UInt8>) {
+    public init(_ filePath: URL, key: Array<UInt8>) {
         self.filePath = filePath
         self.key = key
     }

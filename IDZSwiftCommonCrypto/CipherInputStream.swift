@@ -21,7 +21,7 @@ public class CipherInputStream : InputStreamLike {
     public var hasBytesAvailable: Bool { self.stream.hasBytesAvailable }
     
     // NOTE: given stream is expected to have already been opened
-    init(_ cryptor: StreamCryptor, forStream stream: InputStreamLike, initialCapacity: Int = 1024) {
+    public init(_ cryptor: StreamCryptor, forStream stream: InputStreamLike, initialCapacity: Int = 1024) {
         self.cryptor = cryptor
         self.stream = stream
         self.innerBuffer = Array<UInt8>(repeating: 0, count: initialCapacity)
