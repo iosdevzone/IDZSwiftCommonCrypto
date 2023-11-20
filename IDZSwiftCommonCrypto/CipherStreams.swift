@@ -30,15 +30,15 @@ extension InputStream : InputStreamLike {
 extension OutputStream : OutputStreamLike {
 }
 
-extension InputStreamLike {
+public extension InputStreamLike {
     
-    public func readText(buffer: Array<UInt8>?, encoding: String.Encoding = .utf8, bufferLength: Int = 1024) -> String? {
+    func readText(buffer: Array<UInt8>?, encoding: String.Encoding = .utf8, bufferLength: Int = 1024) -> String? {
         var buf = buffer ?? Array<UInt8>(repeating: 0, count: bufferLength)
         let readCount = self.read(&buf, maxLength: buf.capacity)
         return readCount > 0 ? String(bytes: buf[0..<readCount], encoding: encoding) : nil
     }
     
-    public func readAllText(encoding: String.Encoding = .utf8) -> String {
+    func readAllText(encoding: String.Encoding = .utf8) -> String {
         let buffer = Array<UInt8>(repeating: 0, count: 1024)
         var result = ""
         
@@ -79,10 +79,10 @@ extension InputStreamLike {
     }
 }
 
-extension OutputStreamLike {
+public extension OutputStreamLike {
     
     @discardableResult
-    public func writeUtf8(_ text: String) -> Int {
+    func writeUtf8(_ text: String) -> Int {
         let bytes = Array(text.utf8)
         return self.write(bytes, maxLength: bytes.count)
     }
