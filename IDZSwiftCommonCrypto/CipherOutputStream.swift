@@ -30,28 +30,30 @@ public class CipherOutputStream : OutputStreamLike {
             return
         }
         
-        self.tryWriteFinal()
+        self.writeFinal()
         self.stream.close()
         self._closed = true
     }
 
+    @discardableResult
     public func write(_ buffer: UnsafePointer<UInt8>, maxLength len: Int) -> Int {
-        if self.closed || self.hasCipherUpdateFailure {
+        if len <= 0 || self.closed || self.hasCipherUpdateFailure {
             return 0
         }
-        
+
         if len > self.innerBuffer.capacity {
             self.innerBuffer = Array<UInt8>(repeating: 0, count: len)
         }
         
-        var outerBytesWritten = 0
+        var outerByteCount = 0
+        var innerByteCount = 0
         
         let updateResult = self.cryptor.update(
             bufferIn: buffer,
             byteCountIn: len,
             bufferOut: &self.innerBuffer,
             byteCapacityOut: self.innerBuffer.capacity,
-            byteCountOut: &outerBytesWritten
+            byteCountOut: &outerByteCount
         )
         
         self.updateStatus(.commonCrypto(updateResult))
@@ -59,14 +61,20 @@ public class CipherOutputStream : OutputStreamLike {
         if self.hasCipherUpdateFailure {
             return 0
         }
+    
+        if outerByteCount <= 0 {
+            return 0
+        }
+
+        innerByteCount = self.stream.write(self.innerBuffer, maxLength: outerByteCount)
         
-        let innerBytesWritten = self.stream.write(&self.innerBuffer, maxLength: outerBytesWritten)
-        
-        if outerBytesWritten != innerBytesWritten {
-            self.updateStatus(.transferError)
+        if innerByteCount != outerByteCount {
+            self.updateStatus(.innerTransferError)
+            return 0
         }
         
-        return innerBytesWritten
+        print("write \(outerByteCount) bytes")
+        return outerByteCount
     }
     
     private func updateStatus(_ status: CipherStreamStatus) {
@@ -77,29 +85,33 @@ public class CipherOutputStream : OutputStreamLike {
         _status = status
     }
     
-    private func tryWriteFinal() {
+    @discardableResult
+    private func writeFinal() -> Int {
         if self.hasCipherUpdateFailure {
-            return
+            return 0
         }
         
-        var innerBytesWritten = 0
+        var innerByteCount = 0
         
         let finalResult = self.cryptor.final(
             bufferOut: &self.innerBuffer,
             byteCapacityOut: self.innerBuffer.capacity,
-            byteCountOut: &innerBytesWritten
+            byteCountOut: &innerByteCount
         )
         
         self.updateStatus(.commonCrypto(finalResult))
         
         if self.hasCipherUpdateFailure {
-            return
+            return 0
         }
         
-        let outerBytesWritten = self.stream.write(&self.innerBuffer, maxLength: innerBytesWritten)
+        let outerByteCount = self.stream.write(&self.innerBuffer, maxLength: innerByteCount)
+        print("write \(outerByteCount) final bytes")
         
-        if outerBytesWritten != innerBytesWritten {
-            self.updateStatus(.transferError)
+        if outerByteCount != innerByteCount {
+            self.updateStatus(.finalTransferError)
         }
+        
+        return outerByteCount
     }
 }

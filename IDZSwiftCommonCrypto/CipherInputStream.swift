@@ -36,37 +36,38 @@ public class CipherInputStream : InputStreamLike {
     }
 
     public func read(_ buffer: UnsafeMutablePointer<UInt8>, maxLength len: Int) -> Int {
-        if self.closed || self.hasCipherUpdateFailure {
+        if len <= 0 || self.closed || self.hasCipherUpdateFailure {
             return 0
-        }
-        
-        if !self.hasBytesAvailable {
-            return self.readFinalAndClose(buffer, maxLength: len)
         }
         
         if len > self.innerBuffer.capacity {
             self.innerBuffer = Array<UInt8>(repeating: 0, count: len)
         }
         
-        let innerReadCount = self.stream.read(&self.innerBuffer, maxLength: len)
+        let innerByteCount = self.stream.read(&self.innerBuffer, maxLength: len)
         
-        if innerReadCount <= 0 {
+        if innerByteCount <= 0 {
             return self.readFinalAndClose(buffer, maxLength: len)
         }
         
-        var outerReadCount = 0
+        var outerByteCount = 0
         
         let updateResult = self.cryptor.update(
             bufferIn: &self.innerBuffer,
-            byteCountIn: innerReadCount,
+            byteCountIn: innerByteCount,
             bufferOut: buffer,
             byteCapacityOut: len,
-            byteCountOut: &outerReadCount
+            byteCountOut: &outerByteCount
         )
         
         self.updateStatus(.commonCrypto(updateResult))
         
-        return outerReadCount
+        if self.hasCipherUpdateFailure {
+            return 0
+        }
+
+//        print("read \(outerByteCount) bytes")
+        return outerByteCount
     }
     
     private func updateStatus(_ status: CipherStreamStatus) {
@@ -87,6 +88,7 @@ public class CipherInputStream : InputStreamLike {
             byteCountOut: &outputByteCount
         )
         
+//        print("read \(outputByteCount) final bytes")
         self.updateStatus(.commonCrypto(finalResult))
         self.close()
         

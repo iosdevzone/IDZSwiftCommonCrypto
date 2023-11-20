@@ -27,10 +27,11 @@
 		2206766B2B097C5300D797DD /* AESEncryptedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676692B097C5300D797DD /* AESEncryptedFile.swift */; };
 		2206766C2B097C5300D797DD /* AESEncryptedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676692B097C5300D797DD /* AESEncryptedFile.swift */; };
 		2206766D2B097C5300D797DD /* AESEncryptedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676692B097C5300D797DD /* AESEncryptedFile.swift */; };
-		220676742B0A575D00D797DD /* CipherStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676732B0A575D00D797DD /* CipherStream.swift */; };
-		220676752B0A575D00D797DD /* CipherStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676732B0A575D00D797DD /* CipherStream.swift */; };
-		220676762B0A575D00D797DD /* CipherStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676732B0A575D00D797DD /* CipherStream.swift */; };
-		220676772B0A575D00D797DD /* CipherStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676732B0A575D00D797DD /* CipherStream.swift */; };
+		220676742B0A575D00D797DD /* CipherStreams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676732B0A575D00D797DD /* CipherStreams.swift */; };
+		220676752B0A575D00D797DD /* CipherStreams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676732B0A575D00D797DD /* CipherStreams.swift */; };
+		220676762B0A575D00D797DD /* CipherStreams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676732B0A575D00D797DD /* CipherStreams.swift */; };
+		220676772B0A575D00D797DD /* CipherStreams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220676732B0A575D00D797DD /* CipherStreams.swift */; };
+		2206767B2B0A631800D797DD /* AESEncryptedFileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2206767A2B0A631800D797DD /* AESEncryptedFileTests.swift */; };
 		2F3CB6F21D8F9290005F511D /* Cryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9F5B2D19D2948F00E0B5FF /* Cryptor.swift */; };
 		2F3CB6F31D8F9291005F511D /* Cryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9F5B2D19D2948F00E0B5FF /* Cryptor.swift */; };
 		2F3CB6F41D8F9291005F511D /* Cryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9F5B2D19D2948F00E0B5FF /* Cryptor.swift */; };
@@ -153,7 +154,8 @@
 		2206765F2B097C3400D797DD /* CipherInputStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CipherInputStream.swift; sourceTree = "<group>"; };
 		220676642B097C4200D797DD /* CipherOutputStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CipherOutputStream.swift; sourceTree = "<group>"; };
 		220676692B097C5300D797DD /* AESEncryptedFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AESEncryptedFile.swift; sourceTree = "<group>"; };
-		220676732B0A575D00D797DD /* CipherStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CipherStream.swift; sourceTree = "<group>"; };
+		220676732B0A575D00D797DD /* CipherStreams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CipherStreams.swift; sourceTree = "<group>"; };
+		2206767A2B0A631800D797DD /* AESEncryptedFileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AESEncryptedFileTests.swift; sourceTree = "<group>"; };
 		3012B11A1BAA237C008504EB /* Updateable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updateable.swift; sourceTree = "<group>"; };
 		3050B9B31BA9F7C700177A38 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		308499A71BA77BC20025B41D /* IDZSwiftCommonCryptoTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IDZSwiftCommonCryptoTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,7 +290,7 @@
 				2206765F2B097C3400D797DD /* CipherInputStream.swift */,
 				220676642B097C4200D797DD /* CipherOutputStream.swift */,
 				220676692B097C5300D797DD /* AESEncryptedFile.swift */,
-				220676732B0A575D00D797DD /* CipherStream.swift */,
+				220676732B0A575D00D797DD /* CipherStreams.swift */,
 			);
 			path = IDZSwiftCommonCrypto;
 			sourceTree = "<group>";
@@ -306,6 +308,7 @@
 			children = (
 				0CCB89BA19CE05F800068ED6 /* IDZSwiftCommonCryptoTests.swift */,
 				0CCB89B819CE05F800068ED6 /* Supporting Files */,
+				2206767A2B0A631800D797DD /* AESEncryptedFileTests.swift */,
 			);
 			path = IDZSwiftCommonCryptoTests;
 			sourceTree = "<group>";
@@ -725,7 +728,7 @@
 			files = (
 				0CCB89D219CF416B00068ED6 /* Utilities.swift in Sources */,
 				0CCB89CC19CE071D00068ED6 /* KeyDerivation.swift in Sources */,
-				220676742B0A575D00D797DD /* CipherStream.swift in Sources */,
+				220676742B0A575D00D797DD /* CipherStreams.swift in Sources */,
 				0C67310219D1EB80009828B8 /* Status.swift in Sources */,
 				2F3CB6F61D8F9297005F511D /* StreamCryptor.swift in Sources */,
 				3050B9B41BA9F7C700177A38 /* Crypto.swift in Sources */,
@@ -744,6 +747,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2206767B2B0A631800D797DD /* AESEncryptedFileTests.swift in Sources */,
 				0CCB89BB19CE05F800068ED6 /* IDZSwiftCommonCryptoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -772,7 +776,7 @@
 			files = (
 				309B66AF1C3F073D00CF76D5 /* Updateable.swift in Sources */,
 				309B66B31C3F073D00CF76D5 /* HMAC.swift in Sources */,
-				220676752B0A575D00D797DD /* CipherStream.swift in Sources */,
+				220676752B0A575D00D797DD /* CipherStreams.swift in Sources */,
 				309B66B91C3F073D00CF76D5 /* Crypto.swift in Sources */,
 				2F3CB6F71D8F9297005F511D /* StreamCryptor.swift in Sources */,
 				309B66B61C3F073D00CF76D5 /* Status.swift in Sources */,
@@ -801,7 +805,7 @@
 			files = (
 				309B66D71C3F13F800CF76D5 /* Updateable.swift in Sources */,
 				309B66DB1C3F13F800CF76D5 /* HMAC.swift in Sources */,
-				220676772B0A575D00D797DD /* CipherStream.swift in Sources */,
+				220676772B0A575D00D797DD /* CipherStreams.swift in Sources */,
 				309B66E11C3F13F800CF76D5 /* Crypto.swift in Sources */,
 				2F3CB6F91D8F9298005F511D /* StreamCryptor.swift in Sources */,
 				309B66DE1C3F13F800CF76D5 /* Status.swift in Sources */,
@@ -830,7 +834,7 @@
 			files = (
 				309B66F21C3F19D900CF76D5 /* Updateable.swift in Sources */,
 				309B66F61C3F19D900CF76D5 /* HMAC.swift in Sources */,
-				220676762B0A575D00D797DD /* CipherStream.swift in Sources */,
+				220676762B0A575D00D797DD /* CipherStreams.swift in Sources */,
 				309B66FC1C3F19D900CF76D5 /* Crypto.swift in Sources */,
 				2F3CB6F81D8F9298005F511D /* StreamCryptor.swift in Sources */,
 				309B66F91C3F19D900CF76D5 /* Status.swift in Sources */,

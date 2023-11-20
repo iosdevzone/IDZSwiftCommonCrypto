@@ -17,21 +17,21 @@ public class AESEncryptedFile {
     
     private let filePath: URL
     private let key: Array<UInt8>
-    private let padding: Cryptor.Padding
+    // Not currently configurable since anything but PKCS7 will break with misalignment errors
+    private let padding: Cryptor.Padding = .PKCS7Padding
     
     convenience init(_ filePath: URL, password: String) {
         self.init(filePath, password: password, salt: AESEncryptedFile.defaultSalt)
     }
     
-    convenience init(_ filePath: URL, password: String, salt: String, padding: Cryptor.Padding = .PKCS7Padding) {
+    convenience init(_ filePath: URL, password: String, salt: String) {
         let key = AESEncryptedFile.deriveKey(password, salt: salt)
-        self.init(filePath, key: key, padding: padding)
+        self.init(filePath, key: key)
     }
     
-    init(_ filePath: URL, key: Array<UInt8>, padding: Cryptor.Padding) {
+    init(_ filePath: URL, key: Array<UInt8>) {
         self.filePath = filePath
         self.key = key
-        self.padding = padding
     }
     
     private static func deriveKey(_ password: String, salt: String) -> Array<UInt8> {
@@ -44,17 +44,18 @@ public class AESEncryptedFile {
         )
     }
     
-    public func openInputStream() throws -> CipherInputStream {
+    public func openInputStream() throws -> InputStreamLike {
         guard let innerStream = InputStream(url: self.filePath) else {
             throw Error.createStreamFailure
         }
         
         innerStream.open()
         
-        let algorithm = Cryptor.Algorithm.aes;
+        let algorithm = Cryptor.Algorithm.aes
+        let blockSize = algorithm.blockSize()
         
         // slice off the IV from the start of the file
-        var iv = [UInt8](repeating: 0, count: algorithm.blockSize())
+        var iv = [UInt8](repeating: 0, count: blockSize)
         let bytesRead = innerStream.read(&iv, maxLength: iv.count)
         
         if bytesRead != iv.count {
@@ -66,7 +67,7 @@ public class AESEncryptedFile {
             operation: .decrypt,
             algorithm: algorithm,
             mode: .CBC,
-            padding: .PKCS7Padding,
+            padding: self.padding,
             key: self.key,
             iv: iv
         )
@@ -74,19 +75,20 @@ public class AESEncryptedFile {
         return CipherInputStream(cryptor, forStream: innerStream)
     }
     
-    public func openOutputStream() throws -> CipherOutputStream {
+    public func openOutputStream() throws -> OutputStreamLike {
         guard let innerStream = OutputStream(url: self.filePath, append: false) else {
             throw Error.createStreamFailure
         }
         
-        let algorithm = Cryptor.Algorithm.aes;
-        let iv = try Random.generateBytes(byteCount: algorithm.blockSize())
+        let algorithm = Cryptor.Algorithm.aes
+        let blockSize = algorithm.blockSize()
+        let iv = try Random.generateBytes(byteCount: blockSize)
         
         let cryptor = StreamCryptor(
             operation: .encrypt,
             algorithm: algorithm,
             mode: .CBC,
-            padding: .PKCS7Padding,
+            padding: self.padding,
             key: self.key,
             iv: iv
         )
