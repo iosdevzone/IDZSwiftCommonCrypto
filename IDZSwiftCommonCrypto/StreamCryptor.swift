@@ -458,8 +458,15 @@ open class StreamCryptor
         guard !mode.requiresInitializationVector() || algorithm.blockSize() == ivByteCount else {
             fatalError("FATAL_ERROR: Invalid initialization vector size.")
         }
+        
+        let modeOptions: CCModeOptions = {
+            if case .CTR = mode {
+                return CCModeOptions(kCCModeOptionCTR_BE)
+            }
+            return CCModeOptions(0)
+        }()
 		
-		let rawStatus = CCCryptorCreateWithMode(operation.nativeValue(), mode.nativeValue(), algorithm.nativeValue(), padding.nativeValue(), ivBuffer, keyBuffer, keyByteCount, nil, 0, 0, 0, context)
+		let rawStatus = CCCryptorCreateWithMode(operation.nativeValue(), mode.nativeValue(), algorithm.nativeValue(), padding.nativeValue(), ivBuffer, keyBuffer, keyByteCount, nil, 0, 0, modeOptions, context)
 		if let status = Status.fromRaw(status: rawStatus)
 		{
 			self.status = status
